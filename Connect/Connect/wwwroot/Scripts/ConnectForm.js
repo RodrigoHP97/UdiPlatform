@@ -1,4 +1,5 @@
 window.addEventListener("message", receiveMessage, false);
+
 var final_url = $('#action').val() + '/connect/gateway/processing'
 if (!($('#form_udi')[0].getAttribute('action'))) {
     var url = $('#action').val() + '/connect/gateway/processing';
@@ -86,6 +87,10 @@ $(document).ready(function () {
     $('#form_udi').submit(function (e) {
         e.preventDefault();
         createExtendedHash();
+        var d = new Date();
+        var datestring = d.getFullYear() + ":" + (d.getMonth() + 1) + ":" + d.getDate() + "-" +
+            d.getHours() + ":" + d.getMinutes() + ":" + (d.getSeconds()+1);
+        $('#txndatetime').val(datestring);
         this.submit();
         return false; //I put it here as a fallback
 });
