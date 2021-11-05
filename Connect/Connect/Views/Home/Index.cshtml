@@ -1,0 +1,157 @@
+﻿@{
+    ViewData["Title"] = "EntornoFiservUDI";
+}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+<style>
+    .hide {
+        display: none !important;
+    }
+    .section1 {
+        width: 50%;
+        float: left;
+        height: 100vh;
+        box-sizing: border-box;
+        border-right: 1vw;
+        margin: 0;
+        padding: 0;
+    }
+
+    .section2 {
+        width: 50%;
+        float: left;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+</style>
+<form method="POST" id="form_udi" target="myFrame">
+    <input type="hidden" name="checkoutoption" id="checkoutoption" />
+    <input type="hidden" name="hostURI" id="hostURI" />
+    <input type="hidden" name="txntype" id="txntype" value="sale"/>
+    <input type="hidden" name="timezone" id="timezone" value='America/Mexico_City' />
+    <input type="hidden" name="hash_algorithm" id="hash_algorithm" value="HMACSHA256"/>
+    <input type="hidden" name="hashExtended" id="hashExtended" />
+    <input type="hidden" name="responseFailURL" id="responseFailURL" />
+    <input type="hidden" name="responseSuccessURL" id="responseSuccessURL" />
+
+
+    <div class="section1">
+        <div class="form-group col-md-4 col-xs-6" id="action_field">
+
+            <label id="action_label">Acción:</label>
+            <div class="item-box input-group">
+                <select name="action" id="action" style="width: 200px" class="form-control action">
+                    <option style="width: 200px" id="TEST" value="https://test.ipg-online.com">TEST</option>
+                    <option style="width: 200px" id="PROD" value="https://www2.ipg-online.com">PROD</option>
+                </select>
+
+            </div>
+        </div>
+        <div class="form-group col-md-4 col-xs-6" id="txndatetime_field">
+            <label class="control-label col-sm-12" id="txndatetime_label">Fecha:</label>
+            <div class="item-box input-group">
+                <input type="text" style="width: 200px" id="dtime" name="txndatetime" class="form-control" placeholder="YYYY:MM:DD-HH:MM:SS" maxlength="20">
+            </div>
+        </div>
+        <div class="form-group col-md-4 col-xs-6" id="storename_field">
+            <label class="control-label col-sm-12" id="storename_label">StoreId:</label>
+            <div class="item-box input-group">
+                <input type="text" style="width: 200px" id="storename" name="storeN" class="form-control" maxlength="20">
+            </div>
+        </div>
+        <div class="form-group col-md-4 col-xs-6" id="chargetotal_field">
+            <label class="control-label col-sm-12" id="chargetotal_label">Cargo:</label>
+            <div class="item-box input-group">
+                <input type="number" min="0" style="width: 200px" id="chargetotal" placeholder="0.00" step="0.01" pattern="^\d*(\.\d{0,2})?$" name="Charge" class="form-control" maxlength="20">
+            </div>
+        </div>
+        <div class="form-group col-md-4 col-xs-6" id="action_field">
+
+            <label id="currency_label">Moneda:</label>
+            <div class="item-box input-group">
+                <select name="currency" id="currency" style="width: 200px" class="form-control action ">
+                    <option style="width: 200px" id="USD" value="840">USD</option>
+                    <option style="width: 200px" id="MXN" value="484">MXN</option>
+                </select>
+
+            </div>
+        </div>
+        <div class="form-group col-md-4 col-xs-6" id="action_field">
+
+            <label id="type_of_selling_label">Tipo de venta:</label>
+            <div class="item-box input-group">
+                <select name="type_of_selling" id="type_of_selling" style="width: 200px" class="form-control action">
+                    <option style="width: 200px" id="direct" value="direct">Directa</option>
+                    <option style="width: 200px" id="msi" value="msi">MSI</option>
+                    <option style="width: 200px" id="3ds" value="3ds">Autenticación 3DS</option>
+                    <option style="width: 200px" id="tokenization" value="tokenization">Tokenización de Tarjetas</option>
+                    <option style="width: 200px" id="concurrent" value="concurrent">Cargos recurrentes</option>
+                </select>
+
+            </div>
+            <label id="sharedsecret_label">SharedSecret:</label>
+            <input type="password" style="width: 200px" class="form-control" name="sharedsecret" id="sharedsecret" />
+        </div>
+        <div class="col-sm-6">
+            <button id="sendData" type="submit" class="btn-primary waves-effectt">Enviar</button>
+        </div>
+    </div>
+    <div class="section2 col-sm-12">
+        <label class="hide" id="numberOfInstallments_label">Número de Meses a Pagar:</label>
+        <select name="numberOfInstallments" id="numberOfInstallments" style="width: 200px" class="form-control action hide">
+            <option style="width: 200px" id="three_months" value="3">3</option>
+            <option style="width: 200px" id="six_months" value="6">6</option>
+            <option style="width: 200px" id="nine_months" value="9">9</option>
+            <option style="width: 200px" id="twelves_months" value="12">12</option>
+        </select>
+        <label class="hide" id="installmentsInterest_label">Con intereses :</label>
+        <select name="installmentsInterest" id="installmentsInterest" style="width: 200px" class="form-control action hide">
+            <option style="width: 200px" id="with_intrs" value="true">Sí</option>
+            <option style="width: 200px" id="without_intrs" value="false">No</option>
+        </select>
+        <label class="hide" id="authenticateTransaction_label">Autenticar Transacción:</label>
+        <select name="authenticateTransaction" id="authenticateTransaction" style="width: 200px" class="form-control action hide">
+            <option style="width: 200px" id="auth_tran_ys" value="true">Sí</option>
+            <option style="width: 200px" id="auth_tran_no" value="false">No</option>
+        </select>
+        <label class="hide" id="threeDSRequestorChallengeIndicator_label">Tipo de indicador</label>
+        <select name="threeDSRequestorChallengeIndicator" id="threeDSRequestorChallengeIndicator" style="width: 500px" class="form-control action hide">
+            <option style="width: 200px" id="gateway_pass" value="1">Permitir al Gateway determinar la solicitud del password.</option>
+            <option style="width: 200px" id="no_pass" value="2">No solicitar password 3DS.</option>
+            <option style="width: 200px" id="bank_pass" value="3">El banco emisor decide si solicitar password.</option>
+            <option style="width: 200px" id="yes_pass" value="4">	Siempre requerir password 3DS.</option>
+        </select>
+        <label class="hide" id="assignToken_label">Asignar Token:</label>
+        <select name="assignToken" id="assignToken" style="width: 200px" class="form-control action hide">
+            <option style="width: 200px" id="yes_auth" value="true">Sí</option>
+            <option style="width: 200px" id="no_auth" value="false">No</option>
+        </select>
+        <label class="hide" id="hosteddataid_label">Token:</label>
+        <input type="text" class="form-control hide" name="hosteddataid" id="hosteddataid" />
+        <label class="hide" id="type_of_selling_label">Veces que se aplicará el pago:</label>
+        <input type="number" min="0" step="1" style="width: 200px" class="form-control hide" name="recurringInstallmentCount" />
+        <label class="hide" id="recurringInstallmentPeriod_label">Periodo:</label>
+        <select name="recurringInstallmentPeriod" id="recurringInstallmentPeriod" style="width: 200px" class="form-control action hide">
+            <option style="width: 200px" id="daily" value="day">Diario</option>
+            <option style="width: 200px" id="weekly" value="week">Semanal</option>
+            <option style="width: 200px" id="monthly" value="month">Mensual</option>
+            <option style="width: 200px" id="yearly" value="year">Anual</option>
+        </select>
+        <label class="hide" id="recurringInstallmentFrequency_label">Frecuencia de pago:</label>
+        <input type="number" min="0" step="1" style="width: 200px" class="form-control hide" name="recurringInstallmentFrequency" id="recurringInstallmentFrequency" />
+        <label class="hide" id="recurringComments_label">Comentarios adicionales:</label>
+        <input type="text" style="width: 200px" class="form-control hide" name="recurringComments" id="recurringComments" />
+        <label class="hide" id="ponumber_label">Número de contrato:</label>
+        <input type="text" style="width: 200px" class="form-control hide" name="ponumber" id="ponumber" />
+
+    </div>
+</form>
+
+
+<script src="~/Scripts/ConnectForm.js"></script>
