@@ -57,19 +57,30 @@
 
         </div>
 
-        <div class="col-sm-6">
+        <div>
             <button id="sendData" type="submit" class="btn-primary waves-effectt">Enviar</button>
         </div>
 
     </form>
     </div>
 
-    <div class="section2 col-sm-12">
-        <div class="form-group col-md-4 col-xs-6" id="storename_field">
-            <label id="sharedsecret_label">SharedSecret:</label>
-            <input type="password" style="width: 200px" class="form-control" name="sharedsecret" id="sharedsecret" />
+<div class="section2 col-sm-4">
+    <label id="action_label">Tipo de venta:</label>
+    <div class="item-box input-group">
+        <select name="type_of_selling" id="type_of_selling" style="width: 200px" class="form-control action">
+            <option style="width: 200px" id="direct" value="direct">Directa</option>
+            <option style="width: 200px" id="msi" value="msi">MSI</option>
+            <option style="width: 200px" id="3ds" value="3ds">Autenticación 3DS</option>
+            <option style="width: 200px" id="tokenization" value="tokenization">Tokenización de Tarjetas</option>
+            <option style="width: 200px" id="concurrent" value="concurrent">Cargos recurrentes</option>
+        </select>
 
-        </div>
     </div>
+    <div class="form-group col-md-4 col-xs-6" id="storename_field">
+        <label id="sharedsecret_label">SharedSecret:</label>
+        <input type="password" style="width: 200px" class="form-control" name="sharedsecret" id="sharedsecret" />
+
+    </div>
+</div>
 
         <script src="~/Scripts/ConnectForm.js"></script>

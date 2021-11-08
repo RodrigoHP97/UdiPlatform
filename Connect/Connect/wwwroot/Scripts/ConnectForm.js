@@ -25,99 +25,119 @@ function sort_by_key(array, key) {
     });
 }
 
-const jconf=
-fetch("/Configurations/Connect.json")
-    .then(response => {
-        return response.json();
-    })
-        .then(data => { return Promise.resolve(data) });
+function load_config() {
+    $('#div_master').remove();
+    const jconf =
+        fetch("/Configurations/Connect.json")
+            .then(response => {
+                return response.json();
+            })
+            .then(data => { return Promise.resolve(data) });
 
-//Armamos formulario
-jconf.then((value) => {
-    var general_form = value.filter(function (case_config) {
-        if (Object.keys(case_config)[0] == 'general') {
-            return case_config;
-        }
-
-    });
-
-    var gen_Sort = sort_by_key(general_form[0].general, "name");
-
-    gen_Sort.map(function (value) {
-
-        if (value.label != undefined) {
-
-            var div = '<div class="form-group col-md-4 col-xs-6" id="' + value.name + '_field"></div>';
-
-            var label = '<label class="control-label col-sm-12" id="' + value.name + '_label">' + value.label + '</label>';
-
-
-            $('#div_master').append(div);
-
-
-            //validamos tipo de input
-            if (value.type == "select") {
-
-
-                var select = label + '<select class="form-control" id="' + value.name + '" name="' + value.name + '"style="width: 200px"></select>';
-
-                $('#' + value.name + '_field').append(select);
-
-                
-
-                value.options.map(function (values) {
-
-                    var option = '<option style="width: 200px" id="' + values.id + '"  value="' + values.value + '">' + values.label + '</option>';
-
-                    $('#' + value.name).append(option);
-
-
-                })
-
+    //Armamos formulario
+    jconf.then((value) => {
+        var general_form = value.filter(function (case_config) {
+            if (Object.keys(case_config)[0] == 'general') {
+                return case_config;
             }
 
+        });
 
+        var form = value.filter(function (case_config) {
+            if (Object.keys(case_config)[0] != 'general') {
+
+                return case_config;
+            }
+
+        });
+
+        form = form.filter(function (reg) {
+            return reg[$('#type_of_selling').val()];
+        });
+
+        var gen_Sort = form[0][$('#type_of_selling').val()].concat(general_form[0].general);
+        gen_Sort = sort_by_key(gen_Sort, "name");
+
+        $('#sendData').before('<div id="div_master"></div>');
+
+
+        gen_Sort.map(function (value) {
+
+            if (value.label != undefined) {
+
+                var div = '<div class="form-group col-md-4 col-xs-6" id="' + value.name + '_field"></div>';
+
+                var label = '<label class="control-label col-sm-12" id="' + value.name + '_label">' + value.label + '</label>';
+
+
+                $('#div_master').append(div);
+
+
+                //validamos tipo de input
+                if (value.type == "select") {
+
+
+                    var select = label + '<select class="form-control" id="' + value.name + '" name="' + value.name + '"style="width: 200px"></select>';
+
+                    $('#' + value.name + '_field').append(select);
+
+
+
+                    value.options.map(function (values) {
+
+                        var option = '<option style="width: 200px" id="' + values.id + '"  value="' + values.value + '">' + values.label + '</option>';
+
+                        $('#' + value.name).append(option);
+
+
+                    })
+
+                }
+
+
+                else {
+                    var input_div = label + '<div class="item-box input-group" id="' + value.name + '_input"></div>';
+
+                    $('#' + value.name + '_field').append(input_div);
+
+                    var input = '<input class="form-control" id="' + value.name + '"  style="width: 200px"></input>';
+
+                    $('#' + value.name + '_input').append(input);
+
+
+                    Object.keys(value).map(function (attributes) {
+
+                        if (value[attributes] != '') {
+                            $('#' + value.name).attr(attributes, value[attributes]);
+                        }
+
+                    })
+
+
+                }
+
+            }
             else {
-                var input_div = label + '<div class="item-box input-group" id="' + value.name + '_input"></div>';
 
-                $('#' + value.name + '_field').append(input_div);
+                var input = '<input id="' + value.name + '"></input>';
 
-                var input = '<input class="form-control" id="' + value.name + '"  style="width: 200px"></input>';
-
-                $('#' + value.name + '_input').append(input);
-
+                $('#div_master').append(input);
 
                 Object.keys(value).map(function (attributes) {
 
-                    if (value[attributes] != '') {
-                        $('#' + value.name).attr(attributes, value[attributes]);
-                    }
+                    $('#' + value.name).attr(attributes, value[attributes]);
 
                 })
-
-
             }
 
-        }
-        else {
+        })
+        $('#hash_algorithm').val($('#hash_action').val());
+    });
 
-            var input = '<input id="' + value.name + '"></input>';
-
-            $('#div_master').append(input);
-
-            Object.keys(value).map(function (attributes) {
-
-                $('#' + value.name).attr(attributes, value[attributes]);
-
-            })
-        }
-
-    })
-    $('#hash_algorithm').val($('#hash_action').val());
-});
-
+}
 
 $(document).ready(function () {
+    load_config();
     $('#action').on('change', function () {
         var url = $('#action').val() + '/connect/gateway/processing';
         $('#form_udi').attr('action', url);
@@ -142,31 +162,8 @@ $(document).ready(function () {
     });
 
     $('#type_of_selling').on('change', function () {
-
-        var input_obj = obj_opt.filter(function (newf) {
-            var type_of_selling = $('#type_of_selling').val();
-            var keys = Object.keys(newf)[0];
-            if (type_of_selling == keys) {
-                return newf[keys];
-            }
-        })[0];
-
-        var type_of_selling = $('#type_of_selling').val();
-        var key_arr = Object.keys(input_obj[type_of_selling]);
-
-        key_arr.map(function (input) {
-            var trans_input = input_obj[type_of_selling][input]
-            if (trans_input) {
-                $("#" + input).removeClass("hide");
-                $("#" + input+'_label').removeClass("hide");
-            }
-            else {
-                $("#" + input).addClass("hide");
-                $("#" + input + '_label').addClass("hide");
-
-            }
-        })
-
+        load_config();
+ 
     });
 
 });
