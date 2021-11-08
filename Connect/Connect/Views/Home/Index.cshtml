@@ -53,57 +53,34 @@
 </div>
 <div class="section1">
     <form accept-charset="UTF-8" method="POST" id="form_udi" target="myFrame">
-        <input type="hidden" name="authenticateTransaction" value="true" />
-        <div class="form-group col-md-4 col-xs-6" id="chargetotal_field">
-            <label class="control-label col-sm-12" id="chargetotal_label">Cargo:</label>
-            <div class="item-box input-group">
-                <input type="number" min="0" style="width: 200px" id="chargetotal" placeholder="0.00" step="0.01" pattern="^\d*(\.\d{0,2})?$" name="chargetotal" class="form-control" maxlength="20">
-            </div>
+        <div id="div_master">
+
         </div>
 
-        <input type="hidden" name="checkoutoption" id="checkoutoption" value="combinedpage" />
-        <div class="form-group col-md-4 col-xs-6" id="action_field">
-
-            <label id="currency_label">Moneda:</label>
-            <div class="item-box input-group">
-                <select name="currency" id="currency" style="width: 200px" class="form-control action ">
-                    <option style="width: 200px" id="USD" value="840">USD</option>
-                    <option style="width: 200px" id="MXN" value="484">MXN</option>
-                </select>
-
-            </div>
-        </div>
-        <input type="hidden" name="hash_algorithm" id="hash_algorithm" />
-        <input type="hidden" name="installmentsInterest" value="false" />
-        <input type="hidden" name="numberOfInstallments" value="6" />
-        <input type="hidden" name="hashExtended" id="hashExtended" />
-        <input type="hidden" name="paymentMethod" id="paymentMethod" value="M" />
-        <input type="hidden" name="responseFailURL" id="responseFailURL" value="https://localhost:5001/Home/Privacy" />
-        <input type="hidden" name="responseSuccessURL" id="responseSuccessURL" value="https://localhost:5001/Home/Index" />
-        <div class="form-group col-md-4 col-xs-6" id="storename_field">
-            <label class="control-label col-sm-12" id="storename_label">StoreId:</label>
-            <div class="item-box input-group">
-                <input type="text" style="width: 200px" id="storename" name="storename" class="form-control" maxlength="20">
-            </div>
-        </div>
-        <input type="hidden" name="threeDSRequestorChallengeIndicator" value="4" />
-        <input type="hidden" name="timezone" id="timezone" value='America/Mexico_City' />
-        <input type="hidden" name="transactionNotificationURL" id="transactionNotificationURL" value="https://pagosonline.mx/logs/notificationsoap.php" />
-        <input type="hidden" name="txndatetime" id="txndatetime" />
-        <input type="hidden" name="txntype" id="txntype" value="sale" />
-        <div class="col-sm-6">
+        <div>
             <button id="sendData" type="submit" class="btn-primary waves-effectt">Enviar</button>
         </div>
 
     </form>
     </div>
 
-    <div class="section2 col-sm-12">
-        <div class="form-group col-md-4 col-xs-6" id="storename_field">
-            <label id="sharedsecret_label">SharedSecret:</label>
-            <input type="password" style="width: 200px" class="form-control" name="sharedsecret" id="sharedsecret" />
+<div class="section2 col-sm-4">
+    <label id="action_label">Tipo de venta:</label>
+    <div class="item-box input-group">
+        <select name="type_of_selling" id="type_of_selling" style="width: 200px" class="form-control action">
+            <option style="width: 200px" id="direct" value="direct">Directa</option>
+            <option style="width: 200px" id="msi" value="msi">MSI</option>
+            <option style="width: 200px" id="3ds" value="3ds">Autenticación 3DS</option>
+            <option style="width: 200px" id="tokenization" value="tokenization">Tokenización de Tarjetas</option>
+            <option style="width: 200px" id="concurrent" value="concurrent">Cargos recurrentes</option>
+        </select>
 
-        </div>
     </div>
+    <div class="form-group col-md-4 col-xs-6" id="storename_field">
+        <label id="sharedsecret_label">SharedSecret:</label>
+        <input type="password" style="width: 200px" class="form-control" name="sharedsecret" id="sharedsecret" />
+
+    </div>
+</div>
 
         <script src="~/Scripts/ConnectForm.js"></script>
