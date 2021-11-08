@@ -5,10 +5,17 @@ if (!($('#form_udi')[0].getAttribute('action'))) {
     var url = $('#action').val() + '/connect/gateway/processing';
     $('#form_udi').attr('action', url);
 }
+var sep_conf = { "HMACSHA256": "|", "SHA256": "" };
+
+$('#hash_algorithm').val($('#hash_action').val());
 $(document).ready(function () {
     $('#action').on('change', function () {
         var url = $('#action').val() + '/connect/gateway/processing';
         $('#form_udi').attr('action', url);
+    });
+
+    $('#hash_action').on('change', function () {
+        $('#hash_algorithm').val($('#hash_action').val());
     });
 
     var obj_opt = [
@@ -85,15 +92,17 @@ $(document).ready(function () {
     ];
 
     $('#form_udi').submit(function (e) {
+        
         e.preventDefault();
-        createExtendedHash();
+        e.returnValue = false;
+        
         var d = new Date();
-        var datestring = d.getFullYear() + ":" + (d.getMonth() + 1) + ":" + d.getDate() + "-" +
-            d.getHours() + ":" + d.getMinutes() + ":" + (d.getSeconds()+1);
-        $('#txndatetime').val(datestring);
-        this.submit();
-        return false; //I put it here as a fallback
-});
+        var datestring = d.getFullYear() + ":" + ('0' + (d.getMonth() + 1)).slice(-2) + ":" + ('0' + d.getDate()).slice(-2)+ "-" +
+            ('0' + d.getHours()).slice(-2) + ":" + ('0' + d.getMinutes()).slice(-2) + ":" + ('0' +  d.getSeconds()).slice(-2);
+        $('#txndatetime').val(datestring.replace(/\s*:\s*/, ":"));
+       createExtendedHash(this);
+        //return false; //I put it here as a fallback
+    });
 
     $('#type_of_selling').on('change', function () {
 
@@ -151,29 +160,37 @@ function forwardForm(responseObj, elementArr) {
     newForm.submit();
 }
 
-function createExtendedHash() {
-
+function createExtendedHash(form) {
+    var $form = form
     var hashdata = new Object;
-    hashdata.chargetotal = $('#chargetotal').val();
-    hashdata.checkoutoption = $('#checkoutoption').val();
-    hashdata.currency = $('#currency').val();
-    hashdata.hash_algorithm = $('#hash_algorithm').val();
-    hashdata.paymentMethod = $('#paymentMethod').val();
-    hashdata.responseFailURL = $('#responseFailURL').val();
-    hashdata.responseSuccessURL = $('#responseSuccessURL').val();
-    hashdata.storename = $('#storename').val();
-    hashdata.timezone = $('#timezone').val();
-    hashdata.transactionNotificationURL = $('#transactionNotificationURL').val();
-    hashdata.txndatetime = $('#txndatetime').val();
-    hashdata.txntype = $('#txntype').val();
-    hashdata.sharedsecret = $('#sharedsecret').val();
+    var jform = $('#form_udi').serializeArray()
+    var filtered_form = jform.filter(function (vals) {
+        if (vals.name != '__RequestVerificationToken' && vals.name != 'hashExtended')
+            return (vals.value)
 
+    })
+    var separator = sep_conf[$('#hash_action').val()];
+
+    var mapped_Form = filtered_form.map(function (vals) {
+        return vals.value
+    })
+    
+    hashdata.message = mapped_Form.join(separator);
+    hashdata.sharedsecret = $('#sharedsecret').val();
+    var newHash;
     $.ajax({
         type: 'POST',
         url: '/HashExtended/HashHMAC/',
+        context: $form,
         data: hashdata,
         success: function (response) {
-            $('#hashExtended').val(JSON.stringify(response));
+            console.log('se generó hash', response);
+        },
+        complete: function (response) {
+            $('#hashExtended').val(response.responseJSON.replace(/\"/g, ""));
+            form.submit();
+            newHash = response.responseJSON.replace(/\"/g, "");
+            return newHash;
         }
     });
 };
