@@ -57,7 +57,7 @@
 
         </div>
 
-        <div>
+        <div id="buttonData" class="form-group col-md-4 col-xs-6">
             <button id="sendData" type="submit" class="btn-primary waves-effectt">Enviar</button>
         </div>
 
@@ -71,13 +71,14 @@
             <option style="width: 200px" id="direct" value="direct">Directa</option>
             <option style="width: 200px" id="msi" value="msi">MSI</option>
             <option style="width: 200px" id="3ds" value="3ds">Autenticación 3DS</option>
-            <option style="width: 200px" id="tokenization" value="tokenization">Tokenización de Tarjetas</option>
+            <!--<option style="width: 200px" id="tokenization" value="tokenization">Tokenización de Tarjetas</option>-->
             <option style="width: 200px" id="concurrent" value="concurrent">Cargos recurrentes</option>
         </select>
 
     </div>
-    <div class="form-group col-md-4 col-xs-6" id="storename_field">
-        <label id="sharedsecret_label">SharedSecret:</label>
+    <label id="sharedsecret_label">SharedSecret:</label>
+    <div class="item-box input-group" id="storename_field">
+
         <input type="password" style="width: 200px" class="form-control" name="sharedsecret" id="sharedsecret" />
 
     </div>

@@ -245,5 +245,62 @@
                 
               ]
         }
-      ]}
+      ]},
+      {
+        "concurrent":[
+          {
+            "name":"recurringInstallmentCount",
+            "label":"Veces que se realizará el cargo: ",
+            "type":"text",
+            "class":""
+          
+          },
+          {
+            "name":"recurringInstallmentPeriod",
+            "label":"Periodo en el que se hará el cargo: ",
+            "type":"select",
+            "class":"",
+            "options":[
+              {
+                "id": "day",
+                "value": "day",
+                "label": "Diario"
+              },
+              {
+                "id": "week",
+                "value": "week",
+                "label": "semanal"
+              },
+              {
+                "id": "month",
+                "value": "month",
+                "label": "Mensual"
+              },
+              {
+                "id": "year",
+                "value": "year",
+                "label": "Anual"
+              }
+            ]
+          },
+          {
+            "name":"recurringInstallmentFrequency",
+            "label":"Frecuencia en la que se realizará el cargo: ",
+            "type":"text",
+            "class":""
+          },
+          {
+            "name":"recurringComments",
+            "label":"Cpmentarios adicionales: ",
+            "type":"text",
+            "class":""
+          },
+          {
+            "name":"ponumber",
+            "label":"Número de orden: ",
+            "type":"text",
+            "class":""
+          }
+        ]
+      }
   ]

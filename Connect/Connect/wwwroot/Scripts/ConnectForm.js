@@ -58,7 +58,7 @@ function load_config() {
         var gen_Sort = form[0][$('#type_of_selling').val()].concat(general_form[0].general);
         gen_Sort = sort_by_key(gen_Sort, "name");
 
-        $('#sendData').before('<div id="div_master"></div>');
+        $('#buttonData').before('<div id="div_master"></div>');
 
 
         gen_Sort.map(function (value) {
