@@ -56,7 +56,7 @@
           "name": "responseFailURL",
           "type": "text",
           "class": "hide",
-          "value": "https://localhost:5001/Home/Privacy"
+          "value": "https://localhost:5001/Home/Failure"
         },
         {
           "name": "responseSuccessURL",
