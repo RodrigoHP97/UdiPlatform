@@ -18,7 +18,17 @@ namespace WebApplication1.Controllers
             _logger = logger;
         }
 
+        public IActionResult Connect()
+        {
+            return View();
+        }
+
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult API()
         {
             return View();
         }

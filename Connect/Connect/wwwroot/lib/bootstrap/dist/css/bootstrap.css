@@ -4454,15 +4454,15 @@ input[type="button"].btn-block {
 }
 
 .navbar-light .navbar-brand {
-  color: rgba(0, 0, 0, 0.9);
+  color: #f8f9fa;
 }
 
 .navbar-light .navbar-brand:hover, .navbar-light .navbar-brand:focus {
-  color: rgba(0, 0, 0, 0.9);
+  color: #ff7700;
 }
 
 .navbar-light .navbar-nav .nav-link {
-  color: rgba(0, 0, 0, 0.5);
+    color: #f8f9fa;
 }
 
 .navbar-light .navbar-nav .nav-link:hover, .navbar-light .navbar-nav .nav-link:focus {
@@ -4477,7 +4477,7 @@ input[type="button"].btn-block {
 .navbar-light .navbar-nav .active > .nav-link,
 .navbar-light .navbar-nav .nav-link.show,
 .navbar-light .navbar-nav .nav-link.active {
-  color: rgba(0, 0, 0, 0.9);
+  color: #f8f9fa;
 }
 
 .navbar-light .navbar-toggler {
@@ -4490,16 +4490,16 @@ input[type="button"].btn-block {
 }
 
 .navbar-light .navbar-text {
-  color: rgba(0, 0, 0, 0.5);
+  color: #ff9c00;
 }
 
-.navbar-light .navbar-text a {
-  color: rgba(0, 0, 0, 0.9);
-}
+    .navbar-light .navbar-text a {
+        color: #f8f9fa;
+    }
 
-.navbar-light .navbar-text a:hover, .navbar-light .navbar-text a:focus {
-  color: rgba(0, 0, 0, 0.9);
-}
+        .navbar-light .navbar-text a:hover, .navbar-light .navbar-text a:focus {
+            color: #f8f9fa;
+        }
 
 .navbar-dark .navbar-brand {
   color: #fff;
@@ -6588,7 +6588,7 @@ button.bg-dark:focus {
 }
 
 .bg-white {
-  background-color: #fff !important;
+  background-color: #000000 !important;
 }
 
 .bg-transparent {

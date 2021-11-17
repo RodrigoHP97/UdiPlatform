@@ -32,56 +32,29 @@
     }
 </style>
 <meta charset=UTF-8>
-<div class="form-group col-md-4 col-xs-6" id="action_field">
-
-    <label id="action_label">Acción:</label>
-    <div class="item-box input-group">
-        <select name="action" id="action" style="width: 200px" class="form-control action">
-            <option style="width: 200px" id="TEST" value="https://test.ipg-online.com">TEST</option>
-            <option style="width: 200px" id="PROD" value="https://www2.ipg-online.com">PROD</option>
-        </select>
+<center>
+    <div class="col-4">
+        <h1>Entorno de pruebas de UDI</h1>
+    </div>
+    <div>
+        <h4>Connect</h4>
+        <a  asp-area="" asp-controller="Home" asp-action="Connect">
+            <img src="/Images/API_illustration_light.png" width="500" height="300">
+        </a>
 
     </div>
-    <label id="action_label">Algoritmo hash:</label>
-    <div class="item-box input-group">
-        <select name="action" id="hash_action" style="width: 200px" class="form-control action">
-            <option style="width: 200px" id="hmac" value="HMACSHA256">HMACSHA256</option>
-            <option style="width: 200px" id="nohmac" value="SHA256">SHA256</option>
-        </select>
-
+    <div>
+        <h4>API</h4>
+        <a asp-area="" asp-controller="Home" asp-action="API">
+            <img src="/Images/apisimple.jpg" width="500" height="240">
+        </a>
     </div>
-</div>
-<div class="section1">
-    <form accept-charset="UTF-8" method="POST" id="form_udi" target="myFrame">
-        <div id="div_master">
-
-        </div>
-
-        <div id="buttonData" class="form-group col-md-4 col-xs-6">
-            <button id="sendData" type="submit" class="btn-primary waves-effectt">Enviar</button>
-        </div>
-
-    </form>
+    <div>
+        <h4>Documentación</h4>
+        <a href="https://docs.firstdata.com/org/FDMexico" target="_blank">
+            <img src="/Images/post_ap-76_cedocs.jpg" width="400" height="240">
+        </a>
     </div>
+</center>
 
-<div class="section2 col-sm-4">
-    <label id="action_label">Tipo de venta:</label>
-    <div class="item-box input-group">
-        <select name="type_of_selling" id="type_of_selling" style="width: 200px" class="form-control action">
-            <option style="width: 200px" id="direct" value="direct">Directa</option>
-            <option style="width: 200px" id="msi" value="msi">MSI</option>
-            <option style="width: 200px" id="3ds" value="3ds">Autenticación 3DS</option>
-            <!--<option style="width: 200px" id="tokenization" value="tokenization">Tokenización de Tarjetas</option>-->
-            <option style="width: 200px" id="concurrent" value="concurrent">Cargos recurrentes</option>
-        </select>
 
-    </div>
-    <label id="sharedsecret_label">SharedSecret:</label>
-    <div class="item-box input-group" id="storename_field">
-
-        <input type="password" style="width: 200px" class="form-control" name="sharedsecret" id="sharedsecret" />
-
-    </div>
-</div>
-
-        <script src="~/Scripts/ConnectForm.js"></script>
