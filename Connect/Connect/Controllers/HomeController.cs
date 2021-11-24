@@ -27,7 +27,10 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
-
+        public IActionResult Success()
+        {
+            return View();
+        }
         public IActionResult API()
         {
             return View();

@@ -55,14 +55,12 @@
         {
           "name": "responseFailURL",
           "type": "text",
-          "class": "hide",
-          "value": "https://localhost:5001/Home/Failure"
+          "class": "hide"
         },
         {
           "name": "responseSuccessURL",
           "type": "text",
-          "class": "hide",
-          "value": "https://localhost:5001/Home/Index"
+          "class": "hide"
         },
         {
           "name": "storename",

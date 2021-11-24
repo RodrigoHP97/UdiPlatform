@@ -168,6 +168,7 @@ C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Connect.TagHelpers.input.cache
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Connect.TagHelpers.output.cache
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Connect.RazorCoreGenerate.cache
+C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Razor\Views\Home\API.cshtml.g.cs
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Razor\Views\Home\Connect.cshtml.g.cs
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Razor\Views\Home\Failure.cshtml.g.cs
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Razor\Views\Home\Index.cshtml.g.cs
@@ -184,3 +185,5 @@ C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\ref\Connect.dll
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Connect.pdb
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Connect.genruntimeconfig.cache
+C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Connect.csproj.AssemblyReference.cache
+C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Razor\Views\Home\Success.cshtml.g.cs

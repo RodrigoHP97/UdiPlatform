@@ -132,16 +132,18 @@ function load_config() {
 
         })
         $('#hash_algorithm').val($('#hash_action').val());
-    });
 
+    });
 }
 
 $(document).ready(function () {
     load_config();
+
     $('#action').on('change', function () {
         var url = $('#action').val() + '/connect/gateway/processing';
         $('#form_udi').attr('action', url);
     });
+
 
     $('#hash_action').on('change', function () {
         $('#hash_algorithm').val($('#hash_action').val());
@@ -157,6 +159,10 @@ $(document).ready(function () {
         var datestring = d.getFullYear() + ":" + ('0' + (d.getMonth() + 1)).slice(-2) + ":" + ('0' + d.getDate()).slice(-2)+ "-" +
             ('0' + d.getHours()).slice(-2) + ":" + ('0' + d.getMinutes()).slice(-2) + ":" + ('0' +  d.getSeconds()).slice(-2);
         $('#txndatetime').val(datestring.replace(/\s*:\s*/, ":"));
+
+        $('#responseSuccessURL').val(window.location.origin + '/Home/Success');
+        $('#responseFailURL').val(window.location.origin + '/Home/Failure');
+
        createExtendedHash(this);
         //return false; //I put it here as a fallback
     });
