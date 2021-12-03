@@ -18,28 +18,12 @@ namespace WebApplication1.Controllers
             _logger = logger;
         }
 
-        public IActionResult Connect()
-        {
-            return View();
-        }
 
         public IActionResult Index()
         {
             return View();
         }
-        public IActionResult Success()
-        {
-            return View();
-        }
-        public IActionResult API()
-        {
-            return View();
-        }
-
-        public IActionResult Failure()
-        {
-            return View();
-        }
+   
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

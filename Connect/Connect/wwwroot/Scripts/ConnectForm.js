@@ -1,5 +1,33 @@
 window.addEventListener("message", receiveMessage, false);
 
+function receiveMessage(event) {
+    //if (event.origin != final_url)
+    if (event.origin != "https://test.ipg-online.com")
+        return;
+
+    var elementArr = event.data.elementArr;
+    forwardForm(event.data, elementArr);
+}
+
+
+function forwardForm(responseObj, elementArr) {
+    var newForm = document.createElement("form");
+    newForm.setAttribute('method', 'post');
+    newForm.setAttribute('action', responseObj.redirectURL);
+    newForm.setAttribute('id', 'newForm');
+    newForm.setAttribute('name', 'newForm');
+    document.body.appendChild(newForm);
+    for (var i = 0; i < elementArr.length; i++) {
+        var element = elementArr[i];
+        var input = document.createElement('input');
+        input.setAttribute('type', 'hidden');
+        input.setAttribute('name', element.name);
+        input.setAttribute('value', element.value);
+        document.newForm.appendChild(input);
+    }
+    document.newForm.submit();
+}
+
 var final_url = $('#action').val() + '/connect/gateway/processing'
 if (!($('#form_udi')[0].getAttribute('action'))) {
     var url = $('#action').val() + '/connect/gateway/processing';
@@ -132,7 +160,7 @@ function load_config() {
 
         })
         $('#hash_algorithm').val($('#hash_action').val());
-
+        $('#hostURI').val(window.location.href);
     });
 }
 
@@ -160,8 +188,8 @@ $(document).ready(function () {
             ('0' + d.getHours()).slice(-2) + ":" + ('0' + d.getMinutes()).slice(-2) + ":" + ('0' +  d.getSeconds()).slice(-2);
         $('#txndatetime').val(datestring.replace(/\s*:\s*/, ":"));
 
-        $('#responseSuccessURL').val(window.location.origin + '/Home/Success');
-        $('#responseFailURL').val(window.location.origin + '/Home/Failure');
+        $('#responseSuccessURL').val(window.location.origin + '/Response/Success');
+        $('#responseFailURL').val(window.location.origin + '/Response/Failure');
 
        createExtendedHash(this);
         //return false; //I put it here as a fallback
@@ -174,31 +202,6 @@ $(document).ready(function () {
 
 });
 
-function receiveMessage(event) {
-    if (event.origin != final_url)
-        return;
-
-    var elementArr = event.data.elementArr;
-    forwardForm(event.data, elementArr);
-}
-
-function forwardForm(responseObj, elementArr) {
-    var newForm = document.createElement("form");
-    newForm.setAttribute('method', 'post');
-    newForm.setAttribute('action', responseObj.redirectURL);
-    newForm.setAttribute('id', 'newForm');
-    newForm.setAttribute('name', 'newForm');
-    document.body.appendChild(newForm);
-    for (var i = 0; i < elementArr.length; i++) {
-        var element = elementArr[i];
-        var input = document.createElement('input');
-        input.setAttribute('type', 'hidden');
-        newForm.setAttribute('name', element.name);
-        newForm.setAttribute('value', element.value);
-        newForm.appendChild(input);
-    }
-    newForm.submit();
-}
 
 function createExtendedHash(form) {
     var $form = form
