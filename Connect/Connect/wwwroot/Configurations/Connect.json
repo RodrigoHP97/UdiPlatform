@@ -32,6 +32,16 @@
               "id": "MXN",
               "value": "484",
               "label": "MXN"
+            },
+            {
+              "id": "TTD",
+              "value": "780",
+              "label": "TTD"
+            },
+            {
+              "id": "XCD",
+              "value": "951",
+              "label": "XCD"
             }
           ],
           "maxlength": "20"
@@ -40,6 +50,12 @@
           "name": "hash_algorithm",
           "type": "text",
           "class": "hide"
+        },
+        {
+          "name": "threeDSEmvCoMessageCategory",
+          "type": "text",
+          "class": "hide",
+          "value":"80"
         },
         {
           "name": "hashExtended",
@@ -90,12 +106,6 @@
           "type": "text",
           "class": "hide",
           "value": "sale"
-        },
-        {
-          "name": "ozip",
-          "type": "text",
-          "class": "hide",
-          "value": ""
         }
       ]
     },

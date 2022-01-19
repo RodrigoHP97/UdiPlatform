@@ -1,0 +1,610 @@
+[
+    {
+      "general": [
+        {
+          "order":0,
+          "name": "total",
+          "label": "Cargo:",
+          "type": "number",
+          "placeholder": "0.00",
+          "step": "0.01",
+          "maxlength": "20",
+          "class": "",
+          "min": "0"
+        },
+        {
+          "order":2,
+          "name": "number",
+          "label": "Tarjeta:",
+          "type": "text",
+          "placeholder": "XXXX XXXX XXXX XXXX",
+          "maxlength": "19",
+          "class": "",
+          "style":"width: 300px"
+        },
+        {
+          "order":3,
+          "name": "securityCode",
+          "label": "CCV:",
+          "type": "password",
+          "maxlength": "5",
+          "class": ""
+        },
+        {
+          "order":4,
+          "name": "month",
+          "label": "Mes:",
+          "type": "select",
+          "class": "",
+          "options": [
+            {
+              "id": "jan",
+              "value": "01",
+              "label": "01"
+            },
+            {
+              "id": "feb",
+              "value": "02",
+              "label": "02"
+            },
+            {
+              "id": "mar",
+              "value": "03",
+              "label": "03"
+            },
+            {
+              "id": "apr",
+              "value": "04",
+              "label": "04"
+            },
+            {
+              "id": "may",
+              "value": "05",
+              "label": "05"
+            },
+            {
+              "id": "jun",
+              "value": "06",
+              "label": "06"
+            },
+            {
+              "id": "jul",
+              "value": "07",
+              "label": "07"
+            },
+            {
+              "id": "ago",
+              "value": "08",
+              "label": "08"
+            },
+            {
+              "id": "sep",
+              "value": "09",
+              "label": "09"
+            },
+            {
+              "id": "oct",
+              "value": "10",
+              "label": "10"
+            },
+            {
+              "id": "nov",
+              "value": "11",
+              "label": "11"
+            },
+            {
+              "id": "dic",
+              "value": "12",
+              "label": "12"
+            }
+          ]
+        },{
+          "order":5,
+          "name": "year",
+          "label": "Año:",
+          "type": "select",
+          "class": "",
+          "options": [
+            {
+              "id": "2022",
+              "value": "2022",
+              "label": "2022"
+            },
+            {
+              "id": "2023",
+              "value": "2023",
+              "label": "2023"
+            },
+            {
+              "id": "2024",
+              "value": "2024",
+              "label": "2024"
+            },
+            {
+              "id": "2025",
+              "value": "2025",
+              "label": "2025"
+            },
+            {
+              "id": "2026",
+              "value": "2026",
+              "label": "2026"
+            },
+            {
+              "id": "2027",
+              "value": "2027",
+              "label": "2027"
+            },
+            {
+              "id": "2028",
+              "value": "2028",
+              "label": "2028"
+            },
+            {
+              "id": "2029",
+              "value": "2029",
+              "label": "2029"
+            },
+            {
+              "id": "2030",
+              "value": "2030",
+              "label": "2030"
+            },
+            {
+              "id": "2031",
+              "value": "2031",
+              "label": "2031"
+            },
+            {
+              "id": "2032",
+              "value": "2032",
+              "label": "2032"
+            },
+            {
+              "id": "2033",
+              "value": "2033",
+              "label": "2033"
+            }
+          ]
+        },
+        {
+          "order":1,
+          "name": "currency",
+          "label": "Moneda:",
+          "type": "select",
+          "class": "",
+          "options": [
+            {
+              "id": "USD",
+              "value": "840",
+              "label": "USD"
+            },
+            {
+              "id": "MXN",
+              "value": "484",
+              "label": "MXN"
+            }
+          ],
+          "maxlength": "20"
+        },
+        {
+          "name": "hash_algorithm",
+          "type": "text",
+          "class": "hide"
+        },
+        {
+          "name": "hashExtended",
+          "type": "text",
+          "class": "hide"
+        },
+        {
+          "name": "paymentMethod",
+          "type": "text",
+          "class": "hide",
+          "value": "M"
+        },
+        {
+          "name": "responseFailURL",
+          "type": "text",
+          "class": "hide"
+        },
+        {
+          "name": "responseSuccessURL",
+          "type": "text",
+          "class": "hide"
+        },
+        {
+          "name": "timezone",
+          "type": "text",
+          "class": "hide",
+          "value": "America/Mexico_City"
+        },
+        {
+          "name": "transactionNotificationURL",
+          "type": "text",
+          "class": "hide",
+          "value": "https://pagosonline.mx/logs/notificationsoap.php"
+        },
+        {
+          "name": "txndatetime",
+          "type": "text",
+          "class": "hide"
+        },
+        {
+          "name": "txntype",
+          "type": "text",
+          "class": "hide",
+          "value": "sale"
+        }
+      ]
+    },
+    {
+      "keyvalidation":[
+        {
+          "post":{  
+            "paymentCard": {
+              "number": ""
+            }
+          
+        }
+       },
+       {
+         "redirect":       
+         {
+          "url":"/card-information",
+          "param":"CardValidation",
+          "id":"",
+          "controller":"SendTransaction",
+          "method":"Validation",
+          "content":"application/json",
+          "async":true,
+          "Httpmethod":"POST"
+        }
+       },
+      {
+        "order":2,
+        "name": "number",
+        "label": "Tarjeta:",
+        "type": "text",
+        "placeholder": "XXXX XXXX XXXX XXXX",
+        "maxlength": "19",
+        "class": "",
+        "style":"width: 300px"
+      }
+
+      ],
+      "direct": [
+        {
+          "post":{
+          "requestType": "",
+          "transactionAmount": {
+            "total": "",
+            "currency": ""
+          },
+          "paymentMethod": {
+            "paymentCard": {
+              "number": "",
+              "securityCode": "",
+              "expiryDate": {
+                "month": "",
+                "year": ""
+              }
+            }
+          }
+        }
+       }
+      ]
+    },
+    {
+      "msi": [
+        {
+            "name": "numberOfInstallments",
+            "label": "Meses:",
+            "type": "select",
+            "class": "",
+            "options": [
+                {
+                  "id": "three",
+                  "value": "3",
+                  "label": "3"
+                },
+                {
+                  "id": "six",
+                  "value": "6",
+                  "label": "6"
+                },
+                {
+                    "id": "nine",
+                    "value": "9",
+                    "label": "9"
+                  },
+                  {
+                    "id": "twelve",
+                    "value": "12",
+                    "label": "12"
+                  }
+              ],
+              "maxlength": "20"
+        },
+        {
+            "name": "installmentsInterest",
+            "label": "Con itereses?:",
+            "type": "select",
+            "class": "",
+            "options": [
+                {
+                  "id": "yes_int",
+                  "value": "true",
+                  "label": "Sí"
+                },
+                {
+                  "id": "no_int",
+                  "value": "false",
+                  "label": "No"
+                }
+              ]
+        }
+      ]
+    },
+    {"3ds": [
+        {
+            "name": "numberOfInstallments",
+            "label": "Meses:",
+            "type": "select",
+            "class": "",
+            "options": [
+                {
+                  "id": "three",
+                  "value": "3",
+                  "label": "3"
+                },
+                {
+                  "id": "six",
+                  "value": "6",
+                  "label": "6"
+                },
+                {
+                    "id": "nine",
+                    "value": "9",
+                    "label": "9"
+                  },
+                  {
+                    "id": "twelve",
+                    "value": "12",
+                    "label": "12"
+                  }
+              ]
+        },
+        {
+            "name": "installmentsInterest",
+            "label": "Con itereses?:",
+            "type": "select",
+            "class": "",
+            "options": [
+                {
+                  "id": "yes_int",
+                  "value": "true",
+                  "label": "Sí"
+                },
+                {
+                  "id": "no_int",
+                  "value": "false",
+                  "label": "No"
+                }
+              ]
+        },
+        {
+            "name": "authenticateTransaction",
+            "label": "Autenticar transacción?:",
+            "type": "select",
+            "class": "",
+            "options": [
+                {
+                  "id": "auth_y",
+                  "value": "true",
+                  "label": "Sí"
+                },
+                {
+                  "id": "auth_n",
+                  "value": "false",
+                  "label": "No"
+                }
+              ]
+        },
+        {
+            "name": "threeDSRequestorChallengeIndicator",
+            "label": "Método de autenticación:",
+            "type": "select",
+            "class": "",
+            "options": [
+                {
+                  "id": "first",
+                  "value": "1",
+                  "label": "Permitir al Gateway determinar la solicitud del password."
+                },
+                {
+                  "id": "second",
+                  "value": "2",
+                  "label": "No solicitar password 3DS."
+                },
+                {
+                  "id": "third",
+                  "value": "3",
+                  "label": "El banco emisor decide si solicitar password."
+                },
+                {
+                  "id": "fourth",
+                  "value": "4",
+                  "label": "Siempre requerir password 3DS."
+                }
+                
+              ]
+        }
+      ]},
+      {
+        "tokenization":[
+          {
+            "name":"assignToken",
+            "label":"assignToken token?: ",
+            "type":"select",
+            "class":"",
+            "options":[
+              {
+                "id": "h_tk",
+                "value": "true",
+                "label": "Sí"
+              },
+              {
+                "id": "dh_tk",
+                "value": "false",
+                "label": "No"
+              }
+            ]
+          },
+          {
+            "name": "threeDSRequestorChallengeIndicator",
+            "label": "Método de autenticación:",
+            "type": "select",
+            "class": "",
+            "options": [
+                {
+                  "id": "first",
+                  "value": "1",
+                  "label": "Permitir al Gateway determinar la solicitud del password."
+                },
+                {
+                  "id": "second",
+                  "value": "2",
+                  "label": "No solicitar password 3DS."
+                },
+                {
+                  "id": "third",
+                  "value": "03",
+                  "label": "El banco emisor decide si solicitar password."
+                },
+                {
+                  "id": "fourth",
+                  "value": "4",
+                  "label": "Siempre requerir password 3DS."
+                }
+                
+              ]
+        }
+        ]
+      },
+      {
+        "concurrent":[
+          {
+            "name":"recurringInstallmentCount",
+            "label":"Veces que se realizará el cargo: ",
+            "type":"text",
+            "class":""
+          
+          },
+          {
+            "name":"recurringInstallmentPeriod",
+            "label":"Periodo en el que se hará el cargo: ",
+            "type":"select",
+            "class":"",
+            "options":[
+              {
+                "id": "day",
+                "value": "day",
+                "label": "Diario"
+              },
+              {
+                "id": "week",
+                "value": "week",
+                "label": "semanal"
+              },
+              {
+                "id": "month",
+                "value": "month",
+                "label": "Mensual"
+              },
+              {
+                "id": "year",
+                "value": "year",
+                "label": "Anual"
+              }
+            ]
+          },
+          {
+            "name":"recurringInstallmentFrequency",
+            "label":"Frecuencia en la que se realizará el cargo: ",
+            "type":"text",
+            "class":""
+          },
+          {
+            "name":"recurringComments",
+            "label":"Cpmentarios adicionales: ",
+            "type":"text",
+            "class":""
+          },
+          {
+            "name":"ponumber",
+            "label":"Número de orden: ",
+            "type":"text",
+            "class":""
+          }
+        ]
+      },
+      {
+        "scheduled":[
+          {
+            "name":"recurringInstallmentCount",
+            "label":"Veces que se realizará el cargo: ",
+            "type":"text",
+            "class":""
+          
+          },
+          {
+            "name":"recurringInstallmentPeriod",
+            "label":"Periodo en el que se hará el cargo: ",
+            "type":"select",
+            "class":"",
+            "options":[
+              {
+                "id": "day",
+                "value": "day",
+                "label": "Diario"
+              },
+              {
+                "id": "week",
+                "value": "week",
+                "label": "semanal"
+              },
+              {
+                "id": "month",
+                "value": "month",
+                "label": "Mensual"
+              },
+              {
+                "id": "year",
+                "value": "year",
+                "label": "Anual"
+              }
+            ]
+          },
+          {
+            "name":"recurringInstallmentFrequency",
+            "label":"Frecuencia en la que se realizará el cargo: ",
+            "type":"text",
+            "class":""
+          },
+          {
+            "name":"recurringComments",
+            "label":"Cpmentarios adicionales: ",
+            "type":"text",
+            "class":""
+          },
+          {
+            "name":"ponumber",
+            "label":"Número de orden: ",
+            "type":"text",
+            "class":""
+          }
+        ]
+      },
+      {"auth":[]}
+  ]
