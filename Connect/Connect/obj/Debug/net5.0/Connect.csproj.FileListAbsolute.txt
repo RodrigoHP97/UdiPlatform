@@ -187,3 +187,8 @@ C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Razor\Views\Response\Success.cshtml.g.cs
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Razor\Views\Service\API.cshtml.g.cs
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Razor\Views\Service\Connect.cshtml.g.cs
+C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\bin\Debug\net5.0\System.Net.Http.Formatting.dll
+C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll
+C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\bin\Debug\net5.0\RestSharp.dll
+C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Connect.csproj.ResolveComReference.cache
+C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\bin\Debug\net5.0\RestClient.dll

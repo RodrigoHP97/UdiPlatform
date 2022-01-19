@@ -10,6 +10,8 @@ var jpost = new Object;
 
 var post = new Object;
 
+var pay_post = new Object;
+
 var redirect = new Object;
 
 function sort_by_key(array, key) {
@@ -143,7 +145,7 @@ function load_config() {
                 }
                 else
                 {
-                    if (Object.keys(value)[0] == 'post') { jpost = value.post; }
+                    if (Object.keys(value)[0] == 'post') { jpost = value.post; pay_post = value.post}
                     if (Object.keys(value)[0] == 'redirect') {
                         Object.keys(value.redirect).map(function (ind) {
                             redirect[ind] = value.redirect[ind]
@@ -188,13 +190,6 @@ function sendTrans() {
 
 }
 
-function postdata(params){
-    console.log('post', params);
-}
-
-function seconds_since_epoch(d) {
-    return Math.floor(d / 1000);
-}
 
 $(document).ready(function () {
     load_config();
@@ -218,10 +213,11 @@ $(document).ready(function () {
 
 function postData(apiKey,apiSec) {
     var hashdata = new Object;
-    var d = new Date();
+    var payload = new Object;
+    jpost.payload = JSON.stringify(jpost);
     jpost.clientId = uuidv4()
-    jpost.timezone = seconds_since_epoch(d);
-    var message = apiKey + jpost.clientId + jpost.timezone + JSON.stringify(jpost);
+    jpost.timezone = Date.now();
+    var message = apiKey + jpost.clientId + jpost.timezone + jpost.payload;
     var controller = sep_conf[$('#hash_action').val()].controller; 
     
     hashdata.message = message;
@@ -239,17 +235,21 @@ function postData(apiKey,apiSec) {
             newHash = response.responseJSON.replace(/\"/g, "");
             jpost.sign = newHash;
 
-            post.url = $('#action').val() + redirect.url + redirect.param;
+            post.url = $('#action').val() + redirect.url + redirect.id;
 
             post.Httpmethod = redirect.Httpmethod;
 
             post.async = redirect.async;
-
+             
             post.headers = {};
 
             post.controller = redirect.controller;
 
+            post.Payload = jpost.payload;
+
             post.url_params = redirect.param;
+
+            post.headers["Accept"] = redirect.content
 
             post.headers["Content-type"] = redirect.content
 
@@ -272,11 +272,15 @@ function postData(apiKey,apiSec) {
 
 function ExecTrans(params) {
 
+    var data = {};
+
+    data.post = JSON.stringify(params);
 
     $.ajax({
         type: params.Httpmethod,
-        url: params.controller + '/' + params.url_params,
-        data: params.headers,
+        url: window.location.origin + '/' + params.controller + '/' + params.url_params,
+        dataType: 'json',
+        data: data,
         success: function (response) {
             console.log('se genero hash', response);
         }

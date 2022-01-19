@@ -251,8 +251,9 @@
        {
          "redirect":       
          {
-          "url":"/card-information/",
-          "param":"",
+          "url":"/card-information",
+          "param":"CardValidation",
+          "id":"",
           "controller":"SendTransaction",
           "method":"Validation",
           "content":"application/json",

@@ -52,6 +52,12 @@
           "class": "hide"
         },
         {
+          "name": "threeDSEmvCoMessageCategory",
+          "type": "text",
+          "class": "hide",
+          "value":"80"
+        },
+        {
           "name": "hashExtended",
           "type": "text",
           "class": "hide"
