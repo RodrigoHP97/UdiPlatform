@@ -51,7 +51,8 @@ function load_config() {
                 }
 
             });
-            var gen_Sort = form[0][$('#type_of_selling').val()].concat(general_form[0].general);
+            var types = form.filter(function (e) { return e[$('#type_of_selling').val()] })[0]
+            var gen_Sort = types[$('#type_of_selling').val()].concat(general_form[0].general);
            
         }
         else {

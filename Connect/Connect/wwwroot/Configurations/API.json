@@ -272,29 +272,31 @@
         "style":"width: 300px"
       }
 
-      ],
-      "direct": [
-        {
-          "post":{
-          "requestType": "",
-          "transactionAmount": {
-            "total": "",
-            "currency": ""
-          },
-          "paymentMethod": {
-            "paymentCard": {
-              "number": "",
-              "securityCode": "",
-              "expiryDate": {
-                "month": "",
-                "year": ""
-              }
+      ]
+    },
+    {
+    "direct": [
+      {
+        "post":{
+        "requestType": "",
+        "transactionAmount": {
+          "total": "",
+          "currency": ""
+        },
+        "paymentMethod": {
+          "paymentCard": {
+            "number": "",
+            "securityCode": "",
+            "expiryDate": {
+              "month": "",
+              "year": ""
             }
           }
         }
-       }
-      ]
-    },
+      }
+     }
+    ]
+  },
     {
       "msi": [
         {
