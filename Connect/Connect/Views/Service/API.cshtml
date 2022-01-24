@@ -6,7 +6,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+
+
 <style>
     .hide {
         display: none !important;
@@ -59,7 +60,7 @@
         <div id="buttonData" class="form-group col-md-4 col-xs-6">
             <button id="sendData" type="button" onclick="sendTrans()" class="btn-primary waves-effectt">Enviar</button>
         </div>
-        </form>
+    </form>
 
 </div>
 
@@ -82,17 +83,23 @@
     <div class="item-box input-group" id="apikey_field">
 
         <input type="password" style="width: 200px" class="form-control" name="apikey" id="apikey" />
-
+        <div class="input-group-append">
+            <button id="show_password" class="btn btn-primary" type="button" onclick="show_pwd(this)"> <span id="apikey_span" class="fa fa-eye-slash apikey icon"></span> </button>
+        </div>
     </div>
+
     <label id="apikey_label">APISec:</label>
     <div class="item-box input-group" id="apisec_field">
 
         <input type="password" style="width: 200px" class="form-control" name="apisec" id="apisec" />
-
+        <div class="input-group-append">
+            <button id="show_password" class="btn btn-primary" type="button" onclick="show_pwd(this)"> <span  id="apisec_span" class="fa fa-eye-slash apisec icon"></span> </button>
+        </div>
     </div>
+
 </div>
 
+<script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" data-auto-replace-svg="nest"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 <script src="~/Scripts/APIForm.js"></script>
-<script>
-
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>

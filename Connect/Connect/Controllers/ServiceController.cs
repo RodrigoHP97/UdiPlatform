@@ -11,13 +11,6 @@ namespace WebApplication1.Controllers
 {
     public class ServiceController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public ServiceController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
 
         public IActionResult Connect()
         {

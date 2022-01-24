@@ -10,8 +10,6 @@ var jpost = new Object;
 
 var post = new Object;
 
-var pay_post = new Object;
-
 var redirect = new Object;
 
 function sort_by_key(array, key) {
@@ -171,6 +169,7 @@ function uuidv4() {
 }
 function sendTrans() {
 
+
     Object.keys(jpost).map(function (key) {
         var ex_Obj = jpost[key];
         for (const i in ex_Obj) {
@@ -189,10 +188,23 @@ function sendTrans() {
 
 
 }
-
+function show_pwd(el) {
+    if (el) {
+        var elem = el.parentElement.parentElement.children[0];
+        var id = el.parentElement.parentElement.children[0].id
+        if (elem.type == "password") {
+            elem.type = "text";
+            $('#'+id+'_span').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+        } else {
+            elem.type = "password";
+            $('#' + id + '_span').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+        }
+    }
+}
 
 $(document).ready(function () {
     load_config();
+    show_pwd();
     $('#action').on('change', function () {
         var url = $('#action').val() + '/connect/gateway/processing';
         $('#form_udi').attr('action', url);
@@ -213,7 +225,6 @@ $(document).ready(function () {
 
 function postData(apiKey,apiSec) {
     var hashdata = new Object;
-    var payload = new Object;
     jpost.payload = JSON.stringify(jpost);
     jpost.clientId = uuidv4()
     jpost.timezone = Date.now();
@@ -221,7 +232,7 @@ function postData(apiKey,apiSec) {
     var controller = sep_conf[$('#hash_action').val()].controller; 
     
     hashdata.message = message;
-    hashdata.sharedsecret = apiSec
+    hashdata.sharedsecret = apiSec;
     var newHash;
     $.ajax({
         type: 'POST',
