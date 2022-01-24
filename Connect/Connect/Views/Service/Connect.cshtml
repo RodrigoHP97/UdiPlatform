@@ -75,7 +75,9 @@
     <label id="sharedsecret_label">SharedSecret:</label>
     <div class="item-box input-group" id="storename_field">
         <input type="password" style="width: 200px" class="form-control" name="sharedsecret" id="sharedsecret" />
-
+        <div class="input-group-append">
+            <button id="show_password" class="btn btn-primary" type="button" onclick="show_pwd(this)"> <span id="sharedsecret_span" class="fa fa-eye-slash sharedsecret icon"></span> </button>
+        </div>
     </div>
 </div>
 <script src="~/Scripts/ConnectForm.js"></script>

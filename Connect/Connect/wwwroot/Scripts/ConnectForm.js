@@ -201,7 +201,19 @@ $(document).ready(function () {
     });
 
 });
-
+function show_pwd(el) {
+    if (el) {
+        var elem = el.parentElement.parentElement.children[0];
+        var id = el.parentElement.parentElement.children[0].id
+        if (elem.type == "password") {
+            elem.type = "text";
+            $('#' + id + '_span').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+        } else {
+            elem.type = "password";
+            $('#' + id + '_span').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+        }
+    }
+}
 
 function createExtendedHash(form) {
     var $form = form
