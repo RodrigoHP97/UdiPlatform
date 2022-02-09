@@ -10,7 +10,7 @@ namespace WebApplication1.Controllers
     {
         
         [HttpPost]
-        public JsonResult CardValidation(Jpost postData)
+        public JsonResult PostTransaction(Jpost postData)
         {
             
             //Parseamos el objeto del Post

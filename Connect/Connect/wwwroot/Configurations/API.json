@@ -4,6 +4,7 @@
         {
           "order":0,
           "name": "total",
+          "parent":"transactionAmount",
           "label": "Cargo:",
           "type": "number",
           "placeholder": "0.00",
@@ -15,6 +16,7 @@
         {
           "order":2,
           "name": "number",
+          "parent":"paymentCard",
           "label": "Tarjeta:",
           "type": "text",
           "placeholder": "XXXX XXXX XXXX XXXX",
@@ -25,6 +27,7 @@
         {
           "order":3,
           "name": "securityCode",
+          "parent":"paymentCard",
           "label": "CCV:",
           "type": "password",
           "maxlength": "5",
@@ -33,6 +36,7 @@
         {
           "order":4,
           "name": "month",
+          "parent":"expiryDate",
           "label": "Mes:",
           "type": "select",
           "class": "",
@@ -101,68 +105,64 @@
         },{
           "order":5,
           "name": "year",
+          "parent":"expiryDate",
           "label": "Año:",
           "type": "select",
           "class": "",
           "options": [
             {
-              "id": "2022",
-              "value": "2022",
-              "label": "2022"
-            },
-            {
               "id": "2023",
-              "value": "2023",
+              "value": "23",
               "label": "2023"
             },
             {
               "id": "2024",
-              "value": "2024",
+              "value": "24",
               "label": "2024"
             },
             {
               "id": "2025",
-              "value": "2025",
+              "value": "25",
               "label": "2025"
             },
             {
               "id": "2026",
-              "value": "2026",
+              "value": "26",
               "label": "2026"
             },
             {
               "id": "2027",
-              "value": "2027",
+              "value": "27",
               "label": "2027"
             },
             {
               "id": "2028",
-              "value": "2028",
+              "value": "28",
               "label": "2028"
             },
             {
               "id": "2029",
-              "value": "2029",
+              "value": "29",
               "label": "2029"
             },
             {
               "id": "2030",
-              "value": "2030",
+              "value": "30",
               "label": "2030"
             },
             {
               "id": "2031",
-              "value": "2031",
+              "value": "31",
               "label": "2031"
             },
             {
               "id": "2032",
-              "value": "2032",
+              "value": "32",
               "label": "2032"
             },
             {
               "id": "2033",
-              "value": "2033",
+              "value": "33",
               "label": "2033"
             }
           ]
@@ -170,71 +170,23 @@
         {
           "order":1,
           "name": "currency",
+          "parent":"transactionAmount",
           "label": "Moneda:",
           "type": "select",
           "class": "",
           "options": [
             {
               "id": "USD",
-              "value": "840",
+              "value": "USD",
               "label": "USD"
             },
             {
               "id": "MXN",
-              "value": "484",
+              "value": "MXN",
               "label": "MXN"
             }
           ],
           "maxlength": "20"
-        },
-        {
-          "name": "hash_algorithm",
-          "type": "text",
-          "class": "hide"
-        },
-        {
-          "name": "hashExtended",
-          "type": "text",
-          "class": "hide"
-        },
-        {
-          "name": "paymentMethod",
-          "type": "text",
-          "class": "hide",
-          "value": "M"
-        },
-        {
-          "name": "responseFailURL",
-          "type": "text",
-          "class": "hide"
-        },
-        {
-          "name": "responseSuccessURL",
-          "type": "text",
-          "class": "hide"
-        },
-        {
-          "name": "timezone",
-          "type": "text",
-          "class": "hide",
-          "value": "America/Mexico_City"
-        },
-        {
-          "name": "transactionNotificationURL",
-          "type": "text",
-          "class": "hide",
-          "value": "https://pagosonline.mx/logs/notificationsoap.php"
-        },
-        {
-          "name": "txndatetime",
-          "type": "text",
-          "class": "hide"
-        },
-        {
-          "name": "txntype",
-          "type": "text",
-          "class": "hide",
-          "value": "sale"
         }
       ]
     },
@@ -252,7 +204,7 @@
          "redirect":       
          {
           "url":"/card-information",
-          "param":"CardValidation",
+          "param":"PostTransaction",
           "id":"",
           "controller":"SendTransaction",
           "method":"Validation",
@@ -272,34 +224,77 @@
         "style":"width: 300px"
       }
 
-      ],
-      "direct": [
-        {
-          "post":{
-          "requestType": "",
-          "transactionAmount": {
-            "total": "",
-            "currency": ""
-          },
-          "paymentMethod": {
-            "paymentCard": {
-              "number": "",
-              "securityCode": "",
-              "expiryDate": {
-                "month": "",
-                "year": ""
-              }
-            }
-          }
-        }
-       }
       ]
     },
     {
+    "direct": [
+      {
+        "redirect":       
+        {
+         "url":"/payments",
+         "param":"PostTransaction",
+         "id":"",
+         "controller":"SendTransaction",
+         "method":"Validation",
+         "content":"application/json",
+         "async":true,
+         "Httpmethod":"POST"
+       }
+      },
+      {
+        "parentChild":[
+          {
+            "parent":"transactionAmount"
+          }, 
+          {
+            "parent":"requestType",
+            "value":"PaymentCardSaleTransaction"
+          },
+          {
+            "parent":"paymentMethod",
+            "child":"paymentCard"
+          },
+          {
+            "parent":"paymentCard",
+            "child":"expiryDate"
+          } 
+      ]
+      }
+    ]
+  },
+    {
       "msi": [
+        {
+          "parentChild":[
+            {
+              "parent":"transactionAmount"
+            }, 
+            {
+              "parent":"requestType",
+              "value":"PaymentCardSaleTransaction"
+            },
+            {
+              "parent":"paymentMethod",
+              "child":"paymentCard"
+            },
+            {
+              "parent":"paymentCard",
+              "child":"expiryDate"
+            },
+            {
+              "parent":"order",
+              "child":"installmentOptions"
+            },
+            {
+              "parent":"installmentOptions",
+              "child":"numberOfInstallments"
+            }  
+        ]
+        } ,
         {
             "name": "numberOfInstallments",
             "label": "Meses:",
+            "parent":"installmentOptions",
             "type": "select",
             "class": "",
             "options": [
@@ -325,24 +320,6 @@
                   }
               ],
               "maxlength": "20"
-        },
-        {
-            "name": "installmentsInterest",
-            "label": "Con itereses?:",
-            "type": "select",
-            "class": "",
-            "options": [
-                {
-                  "id": "yes_int",
-                  "value": "true",
-                  "label": "Sí"
-                },
-                {
-                  "id": "no_int",
-                  "value": "false",
-                  "label": "No"
-                }
-              ]
         }
       ]
     },

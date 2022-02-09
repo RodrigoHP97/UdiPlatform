@@ -52,12 +52,6 @@
           "class": "hide"
         },
         {
-          "name": "threeDSEmvCoMessageCategory",
-          "type": "text",
-          "class": "hide",
-          "value":"80"
-        },
-        {
           "name": "hashExtended",
           "type": "text",
           "class": "hide"
@@ -94,7 +88,7 @@
           "name": "transactionNotificationURL",
           "type": "text",
           "class": "hide",
-          "value": "https://pagosonline.mx/logs/notificationsoap.php"
+          "value": "http://localhost:55890/Response/Notification"
         },
         {
           "name": "txndatetime",
