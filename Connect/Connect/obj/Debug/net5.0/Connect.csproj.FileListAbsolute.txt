@@ -192,3 +192,4 @@ C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\bin\Debug\net5.0
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\bin\Debug\net5.0\RestSharp.dll
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Connect.csproj.ResolveComReference.cache
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\bin\Debug\net5.0\RestClient.dll
+C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Razor\Views\Service\Store_Creation.cshtml.g.cs

@@ -7,10 +7,16 @@ var sep_conf = {
     }
 };
 var jpost = new Object;
-
+var list = [];
 var post = new Object;
 
+var Req_Obj = new Object;
+
 var redirect = new Object;
+
+var par_Obj = new Object;
+
+var final = {};
 
 function sort_by_key(array, key) {
     return array.sort(function (a, b) {
@@ -20,6 +26,7 @@ function sort_by_key(array, key) {
 }
 
 function load_config() {
+    
     $('#div_master').remove();
     const jconf =
         fetch("/Configurations/API.json")
@@ -71,9 +78,10 @@ function load_config() {
 
             $('#buttonData').before('<div id="div_master"></div>');
 
-
             gen_Sort.map(function (value) {
-                if (Object.keys(value)[0] != 'post' && Object.keys(value)[0] != 'redirect') {
+                if (Object.keys(value)[0] != 'post' && Object.keys(value)[0] != 'redirect' && Object.keys(value)[0] != 'parentChild') {
+
+                    list.push(value.name);
 
                     if (value.label != undefined) {
 
@@ -89,7 +97,7 @@ function load_config() {
                         if (value.type == "select") {
 
 
-                            var select = label + '<select class="form-control" id="' + value.name + '" name="' + value.name + '"style="width: 200px"></select>';
+                            var select = label + '<select class="form-control" id="' + value.name + '" name="' + value.name + '"parent="'+ value.parent+'" style="width: 200px"></select>';
 
                             $('#' + value.name + '_field').append(select);
 
@@ -144,7 +152,9 @@ function load_config() {
                 }
                 else
                 {
-                    if (Object.keys(value)[0] == 'post') { jpost = value.post; pay_post = value.post}
+                    if (Object.keys(value)[0] == 'post') { jpost = value.post; pay_post = value.post; Req_Obj = value.parentChild }
+                    if (Object.keys(value)[0] == 'parentChild') { Req_Obj = value.parentChild }
+                   
                     if (Object.keys(value)[0] == 'redirect') {
                         Object.keys(value.redirect).map(function (ind) {
                             redirect[ind] = value.redirect[ind]
@@ -168,23 +178,106 @@ function uuidv4() {
         (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
     );
 }
+// función de mapeo de post
+function arrJ(obj, res, par, child) {
+    var result = {};
+    var subres = {};
+    //var final={}
+    if (Object.keys(res).length == 0) {
+        obj.map(function (Objv, i) {
+            Object.values(Objv).map(function (Obv, j) {
+                if (Objv.parent == Obv) {
+                    if (Objv.value) {
+                        result[Objv.parent] = Objv.value;
+                    }
+                    else {
+                        if (Objv.child) {
+                            var child_element = $("[parent='" + Objv.child + "']");
+                            var parent_element = $("[parent='" + Objv.parent + "']");
+
+                            if (par != Objv.parent && parent_element.length > 0 && child == Objv.parent) {
+
+                                if (par) {
+                                    //console.log(par,child,JSON.stringify(result),Objv) 
+                                    if (!result[par]) {
+                                        final[par] = {};
+
+                                    }
+                                    //console.log(par,Objv, JSON.stringify(result),child_element.length,parent_element.length)
+                                    if (!subres[Objv.child]) {
+                                        //console.log(par,Objv,JSON.stringify(subres),JSON.stringify(result))
+                                        subres[Objv.child] = {};
+                                    }
+
+                                    parent_element.map(function (i, input) {
+                                        //console.log(par,child,JSON.stringify(result),JSON.stringify(subres),Objv)
+                                        subres[input.id] = $('#' + input.id).val().split(' ').join('');
+
+                                    })
+
+                                    child_element.map(function (i, input) {
+
+                                        subres[Objv.child][input.id] = $('#' + input.id).val().split(' ').join('');;
+                                    })
+                                    final[par][Objv.parent] = subres;
+
+                                }
+                            }
+                            else {
+                                if (!par) {
+                                    //console.log(obj,{},Objv.parent,Objv.child,JSON.stringify(final))
+                                    arrJ(obj, {}, Objv.parent, Objv.child)
+                                }
+                            }
+                        }
+                        else {
+                            if (!result[Objv.parent]) {
+                                result[Objv.parent] = {};
+                            }
+
+
+                            var element = $("[parent='" + Objv.parent + "']");
+                            var ele_l = element.length;
+                            if (ele_l > 0) {
+                                element.map(function (i, input) {
+                                    result[Objv.parent][input.id] = $('#' + input.id).val().split(' ').join('');;
+
+                                })
+
+                            }
+                        }
+                        if (result[par]) {
+                            final = result;
+                            // console.log(JSON.stringify(final),i)
+                        }
+                    }
+                }
+
+            })
+        })
+    }
+    // console.log(final,result)
+    return Object.assign(final, result)
+}
+
 function sendTrans() {
 
-
-    Object.keys(jpost).map(function (key) {
-        var ex_Obj = jpost[key];
-        for (const i in ex_Obj) {
-            console.log(ex_Obj, i, ex_Obj[i]);
-            if (i == 'number') {
-                jpost[key][i] = $('#' + i).val().split(' ').join('');
+    if (!Req_Obj) {
+        Object.keys(jpost).map(function (key) {
+            var ex_Obj = jpost[key];
+            for (const i in ex_Obj) {
+                console.log(ex_Obj, i, ex_Obj[i]);
+                if (i == 'number') {
+                    jpost[key][i] = $('#' + i).val().split(' ').join('');
+                }
+                else {
+                    jpost[key][i] = $('#' + i).val();
+                }
             }
-            else {
-                jpost[key][i] = $('#' + i).val();
-            }   
-        }
 
-    })
-
+        })
+    }
+   
     postData($('#apikey').val(), $('#apisec').val());
 
 
@@ -224,9 +317,9 @@ $(document).ready(function () {
 });
 
 
-function postData(apiKey,apiSec) {
+function postData(apiKey, apiSec) {
     var hashdata = new Object;
-    jpost.payload = JSON.stringify(jpost);
+    jpost.payload = JSON.stringify(arrJ(Req_Obj, {}));
     jpost.clientId = uuidv4()
     jpost.timezone = Date.now();
     var message = apiKey + jpost.clientId + jpost.timezone + jpost.payload;
@@ -294,9 +387,22 @@ function ExecTrans(params) {
         dataType: 'json',
         data: data,
         success: function (response) {
-            console.log('se genero hash', response);
+            //console.log('respuesta', response);
+            var resp = JSON.parse(response);
+            if (resp.processor.associationResponseCode === '000') {
+                send_2_success(resp);
+            }
+            else {
+                send_2_error(resp);
+            }
         }
     })
 }
 
+function send_2_success(resp) {
+    $.ajax({
+        url: window.location.origin + '/Response/APISuccess'
+    })
+    console.log(resp.transactionStatus);
+}
 //# sourceMappingURL=ConnectForm.js.map
