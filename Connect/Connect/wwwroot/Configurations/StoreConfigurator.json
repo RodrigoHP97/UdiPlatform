@@ -1,0 +1,56 @@
+{
+    "reseller": {
+      "FDMX": {
+        "acquirer": {
+          "value": [
+            "Mexico"
+          ],
+          "label": "Adquirente"
+        },
+        "services": {
+          "value": [
+            "Connect",
+            "API",
+            "MoTo"
+          ],
+          "label": "Servicios"
+        },
+        "features": {
+          "value": [
+            "installments",
+            "hosted_data"
+          ],
+          "label": "Servicios adicionales"
+        },
+        "environments": {
+          "value": [
+            "Test1",
+            "Prod1"
+          ],
+          "label": "Ambientes"
+        }
+      },
+      "SCOTIA": {
+        "acquirer": {
+          "value": [
+            "Jamaica",
+            "Trinidad y Tobago"
+          ],
+          "label": "Adquirente"
+        },
+        "services": {
+          "value": [
+            "Connect"
+          ],
+          "label": "Servicios"
+        },
+        "environments": {
+          "value": [
+            "Test1",
+            "Prod1"
+          ],
+          "label": "Ambientes"
+        }
+      }
+    }
+  }

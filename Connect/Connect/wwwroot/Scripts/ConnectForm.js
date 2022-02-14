@@ -9,6 +9,17 @@ function receiveMessage(event) {
     forwardForm(event.data, elementArr);
 }
 
+function orderGen() {
+
+    var order = "FD";
+    var d = new Date();
+    var oid_str = d.getFullYear().toString() + (d.getMonth()+1).toString() + d.getDate().toString() + d.getHours().toString() + d.getMinutes().toString() + d.getSeconds().toString() + d.getMilliseconds().toString() ;
+    order = order + oid_str;
+    console.log(order);
+
+    $('#oid').val(order);
+
+}
 
 function forwardForm(responseObj, elementArr) {
     var newForm = document.createElement("form");
@@ -179,7 +190,7 @@ $(document).ready(function () {
 
 
     $('#form_udi').submit(function (e) {
-        
+        orderGen();
         e.preventDefault();
         e.returnValue = false;
         

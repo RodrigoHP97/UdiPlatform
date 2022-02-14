@@ -210,7 +210,8 @@
           "method":"Validation",
           "content":"application/json",
           "async":true,
-          "Httpmethod":"POST"
+          "Httpmethod":"POST",
+          "ResponseCatcher":["orderId","ipgTransactionId","approvalCode"]
         }
        },
       {
@@ -264,6 +265,19 @@
   },
     {
       "msi": [
+        {
+          "redirect":       
+          {
+           "url":"/payments",
+           "param":"PostTransaction",
+           "id":"",
+           "controller":"SendTransaction",
+           "method":"Validation",
+           "content":"application/json",
+           "async":true,
+           "Httpmethod":"POST"
+         }
+        },
         {
           "parentChild":[
             {

@@ -39,7 +39,30 @@ namespace WebApplication1.Controllers
 
             IRestResponse response = client.Execute(request);
 
-            return Json(response.Content);
+            var des_resp = JsonConvert.DeserializeObject<Dictionary<string, object>>(response.Content);
+
+            if (des_resp!=null) { 
+                var ser_pros= JsonConvert.SerializeObject(des_resp["processor"]);
+                var associationRespCode= JsonConvert.DeserializeObject<Dictionary<string, object>>(ser_pros);
+                var code = associationRespCode["associationResponseCode"].ToString();
+                if (code == "000")
+                {
+                    return Json(response.Content);
+                }
+                else
+                {
+                    return Json(response.Content);
+                }
+
+            }
+            else
+            {
+                return Json(response.Content);
+            }
+
+
+
+            //return Json(response.Content);
 
         }   
     }

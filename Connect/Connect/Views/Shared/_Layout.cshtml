@@ -8,44 +8,46 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand ml-lg-auto">
+    <div id="navprincipal">
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container">
+                    <a class="navbar-brand ml-lg-auto">
 
-                    <div>
-                        <img src="/Images/2560px-Fiserv_logo.svg_.png" width="80" height="31">
+                        <div>
+                            <img src="/Images/2560px-Fiserv_logo.svg_.png" width="80" height="31">
 
-                    </div>
-
-                </a>
-                
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <div class="dropdown">
-                        <button class="navbar-brand dropbtn">Integracciones</button>
-                        <div class="dropdown-content">
-                            <a class="navbar-brand" asp-area="" asp-controller="Service" asp-action="Connect">Connect</a>
-                            <a class="navbar-brand" asp-area="" asp-controller="Service" asp-action="API">API</a>
-                            <a class="navbar-brand" asp-area="" asp-controller="Service" asp-action=">PaymentJs">PaymentJs</a>
                         </div>
+
+                    </a>
+
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <div class="dropdown">
+                            <button class="navbar-brand dropbtn">Integracciones</button>
+                            <div class="dropdown-content">
+                                <a class="navbar-brand" asp-area="" asp-controller="Service" asp-action="Connect">Connect</a>
+                                <a class="navbar-brand" asp-area="" asp-controller="Service" asp-action="API">API</a>
+                                <a class="navbar-brand" asp-area="" asp-controller="Service" asp-action=">PaymentJs">PaymentJs</a>
+                            </div>
+                        </div>
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="navbar-brand" href="https://docs.firstdata.com/org/FDMexico" target="_blank">Documentación</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="navbar-brand" asp-area="" asp-controller="Service" asp-action="Store_Creation">Store Masivo</a>
+                            </li>
+                        </ul>
                     </div>
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="navbar-brand" href="https://docs.firstdata.com/org/FDMexico" target="_blank">Documentación</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="navbar-brand" asp-area="" asp-controller="Service" asp-action="Store_Creation">Store Masivo</a>
-                        </li>
-                    </ul>
                 </div>
-                </div>
-        </nav>
-    </header>
+            </nav>
+        </header>
+    </div>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
