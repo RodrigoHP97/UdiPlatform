@@ -9,9 +9,9 @@ var sep_conf = {
 var jpost = new Object;
 var list = [];
 var post = new Object;
-
+var repost = {}
 var Req_Obj = new Object;
-
+var orderObj = new Object;
 var redirect = new Object;
 
 var par_Obj = new Object;
@@ -256,6 +256,7 @@ function arrJ(obj, res, par, child) {
             })
         })
     }
+    Object.assign(final,orderGen())
     // console.log(final,result)
     return Object.assign(final, result)
 }
@@ -350,6 +351,8 @@ function postData(apiKey, apiSec) {
 
             post.controller = redirect.controller;
 
+            repost.ResponseCatcher = redirect.ResponseCatcher;
+
             post.Payload = jpost.payload;
 
             post.url_params = redirect.param;
@@ -387,22 +390,51 @@ function ExecTrans(params) {
         dataType: 'json',
         data: data,
         success: function (response) {
-            //console.log('respuesta', response);
-            var resp = JSON.parse(response);
-            if (resp.processor.associationResponseCode === '000') {
-                send_2_success(resp);
-            }
-            else {
-                send_2_error(resp);
-            }
+            console.log('respuesta', response);
+            SuccessPage(response);
         }
     })
 }
+function orderGen() {
 
-function send_2_success(resp) {
-    $.ajax({
-        url: window.location.origin + '/Response/APISuccess'
-    })
-    console.log(resp.transactionStatus);
+    var order = "FD";
+    var d = new Date();
+    var oid_str = d.getFullYear().toString() + (d.getMonth() + 1).toString() + d.getDate().toString() + d.getHours().toString() + d.getMinutes().toString() + d.getSeconds().toString() + d.getMilliseconds().toString();
+    order = order + oid_str;
+    console.log(order);
+    orderObj.order = { "orderId": "" };
+    orderObj.order.orderId = order;
+    return orderObj;
 }
-//# sourceMappingURL=ConnectForm.js.map
+
+
+function SuccessPage(params) {
+    $('#txnOrder_header').remove();
+    $('#txnResult_header').remove();
+    $('#txnTotal_header').remove();
+    $("#success_tic").modal('show');
+    var jpayload = JSON.parse(jpost.payload);
+    var message_str = document.createElement('h2');
+    message_str.setAttribute('id', 'txnResult_header');
+    message_str.innerHTML = "Transaccion Exitosa!!";
+
+    var message_sub = document.createElement('h4');
+    message_sub.setAttribute('id', 'txnOrder_header');
+    message_sub.innerHTML = "Tu Pedido: " + JSON.parse(params).orderId;
+
+
+    var message_tot = document.createElement('h4');
+    message_tot.setAttribute('id', 'txnTotal_header');
+    message_tot.innerHTML = "Total: " + jpayload.transactionAmount.total + ' ' + jpayload.transactionAmount.currency;
+
+
+    $('#txnResult').append(message_str);
+    $('#txnOrder').append(message_sub);
+    $('#txnTotal').append(message_tot);
+}
+
+function close_modal() {
+
+    $("#success_tic").modal('hide');
+}
+

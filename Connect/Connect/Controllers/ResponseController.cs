@@ -16,7 +16,8 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public IActionResult Success()
         {
-            ViewBag.oid = Request.Form["oid"];
+            var oid = Request.Form["oid"];
+            ViewBag.oid = oid;
             ViewBag.chargetotal = Request.Form["chargetotal"];
             ViewBag.status = Request.Form["status"];
             return View();
@@ -26,10 +27,7 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
-        public IActionResult APISuccess()
-        {
-            return View();
-        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

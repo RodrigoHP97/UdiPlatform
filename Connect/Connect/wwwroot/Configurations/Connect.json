@@ -18,6 +18,12 @@
           "class": "hide"
         },
         {
+          "name": "oid",
+          "type": "text",
+          "value": "",
+          "class": "hide"
+        },
+        {
           "name": "currency",
           "label": "Moneda:",
           "type": "select",
@@ -88,7 +94,7 @@
           "name": "transactionNotificationURL",
           "type": "text",
           "class": "hide",
-          "value": "http://localhost:55890/Response/Notification"
+          "value": "https://localhost:44384/Response/Notification"
         },
         {
           "name": "txndatetime",
@@ -100,6 +106,62 @@
           "type": "text",
           "class": "hide",
           "value": "sale"
+        }
+      ]
+    },
+    {
+      "directbypass": [
+        {
+          "name": "cardnumber",
+          "label": "tarjeta:",
+          "type": "text",
+          "maxlength": "20",
+          "class": ""
+        },
+        {
+          "name": "expmonth",
+          "label": "Mes:",
+          "type": "text",
+          "maxlength": "20",
+          "class": ""
+        },
+        {
+          "name": "expyear",
+          "label": "Año:",
+          "type": "text",
+          "maxlength": "20",
+          "class": ""
+        },
+        {
+          "name": "cvm",
+          "label": "cvv:",
+          "type": "text",
+          "maxlength": "20",
+          "class": ""
+        },
+        {
+          "name": "full_bypass",
+          "type": "text",
+          "value": "true",
+          "class": "hide"
+        },
+        {
+          "name": "baddr1",
+          "type": "text",
+          "value": "Escarñata554",
+          "class": "hide"
+        },
+        {
+          "name": "dynamicMerchantName",
+          "type": "text",
+          "value": "FDRodrigo",
+          "class": "hide"
+        },
+        {
+          "name": "bname",
+          "type": "text",
+          "value": "Rodrigo Pérez",
+          "class": "hide"
         }
       ]
     },
