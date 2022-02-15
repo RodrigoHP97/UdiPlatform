@@ -13,7 +13,7 @@ var repost = {}
 var Req_Obj = new Object;
 var orderObj = new Object;
 var redirect = new Object;
-
+var onComplete = new Object;
 var par_Obj = new Object;
 
 var final = {};
@@ -79,7 +79,7 @@ function load_config() {
             $('#buttonData').before('<div id="div_master"></div>');
 
             gen_Sort.map(function (value) {
-                if (Object.keys(value)[0] != 'post' && Object.keys(value)[0] != 'redirect' && Object.keys(value)[0] != 'parentChild') {
+                if (Object.keys(value)[0] != 'post' && Object.keys(value)[0] != 'redirect' && Object.keys(value)[0] != 'parentChild' && Object.keys(value)[0] != 'onComplete') {
 
                     list.push(value.name);
 
@@ -154,6 +154,7 @@ function load_config() {
                 {
                     if (Object.keys(value)[0] == 'post') { jpost = value.post; pay_post = value.post; Req_Obj = value.parentChild }
                     if (Object.keys(value)[0] == 'parentChild') { Req_Obj = value.parentChild }
+                    if (Object.keys(value)[0] == 'onComplete') { onComplete = value.onComplete }
                    
                     if (Object.keys(value)[0] == 'redirect') {
                         Object.keys(value.redirect).map(function (ind) {
@@ -409,28 +410,66 @@ function orderGen() {
 
 
 function SuccessPage(params) {
-    $('#txnOrder_header').remove();
-    $('#txnResult_header').remove();
-    $('#txnTotal_header').remove();
     $("#success_tic").modal('show');
-    var jpayload = JSON.parse(jpost.payload);
-    var message_str = document.createElement('h2');
-    message_str.setAttribute('id', 'txnResult_header');
-    message_str.innerHTML = "Transaccion Exitosa!!";
 
-    var message_sub = document.createElement('h4');
-    message_sub.setAttribute('id', 'txnOrder_header');
-    message_sub.innerHTML = "Tu Pedido: " + JSON.parse(params).orderId;
+    onComplete.map(function (ret) {
+
+        if (ret.type != 'button') {
+            $('#txn' + ret.id + '_header').remove();
+            $('#txn' + ret.id).remove();
+            var message_str = document.createElement(ret.type);
+            var msj_div = document.createElement('div');
+            msj_div.setAttribute('id', 'txn' +  ret.id);
+            message_str.setAttribute('id', 'txn' +  ret.id + '_header');
+            $('#modal_id').append(msj_div);
+            if (ret.label) {
+                var message = ret.label;
+                if (ret.key) {
+
+                    
+                    //message_str.innerHTML = ret.label
+                    var Obj;
+                    var msj;
+                    var sub_msj = "";
+                    ret.key.map(function (keys) {
 
 
-    var message_tot = document.createElement('h4');
-    message_tot.setAttribute('id', 'txnTotal_header');
-    message_tot.innerHTML = "Total: " + jpayload.transactionAmount.total + ' ' + jpayload.transactionAmount.currency;
+                        var subObj = JSON.parse(params)[keys];
+                        if (subObj) {
+                            Obj = subObj
+                            msj = subObj;
+                            //message_str.innerHTML = message + msj;
+                        }
 
+                        if (typeof (keys) != 'string') {
+                            keys.map(function (arr, i) {
+                                sub_msj = sub_msj + Obj[arr]
+                                if (i === keys.length - 1) {
 
-    $('#txnResult').append(message_str);
-    $('#txnOrder').append(message_sub);
-    $('#txnTotal').append(message_tot);
+                                    msj=sub_msj;
+                                }
+                            })
+
+                        }
+                        if (msj) {
+                            message_str.innerHTML = message + msj;
+                        }
+                    })
+
+                }
+                else {
+                    message_str.innerHTML = message;
+                }
+                
+            }
+            $('#txn' + ret.id).append(message_str);
+        }
+
+    })
+    /*
+    var txn_button = '<button id="VoidData" type="button" onclick="voidTrans("' + JSON.parse(params).ipgTransactionId +'")" class="center col-sm-12 btn-danger">Cancelar Transaccion</button>'
+
+    $('#txn_btn').append(txn_button);*/
 }
 
 function close_modal() {
