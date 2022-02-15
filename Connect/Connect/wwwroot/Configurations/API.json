@@ -291,8 +291,9 @@
             "type":"h5"
           },
           {
+            "label":"Cancelar Venta",
             "id":"TransactionId",
-            "key":["ipgTransactionId"],
+            "key":"ipgTransactionId",
             "return":"true",
             "type":"button"
           }
@@ -340,6 +341,43 @@
             "child": "numberOfInstallments"
           }
         ]
+      },
+      {
+        "onComplete":[
+          {
+            "label":"Venta Exitosa!!",
+            "id":"Result",
+            "type":"h2"
+          },
+          {
+            "label":"Tu Pedido: ",
+            "id":"Order",
+            "key":["orderId"],
+            "return":"false",
+            "type":"h5"
+          },
+          {
+            "label":"Total: ",
+            "id":"Amount",
+            "key":["approvedAmount",["total","currency"]],
+            "return":"false",
+            "type":"h5"
+          },
+          {
+            "label":"Código de approbación: ",
+            "id":"Approval",
+            "key":["approvalCode"],
+            "return":"false",
+            "type":"h5"
+          },
+          {
+            "label":"Cancelar Venta",
+            "id":"TransactionId",
+            "key":"ipgTransactionId",
+            "return":"true",
+            "type":"button"
+          }
+      ]
       },
       {
         "name": "numberOfInstallments",

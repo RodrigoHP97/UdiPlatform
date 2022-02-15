@@ -257,7 +257,7 @@ function arrJ(obj, res, par, child) {
             })
         })
     }
-    Object.assign(final,orderGen())
+
     // console.log(final,result)
     return Object.assign(final, result)
 }
@@ -321,7 +321,14 @@ $(document).ready(function () {
 
 function postData(apiKey, apiSec) {
     var hashdata = new Object;
-    jpost.payload = JSON.stringify(arrJ(Req_Obj, {}));
+    var paysend = arrJ(Req_Obj, {});
+    if (!paysend['order']) {
+        Object.assign(paysend, orderGen())
+    }
+    else {
+        Object.assign(paysend.order, orderGen().order)
+    }
+    jpost.payload = JSON.stringify(paysend);
     jpost.clientId = uuidv4()
     jpost.timezone = Date.now();
     var message = apiKey + jpost.clientId + jpost.timezone + jpost.payload;
@@ -419,14 +426,14 @@ function SuccessPage(params) {
             $('#txn' + ret.id).remove();
             var message_str = document.createElement(ret.type);
             var msj_div = document.createElement('div');
-            msj_div.setAttribute('id', 'txn' +  ret.id);
-            message_str.setAttribute('id', 'txn' +  ret.id + '_header');
+            msj_div.setAttribute('id', 'txn' + ret.id);
+            message_str.setAttribute('id', 'txn' + ret.id + '_header');
             $('#modal_id').append(msj_div);
             if (ret.label) {
                 var message = ret.label;
                 if (ret.key) {
 
-                    
+
                     //message_str.innerHTML = ret.label
                     var Obj;
                     var msj;
@@ -446,7 +453,7 @@ function SuccessPage(params) {
                                 sub_msj = sub_msj + Obj[arr]
                                 if (i === keys.length - 1) {
 
-                                    msj=sub_msj;
+                                    msj = sub_msj;
                                 }
                             })
 
@@ -460,16 +467,20 @@ function SuccessPage(params) {
                 else {
                     message_str.innerHTML = message;
                 }
-                
+
             }
             $('#txn' + ret.id).append(message_str);
         }
+        else {
+            $('#' + ret.id + '_btn').remove();
+            var msj_div = document.createElement('div');
+            msj_div.setAttribute('id', ret.id + '_btn');
+            $('#modal-content').append(msj_div);
+            var txn_button = '<button id="' + ret.id + '" type="button" onclick="voidTrans(' + JSON.parse(params)[ret.key] + ')" class="center col-sm-12 btn-danger">'+ret.label+'</button>'
+            $('#' + ret.id+'_btn').append(txn_button);
+        }
 
     })
-    /*
-    var txn_button = '<button id="VoidData" type="button" onclick="voidTrans("' + JSON.parse(params).ipgTransactionId +'")" class="center col-sm-12 btn-danger">Cancelar Transaccion</button>'
-
-    $('#txn_btn').append(txn_button);*/
 }
 
 function close_modal() {
