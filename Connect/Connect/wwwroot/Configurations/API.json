@@ -22,7 +22,7 @@
         "placeholder": "XXXX XXXX XXXX XXXX",
         "maxlength": "19",
         "class": "",
-        "style": "width: 300px"
+        "style": "width: 300px" 
       },
       {
         "order": 3,
@@ -192,6 +192,112 @@
     ]
   },
   {
+    "partial":[
+      {
+        "3ds":[
+          {
+            "type":"insert"
+          },
+          {
+            "request":{ 
+              "authenticationRequest": {
+                "authenticationType": "Secure3D21AuthenticationRequest",
+                "termURL": "https://https://localhost:44384/ThreeDSValidator/Authentication",
+                "methodNotificationURL": "https://https://localhost:44384/ThreeDSValidator/Notification",
+                "challengeIndicator": "",
+                "challengeWindowSize": ""
+            }
+          }
+        },
+        {
+          "input":{
+            "name":"3ds_box",
+            "label":"¿Autenticar transacción?",
+            "type":"checkbox"
+          }
+        },
+        {
+          "form":[
+            {
+              "name": "challengeIndicator",
+              "label": "Método de autenticación:",
+              "type": "select",
+              "class": "",
+              "options": [
+                {
+                  "id": "first",
+                  "value": "01",
+                  "label": "Permitir al Gateway determinar la solicitud del password."
+                },
+                {
+                  "id": "second",
+                  "value": "02",
+                  "label": "No solicitar password 3DS."
+                },
+                {
+                  "id": "third",
+                  "value": "03",
+                  "label": "El banco emisor decide si solicitar password."
+                },
+                {
+                  "id": "fourth",
+                  "value": "04",
+                  "label": "Siempre requerir password 3DS."
+                }
+              ]
+            },
+            {
+              "name": "challengeWindowSize",
+              "label": "Tamaño de la ventana:",
+              "type": "select",
+              "class": "",
+              "options": [
+                {
+                  "id": "first",
+                  "value": "01",
+                  "label": "250 x 400"
+                },
+                {
+                  "id": "second",
+                  "value": "02",
+                  "label": "390 x 400"
+                },
+                {
+                  "id": "third",
+                  "value": "03",
+                  "label": "500 x 600"
+                },
+                {
+                  "id": "fourth",
+                  "value": "04",
+                  "label": "600 x 400"
+                },
+                {
+                  "id": "fourth",
+                  "value": "05",
+                  "label": "Tamaño completo"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+      },
+      {
+        "tokenization":[
+          {
+            "type":"update"
+          },
+          {
+            "request":{
+              
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
     "keyvalidation": [
       {
         "post": {
@@ -199,6 +305,15 @@
             "number": ""
           }
         }
+      },
+      {
+        "onComplete":[
+          {
+            "label":"Credenciales de API Válidas!!",
+            "id":"Result",
+            "type":"h2"
+          }
+      ]
       },
       {
         "redirect": {
@@ -224,6 +339,7 @@
         "type": "text",
         "placeholder": "XXXX XXXX XXXX XXXX",
         "maxlength": "19",
+        "parent":"payment",
         "class": "",
         "style": "width: 300px"
       }
@@ -409,269 +525,6 @@
         ],
         "maxlength": "20"
       }
-    ]
-  },
-  {
-    "3ds": [
-      {
-        "name": "numberOfInstallments",
-        "label": "Meses:",
-        "type": "select",
-        "class": "",
-        "options": [
-          {
-            "id": "three",
-            "value": "3",
-            "label": "3"
-          },
-          {
-            "id": "six",
-            "value": "6",
-            "label": "6"
-          },
-          {
-            "id": "nine",
-            "value": "9",
-            "label": "9"
-          },
-          {
-            "id": "twelve",
-            "value": "12",
-            "label": "12"
-          }
-        ]
-      },
-      {
-        "name": "installmentsInterest",
-        "label": "Con itereses?:",
-        "type": "select",
-        "class": "",
-        "options": [
-          {
-            "id": "yes_int",
-            "value": "true",
-            "label": "Sí"
-          },
-          {
-            "id": "no_int",
-            "value": "false",
-            "label": "No"
-          }
-        ]
-      },
-      {
-        "name": "authenticateTransaction",
-        "label": "Autenticar transacción?:",
-        "type": "select",
-        "class": "",
-        "options": [
-          {
-            "id": "auth_y",
-            "value": "true",
-            "label": "Sí"
-          },
-          {
-            "id": "auth_n",
-            "value": "false",
-            "label": "No"
-          }
-        ]
-      },
-      {
-        "name": "threeDSRequestorChallengeIndicator",
-        "label": "Método de autenticación:",
-        "type": "select",
-        "class": "",
-        "options": [
-          {
-            "id": "first",
-            "value": "1",
-            "label": "Permitir al Gateway determinar la solicitud del password."
-          },
-          {
-            "id": "second",
-            "value": "2",
-            "label": "No solicitar password 3DS."
-          },
-          {
-            "id": "third",
-            "value": "3",
-            "label": "El banco emisor decide si solicitar password."
-          },
-          {
-            "id": "fourth",
-            "value": "4",
-            "label": "Siempre requerir password 3DS."
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "tokenization": [
-      {
-        "name": "assignToken",
-        "label": "assignToken token?: ",
-        "type": "select",
-        "class": "",
-        "options": [
-          {
-            "id": "h_tk",
-            "value": "true",
-            "label": "Sí"
-          },
-          {
-            "id": "dh_tk",
-            "value": "false",
-            "label": "No"
-          }
-        ]
-      },
-      {
-        "name": "threeDSRequestorChallengeIndicator",
-        "label": "Método de autenticación:",
-        "type": "select",
-        "class": "",
-        "options": [
-          {
-            "id": "first",
-            "value": "1",
-            "label": "Permitir al Gateway determinar la solicitud del password."
-          },
-          {
-            "id": "second",
-            "value": "2",
-            "label": "No solicitar password 3DS."
-          },
-          {
-            "id": "third",
-            "value": "03",
-            "label": "El banco emisor decide si solicitar password."
-          },
-          {
-            "id": "fourth",
-            "value": "4",
-            "label": "Siempre requerir password 3DS."
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "concurrent": [
-      {
-        "name": "recurringInstallmentCount",
-        "label": "Veces que se realizará el cargo: ",
-        "type": "text",
-        "class": ""
-      },
-      {
-        "name": "recurringInstallmentPeriod",
-        "label": "Periodo en el que se hará el cargo: ",
-        "type": "select",
-        "class": "",
-        "options": [
-          {
-            "id": "day",
-            "value": "day",
-            "label": "Diario"
-          },
-          {
-            "id": "week",
-            "value": "week",
-            "label": "semanal"
-          },
-          {
-            "id": "month",
-            "value": "month",
-            "label": "Mensual"
-          },
-          {
-            "id": "year",
-            "value": "year",
-            "label": "Anual"
-          }
-        ]
-      },
-      {
-        "name": "recurringInstallmentFrequency",
-        "label": "Frecuencia en la que se realizará el cargo: ",
-        "type": "text",
-        "class": ""
-      },
-      {
-        "name": "recurringComments",
-        "label": "Cpmentarios adicionales: ",
-        "type": "text",
-        "class": ""
-      },
-      {
-        "name": "ponumber",
-        "label": "Número de orden: ",
-        "type": "text",
-        "class": ""
-      }
-    ]
-  },
-  {
-    "scheduled": [
-      {
-        "name": "recurringInstallmentCount",
-        "label": "Veces que se realizará el cargo: ",
-        "type": "text",
-        "class": ""
-      },
-      {
-        "name": "recurringInstallmentPeriod",
-        "label": "Periodo en el que se hará el cargo: ",
-        "type": "select",
-        "class": "",
-        "options": [
-          {
-            "id": "day",
-            "value": "day",
-            "label": "Diario"
-          },
-          {
-            "id": "week",
-            "value": "week",
-            "label": "semanal"
-          },
-          {
-            "id": "month",
-            "value": "month",
-            "label": "Mensual"
-          },
-          {
-            "id": "year",
-            "value": "year",
-            "label": "Anual"
-          }
-        ]
-      },
-      {
-        "name": "recurringInstallmentFrequency",
-        "label": "Frecuencia en la que se realizará el cargo: ",
-        "type": "text",
-        "class": ""
-      },
-      {
-        "name": "recurringComments",
-        "label": "Cpmentarios adicionales: ",
-        "type": "text",
-        "class": ""
-      },
-      {
-        "name": "ponumber",
-        "label": "Número de orden: ",
-        "type": "text",
-        "class": ""
-      }
-    ]
-  },
-  {
-    "auth": [
-      
     ]
   }
 ]

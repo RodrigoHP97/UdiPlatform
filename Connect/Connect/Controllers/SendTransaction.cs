@@ -41,28 +41,46 @@ namespace WebApplication1.Controllers
 
             var des_resp = JsonConvert.DeserializeObject<Dictionary<string, object>>(response.Content);
 
-            if (des_resp!=null) { 
-                var ser_pros= JsonConvert.SerializeObject(des_resp["processor"]);
-                var associationRespCode= JsonConvert.DeserializeObject<Dictionary<string, object>>(ser_pros);
-                var code = associationRespCode["associationResponseCode"].ToString();
-                if (code == "000")
-                {
-                    return Json(response.Content);
-                }
-                else
-                {
-                    return Json(response.Content);
-                }
-
-            }
-            else
+            if (des_resp!=null)
             {
-                return Json(response.Content);
+                try
+                {
+                    var ser_pros = JsonConvert.SerializeObject(des_resp["requestStatus"]);
+                    if (ser_pros == "SUCCESS")
+                    {
+                        return Json(response.Content);
+                    }
+                }
+                catch
+                {
+                    try
+                    {
+                        var ser_pros = JsonConvert.SerializeObject(des_resp["processor"]);
+
+                        var associationRespCode = JsonConvert.DeserializeObject<Dictionary<string, object>>(ser_pros);
+                        var code = associationRespCode["associationResponseCode"].ToString();
+
+                        if (code == "000")
+                        {
+                            return Json(response.Content);
+                        }
+                        else
+                        {
+                            return Json(response.Content);
+                        }
+                    }
+
+                    catch
+                    {
+                        
+                    }
+
+                }
+
+                
+
             }
-
-
-
-            //return Json(response.Content);
+            return Json(response.Content);
 
         }   
     }

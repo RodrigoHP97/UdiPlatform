@@ -79,7 +79,7 @@ function load_config() {
             $('#buttonData').before('<div id="div_master"></div>');
 
             gen_Sort.map(function (value) {
-                if (Object.keys(value)[0] != 'post' && Object.keys(value)[0] != 'redirect' && Object.keys(value)[0] != 'parentChild' && Object.keys(value)[0] != 'onComplete') {
+                if (Object.keys(value)[0] != 'post' && Object.keys(value)[0] != 'redirect' && Object.keys(value)[0] != 'parentChild' && Object.keys(value)[0] != 'onComplete' && Object.keys(value)[0] != '3ds') {
 
                     list.push(value.name);
 
@@ -152,10 +152,9 @@ function load_config() {
                 }
                 else
                 {
-                    if (Object.keys(value)[0] == 'post') { jpost = value.post; pay_post = value.post; Req_Obj = value.parentChild }
+                    if (Object.keys(value)[0] == 'post') { jpost = value.post; pay_post = value.post;  }
                     if (Object.keys(value)[0] == 'parentChild') { Req_Obj = value.parentChild }
                     if (Object.keys(value)[0] == 'onComplete') { onComplete = value.onComplete }
-                   
                     if (Object.keys(value)[0] == 'redirect') {
                         Object.keys(value.redirect).map(function (ind) {
                             redirect[ind] = value.redirect[ind]
@@ -262,26 +261,29 @@ function arrJ(obj, res, par, child) {
     return Object.assign(final, result)
 }
 
-function sendTrans() {
-
-    if (!Req_Obj) {
+function validateCard(obj) {
+    if (Object.keys(Req_Obj).length == 0) {
         Object.keys(jpost).map(function (key) {
+            obj[key] = {};
             var ex_Obj = jpost[key];
             for (const i in ex_Obj) {
                 console.log(ex_Obj, i, ex_Obj[i]);
                 if (i == 'number') {
-                    jpost[key][i] = $('#' + i).val().split(' ').join('');
+                    obj[key][i] = $('#' + i).val().split(' ').join('');
                 }
                 else {
-                    jpost[key][i] = $('#' + i).val();
+                    obj[key][i] = $('#' + i).val();
                 }
             }
 
         })
+        return obj;
     }
+}
+
+function sendTrans() {
    
     postData($('#apikey').val(), $('#apisec').val());
-
 
 }
 function show_pwd(el) {
@@ -321,13 +323,19 @@ $(document).ready(function () {
 
 function postData(apiKey, apiSec) {
     var hashdata = new Object;
-    var paysend = arrJ(Req_Obj, {});
-    if (!paysend['order']) {
-        Object.assign(paysend, orderGen())
+    if (Object.keys(Req_Obj).length>0) {
+        var paysend = arrJ(Req_Obj, {});
+        if (!paysend['order']) {
+            Object.assign(paysend, orderGen())
+        }
+        else {
+            Object.assign(paysend.order, orderGen().order)
+        }
     }
     else {
-        Object.assign(paysend.order, orderGen().order)
+        paysend=validateCard({});
     }
+
     jpost.payload = JSON.stringify(paysend);
     jpost.clientId = uuidv4()
     jpost.timezone = Date.now();
