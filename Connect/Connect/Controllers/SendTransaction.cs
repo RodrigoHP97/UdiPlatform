@@ -8,11 +8,12 @@ namespace WebApplication1.Controllers
 {
     public class SendTransactionController : Controller
     {
-        
+       
+
         [HttpPost]
         public JsonResult PostTransaction(Jpost postData)
         {
-            
+
             //Parseamos el objeto del Post
             var deserialized_post =JsonConvert.DeserializeObject<Dictionary<string, object>>(postData.post);
 
@@ -43,7 +44,7 @@ namespace WebApplication1.Controllers
 
                 try
                 {
-                    var ser_pros = JsonConvert.SerializeObject(des_resp["requestStatus"]);
+                    string ser_pros = des_resp["requestStatus"].ToString();
                     if (ser_pros == "SUCCESS")
                     {
                         return Json(response.Content);
@@ -51,26 +52,36 @@ namespace WebApplication1.Controllers
                 }
                 catch
                 {
-                    try
+                try
+                {
+                    var ser_pros = JsonConvert.SerializeObject(des_resp["processor"]);
+
+                    var associationRespCode = JsonConvert.DeserializeObject<Dictionary<string, object>>(ser_pros);
+                    string code = associationRespCode["associationResponseCode"].ToString();
+
+                    if (code == "000")
                     {
-                        var ser_pros = JsonConvert.SerializeObject(des_resp["processor"]);
-
-                        var associationRespCode = JsonConvert.DeserializeObject<Dictionary<string, object>>(ser_pros);
-                        var code = associationRespCode["associationResponseCode"].ToString();
-
-                        if (code == "000")
-                        {
-                            sended.Code = response.Content;
-                        }
+                        sended.Code = response.Content;
                     }
-
-                    catch (Exception)
+                    else
                     {
+                        //Aquí se mapean los errores
+                        var Error = new JpostException();
+                        Error.Code = "Error";
+                        Error.Message = "La transacción no pudo ser completada exitosamente";
 
+                        sended.Code = JsonConvert.SerializeObject(Error);
+                    }
+                }
+                catch (Exception)
+                {
+                    var Error = new JpostException();
+                    Error.Code = "Error";
+                    Error.Source = "Usuario";
+                    Error.Message = "Favor de corroborar las credenciales";
 
-                    var ex=new JpostException("La venta no pudo ser completada satisfactoriamente");
+                    sended.Code = JsonConvert.SerializeObject(Error);
 
-                    throw ex;
 
                 }
             }
@@ -98,16 +109,19 @@ public class JpostResponse
 
 }
 
-[Serializable]
-class JpostException : Exception
+public class RespCode
 {
+    public string Code { get; set; }
+    public string Message { get; set; }
 
-    public JpostException(string message)
-        : base(message)
-    {
-    }
-    public JpostException(string message, Exception innerException)
-        : base(message, innerException)
-    {
-    }
+    public string Source { get; set; }
+}
+
+public class JpostException
+{
+    public string Code { get; set; }
+    public string Message { get; set; }
+
+    public string Source { get; set; }
+
 }

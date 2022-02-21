@@ -38,9 +38,19 @@
             margin: 10% auto;
         }
 
+    #error_tic .page-body {
+        max-width: 300px;
+        background-color: #FFFFFF;
+        margin: 10% auto;
+    }
+
             #success_tic .page-body .head {
                 text-align: center;
             }
+
+    #error_tic .page-body .head {
+        text-align: center;
+    }
         /* #success_tic .tic{
       font-size:186px;
     } */
@@ -52,6 +62,15 @@
             padding: 3px 15px;
             margin-bottom: 10px;
         }
+
+    #error_tic .close {
+        opacity: 1;
+        position: absolute;
+        right: 0px;
+        font-size: 30px;
+        padding: 3px 15px;
+        margin-bottom: 10px;
+    }
 
         #success_tic .checkmark-circle {
             width: 150px;
@@ -69,53 +88,119 @@
             position: absolute;
         }
 
+    #error_tic .crossmark-circle {
+        width: 150px;
+        height: 150px;
+        position: relative;
+        display: inline-block;
+        vertical-align: top;
+    }
+    .crossmark-circle .background {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background: #cb2626;
+        position: absolute;
+    }
+
         #success_tic .checkmark-circle .checkmark {
             border-radius: 5px;
         }
+    #error_tic .crossmark-circle .crossmark {
+        border-radius: 5px;
+    }
 
-            #success_tic .checkmark-circle .checkmark.draw:after {
-                -webkit-animation-delay: 300ms;
-                -moz-animation-delay: 300ms;
-                animation-delay: 300ms;
-                -webkit-animation-duration: 1s;
-                -moz-animation-duration: 1s;
-                animation-duration: 1s;
-                -webkit-animation-timing-function: ease;
-                -moz-animation-timing-function: ease;
-                animation-timing-function: ease;
-                -webkit-animation-name: checkmark;
-                -moz-animation-name: checkmark;
-                animation-name: checkmark;
-                -webkit-transform: scaleX(-1) rotate(135deg);
-                -moz-transform: scaleX(-1) rotate(135deg);
-                -ms-transform: scaleX(-1) rotate(135deg);
-                -o-transform: scaleX(-1) rotate(135deg);
-                transform: scaleX(-1) rotate(135deg);
-                -webkit-animation-fill-mode: forwards;
-                -moz-animation-fill-mode: forwards;
-                animation-fill-mode: forwards;
-            }
 
-            #success_tic .checkmark-circle .checkmark:after {
-                opacity: 1;
-                height: 75px;
-                width: 37.5px;
-                -webkit-transform-origin: left top;
-                -moz-transform-origin: left top;
-                -ms-transform-origin: left top;
-                -o-transform-origin: left top;
-                transform-origin: left top;
-                border-right: 15px solid #fff;
-                border-top: 15px solid #fff;
-                border-radius: 2.5px !important;
-                content: '';
-                left: 35px;
-                top: 80px;
-                position: absolute;
-            }
+    #success_tic .checkmark-circle .checkmark.draw:after {
+        -webkit-animation-delay: 300ms;
+        -moz-animation-delay: 300ms;
+        animation-delay: 300ms;
+        -webkit-animation-duration: 1s;
+        -moz-animation-duration: 1s;
+        animation-duration: 1s;
+        -webkit-animation-timing-function: ease;
+        -moz-animation-timing-function: ease;
+        animation-timing-function: ease;
+        -webkit-animation-name: checkmark;
+        -moz-animation-name: checkmark;
+        animation-name: checkmark;
+        -webkit-transform: scaleX(-1) rotate(135deg);
+        -moz-transform: scaleX(-1) rotate(135deg);
+        -ms-transform: scaleX(-1) rotate(135deg);
+        -o-transform: scaleX(-1) rotate(135deg);
+        transform: scaleX(-1) rotate(135deg);
+        -webkit-animation-fill-mode: forwards;
+        -moz-animation-fill-mode: forwards;
+        animation-fill-mode: forwards;
+    }
+
+    #success_tic .checkmark-circle .checkmark:after {
+        opacity: 1;
+        height: 75px;
+        width: 37.5px;
+        -webkit-transform-origin: left top;
+        -moz-transform-origin: left top;
+        -ms-transform-origin: left top;
+        -o-transform-origin: left top;
+        transform-origin: left top;
+        border-right: 15px solid #fff;
+        border-top: 15px solid #fff;
+        border-radius: 2.5px !important;
+        content: '';
+        left: 35px;
+        top: 80px;
+        position: absolute;
+    }
+
+
+    .crossmark:after {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        content: "\2573"; /* use the hex value here... */
+        font-size: 80px;
+        color: #FFFFFF;
+        font-weight: bold;
+        line-height: 120px;
+        text-align: center;
+    }
 </style>
 <meta charset=UTF-8>
+<div>
+    <!-- Modal -->
+    <div id="error_tic" class="modal fade" role="dialog">
+        <div class="modal-dialog">
 
+            <!-- Modal content-->
+            <div class="modal-content" id="modal-content">
+                <a class="close" onclick="close_modal()" data-dismiss="modal">&times;</a>
+                <div class="page-body">
+                    <div class="head" id="head_id">
+
+                        <div class="crossmark-circle">
+                            <div class="background"></div>
+                            <div class="crossmark draw"></div>
+                        </div>
+                        <div id="modal_error_id">
+
+
+                        </div>
+
+                        <!--Message--->
+                    </div>
+
+
+                </div>
+                <div id="txn_btn">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
 <div>
     <!-- Modal -->
     <div id="success_tic" class="modal fade" role="dialog">
@@ -130,7 +215,7 @@
                             <div class="background"></div>
                             <div class="checkmark draw"></div>
                         </div>
-                        <div id="modal_id">
+                        <div id="modal_success_id">
 
 
                         </div>
