@@ -1,4 +1,4 @@
-
+using System;
 using RestSharp;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -26,6 +26,7 @@ namespace WebApplication1.Controllers
 
             //Iniciamos el cliente
             var client = new RestClient(url.ToString());
+            var sended = new JpostResponse();
 
             var request = new RestRequest(Method.POST); 
             //Agregamos los headers
@@ -38,11 +39,8 @@ namespace WebApplication1.Controllers
             request.AddParameter(headers["Content-type"].ToString(), deserialized_post["Payload"].ToString(),ParameterType.RequestBody);
 
             IRestResponse response = client.Execute(request);
-
             var des_resp = JsonConvert.DeserializeObject<Dictionary<string, object>>(response.Content);
 
-            if (des_resp!=null)
-            {
                 try
                 {
                     var ser_pros = JsonConvert.SerializeObject(des_resp["requestStatus"]);
@@ -62,30 +60,28 @@ namespace WebApplication1.Controllers
 
                         if (code == "000")
                         {
-                            return Json(response.Content);
-                        }
-                        else
-                        {
-                            return Json(response.Content);
+                            sended.Code = response.Content;
                         }
                     }
 
-                    catch
+                    catch (Exception)
                     {
-                        
-                    }
+
+
+                    var ex=new JpostException("La venta no pudo ser completada satisfactoriamente");
+
+                    throw ex;
 
                 }
-
-                
-
             }
-            return Json(response.Content);
 
+                return Json(sended.Code);
+            
+            
+        }
+           
         }   
     }
-    
-}
 
 public class Jpost
 {
@@ -93,5 +89,25 @@ public class Jpost
     {
         get;
         set;
+    }
+}
+
+public class JpostResponse
+{
+    public string Code { get; set; }
+
+}
+
+[Serializable]
+class JpostException : Exception
+{
+
+    public JpostException(string message)
+        : base(message)
+    {
+    }
+    public JpostException(string message, Exception innerException)
+        : base(message, innerException)
+    {
     }
 }

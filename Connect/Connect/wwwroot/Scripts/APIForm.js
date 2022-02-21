@@ -10,12 +10,12 @@ var jpost = new Object;
 var list = [];
 var post = new Object;
 var repost = {}
-var Req_Obj = new Object;
+
 var orderObj = new Object;
 var redirect = new Object;
 var onComplete = new Object;
 var par_Obj = new Object;
-
+var Req_Obj = new Object;
 var final = {};
 
 function sort_by_key(array, key) {
@@ -37,7 +37,7 @@ function load_config() {
 
     //Armamos formulario
     jconf.then((value) => {
-
+        Req_Obj = {};
         var jval = $('#type_of_selling').children(":selected").attr("id");
 
 
@@ -79,7 +79,12 @@ function load_config() {
             $('#buttonData').before('<div id="div_master"></div>');
 
             gen_Sort.map(function (value) {
-                if (Object.keys(value)[0] != 'post' && Object.keys(value)[0] != 'redirect' && Object.keys(value)[0] != 'parentChild' && Object.keys(value)[0] != 'onComplete' && Object.keys(value)[0] != '3ds') {
+                if (Object.keys(value)[0] != 'post' &&
+                    Object.keys(value)[0] != 'redirect' &&
+                    Object.keys(value)[0] != 'parentChild' &&
+                    Object.keys(value)[0] != 'onComplete' &&
+                    Object.keys(value)[0] != '3ds' &&
+                    Object.keys(value)[0] != 'services') {
 
                     list.push(value.name);
 
@@ -336,10 +341,10 @@ function postData(apiKey, apiSec) {
         paysend=validateCard({});
     }
 
-    jpost.payload = JSON.stringify(paysend);
-    jpost.clientId = uuidv4()
-    jpost.timezone = Date.now();
-    var message = apiKey + jpost.clientId + jpost.timezone + jpost.payload;
+    var payload = JSON.stringify(paysend);
+    var clientId = uuidv4()
+    var timezone = Date.now();
+    var message = apiKey + clientId + timezone + payload;
     var controller = sep_conf[$('#hash_action').val()].controller; 
     
     hashdata.message = message;
@@ -355,7 +360,7 @@ function postData(apiKey, apiSec) {
         complete: function (response) {
             $('#hashExtended').val(response.responseJSON.replace(/\"/g, ""));
             newHash = response.responseJSON.replace(/\"/g, "");
-            jpost.sign = newHash;
+            var sign = newHash;
 
             post.url = $('#action').val() + redirect.url + redirect.id;
 
@@ -369,7 +374,7 @@ function postData(apiKey, apiSec) {
 
             repost.ResponseCatcher = redirect.ResponseCatcher;
 
-            post.Payload = jpost.payload;
+            post.Payload = payload;
 
             post.url_params = redirect.param;
 
@@ -379,11 +384,11 @@ function postData(apiKey, apiSec) {
 
             post.headers["Api-Key"] = $('#apikey').val();
 
-            post.headers["Client-Request-Id"] = jpost.clientId;
+            post.headers["Client-Request-Id"] = clientId;
 
-            post.headers["Timestamp"] = jpost.timezone;
+            post.headers["Timestamp"] = timezone;
 
-            post.headers["Message-Signature"] = jpost.sign;
+            post.headers["Message-Signature"] = sign;
 
             console.log('data', post);
 
@@ -391,7 +396,6 @@ function postData(apiKey, apiSec) {
             return newHash;
         }
     });
-    return jpost.sign;
 };
 
 function ExecTrans(params) {
@@ -405,9 +409,13 @@ function ExecTrans(params) {
         url: window.location.origin + '/' + params.controller + '/' + params.url_params,
         dataType: 'json',
         data: data,
+        error: function (response) {
+            console.log(response);
+        },
         success: function (response) {
             console.log('respuesta', response);
             SuccessPage(response);
+            
         }
     })
 }
@@ -426,7 +434,6 @@ function orderGen() {
 
 function SuccessPage(params) {
     $("#success_tic").modal('show');
-
     onComplete.map(function (ret) {
 
         if (ret.type != 'button') {
@@ -492,7 +499,9 @@ function SuccessPage(params) {
 }
 
 function close_modal() {
-
+    var range = document.createRange();
+    range.selectNodeContents(document.getElementById("modal_id"));
+    range.deleteContents();
     $("#success_tic").modal('hide');
 }
 
