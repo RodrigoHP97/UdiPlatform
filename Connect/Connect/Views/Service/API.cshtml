@@ -9,108 +9,198 @@
 
 
 <style>
-    .hide {
-        display: none !important;
+        .hide {
+            display: none !important;
+        }
+
+        .section1 {
+            width: 50%;
+            float: left;
+            height: 100vh;
+            box-sizing: border-box;
+            border-right: 1vw;
+            margin: 0;
+            padding: 0;
+        }
+
+        .section2 {
+            width: 50%;
+            float: left;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        #success_tic .page-body {
+            max-width: 300px;
+            background-color: #FFFFFF;
+            margin: 10% auto;
+        }
+
+    #error_tic .page-body {
+        max-width: 300px;
+        background-color: #FFFFFF;
+        margin: 10% auto;
     }
 
-    .section1 {
-        width: 50%;
-        float: left;
-        height: 100vh;
-        box-sizing: border-box;
-        border-right: 1vw;
-        margin: 0;
-        padding: 0;
+            #success_tic .page-body .head {
+                text-align: center;
+            }
+
+    #error_tic .page-body .head {
+        text-align: center;
+    }
+        /* #success_tic .tic{
+      font-size:186px;
+    } */
+        #success_tic .close {
+            opacity: 1;
+            position: absolute;
+            right: 0px;
+            font-size: 30px;
+            padding: 3px 15px;
+            margin-bottom: 10px;
+        }
+
+    #error_tic .close {
+        opacity: 1;
+        position: absolute;
+        right: 0px;
+        font-size: 30px;
+        padding: 3px 15px;
+        margin-bottom: 10px;
     }
 
-    .section2 {
-        width: 50%;
-        float: left;
-        height: 100vh;
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
+        #success_tic .checkmark-circle {
+            width: 150px;
+            height: 150px;
+            position: relative;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .checkmark-circle .background {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: #1ab394;
+            position: absolute;
+        }
+
+    #error_tic .crossmark-circle {
+        width: 150px;
+        height: 150px;
+        position: relative;
+        display: inline-block;
+        vertical-align: top;
     }
-    #success_tic .page-body{
-  max-width:300px;
-  background-color:#FFFFFF;
-  margin:10% auto;
-}
- #success_tic .page-body .head{
-  text-align:center;
-}
-/* #success_tic .tic{
-  font-size:186px;
-} */
-#success_tic .close{
-      opacity: 1;
-    position: absolute;
-    right: 0px;
-    font-size: 30px;
-    padding: 3px 15px;
-  margin-bottom: 10px;
-}
-#success_tic .checkmark-circle {
-  width: 150px;
-  height: 150px;
-  position: relative;
-  display: inline-block;
-  vertical-align: top;
-}
-.checkmark-circle .background {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  background: #1ab394;
-  position: absolute;
-}
-#success_tic .checkmark-circle .checkmark {
-  border-radius: 5px;
-}
-#success_tic .checkmark-circle .checkmark.draw:after {
-  -webkit-animation-delay: 300ms;
-  -moz-animation-delay: 300ms;
-  animation-delay: 300ms;
-  -webkit-animation-duration: 1s;
-  -moz-animation-duration: 1s;
-  animation-duration: 1s;
-  -webkit-animation-timing-function: ease;
-  -moz-animation-timing-function: ease;
-  animation-timing-function: ease;
-  -webkit-animation-name: checkmark;
-  -moz-animation-name: checkmark;
-  animation-name: checkmark;
-  -webkit-transform: scaleX(-1) rotate(135deg);
-  -moz-transform: scaleX(-1) rotate(135deg);
-  -ms-transform: scaleX(-1) rotate(135deg);
-  -o-transform: scaleX(-1) rotate(135deg);
-  transform: scaleX(-1) rotate(135deg);
-  -webkit-animation-fill-mode: forwards;
-  -moz-animation-fill-mode: forwards;
-  animation-fill-mode: forwards;
-}
-#success_tic .checkmark-circle .checkmark:after {
-  opacity: 1;
-  height: 75px;
-  width: 37.5px;
-  -webkit-transform-origin: left top;
-  -moz-transform-origin: left top;
-  -ms-transform-origin: left top;
-  -o-transform-origin: left top;
-  transform-origin: left top;
-  border-right: 15px solid #fff;
-  border-top: 15px solid #fff;
-  border-radius: 2.5px !important;
-  content: '';
-  left: 35px;
-  top: 80px;
-  position: absolute;
-}
+    .crossmark-circle .background {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background: #cb2626;
+        position: absolute;
+    }
+
+        #success_tic .checkmark-circle .checkmark {
+            border-radius: 5px;
+        }
+    #error_tic .crossmark-circle .crossmark {
+        border-radius: 5px;
+    }
 
 
+    #success_tic .checkmark-circle .checkmark.draw:after {
+        -webkit-animation-delay: 300ms;
+        -moz-animation-delay: 300ms;
+        animation-delay: 300ms;
+        -webkit-animation-duration: 1s;
+        -moz-animation-duration: 1s;
+        animation-duration: 1s;
+        -webkit-animation-timing-function: ease;
+        -moz-animation-timing-function: ease;
+        animation-timing-function: ease;
+        -webkit-animation-name: checkmark;
+        -moz-animation-name: checkmark;
+        animation-name: checkmark;
+        -webkit-transform: scaleX(-1) rotate(135deg);
+        -moz-transform: scaleX(-1) rotate(135deg);
+        -ms-transform: scaleX(-1) rotate(135deg);
+        -o-transform: scaleX(-1) rotate(135deg);
+        transform: scaleX(-1) rotate(135deg);
+        -webkit-animation-fill-mode: forwards;
+        -moz-animation-fill-mode: forwards;
+        animation-fill-mode: forwards;
+    }
+
+    #success_tic .checkmark-circle .checkmark:after {
+        opacity: 1;
+        height: 75px;
+        width: 37.5px;
+        -webkit-transform-origin: left top;
+        -moz-transform-origin: left top;
+        -ms-transform-origin: left top;
+        -o-transform-origin: left top;
+        transform-origin: left top;
+        border-right: 15px solid #fff;
+        border-top: 15px solid #fff;
+        border-radius: 2.5px !important;
+        content: '';
+        left: 35px;
+        top: 80px;
+        position: absolute;
+    }
+
+
+    .crossmark:after {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        content: "\2573"; /* use the hex value here... */
+        font-size: 80px;
+        color: #FFFFFF;
+        font-weight: bold;
+        line-height: 120px;
+        text-align: center;
+    }
 </style>
 <meta charset=UTF-8>
+<div>
+    <!-- Modal -->
+    <div id="error_tic" class="modal fade" role="dialog">
+        <div class="modal-dialog">
 
+            <!-- Modal content-->
+            <div class="modal-content" id="modal-content">
+                <a class="close" onclick="close_modal()" data-dismiss="modal">&times;</a>
+                <div class="page-body">
+                    <div class="head" id="head_id">
+
+                        <div class="crossmark-circle">
+                            <div class="background"></div>
+                            <div class="crossmark draw"></div>
+                        </div>
+                        <div id="modal_error_id">
+
+
+                        </div>
+
+                        <!--Message--->
+                    </div>
+
+
+                </div>
+                <div id="txn_btn">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
 <div>
     <!-- Modal -->
     <div id="success_tic" class="modal fade" role="dialog">
@@ -120,13 +210,14 @@
             <div class="modal-content" id="modal-content">
                 <a class="close" onclick="close_modal()" data-dismiss="modal">&times;</a>
                 <div class="page-body">
-                    <div class="head">
-                        <div id="modal_id">
+                    <div class="head" id="head_id">
+                        <div class="checkmark-circle">
+                            <div class="background"></div>
+                            <div class="checkmark draw"></div>
+                        </div>
+                        <div id="modal_success_id">
 
-                            <div class="checkmark-circle">
-                                <div class="background"></div>
-                                <div class="checkmark draw"></div>
-                            </div>
+
                         </div>
 
                         <!--Message--->
@@ -135,7 +226,7 @@
 
                 </div>
                 <div id="txn_btn">
-                    
+
                 </div>
             </div>
         </div>
@@ -173,6 +264,13 @@
 
 </div>
 
+<div class="row" id="3ds_field">
+
+    <div class="input-group-append">
+        <input type="checkbox" id="3ds_checkbox" >
+        <label for="3ds_checkbox">&nbsp;&nbsp;Autenticar Transacción?</label>
+    </div>
+</div>
 <div class="section2 col-sm-4">
     <label id="action_label">Tipo de venta:</label>
     <div class="item-box input-group">
@@ -180,11 +278,7 @@
             <option style="width: 200px" id="keyvalidation" value="keyvalidation">Validación de Credenciales</option>
             <option style="width: 200px" id="direct" value="direct">Directa</option>
             <option style="width: 200px" id="msi" value="msi">MSI</option>
-            <option style="width: 200px" id="auth" value="auth">PreAuth-PostAuth</option>
-            <option style="width: 200px" id="3ds" value="3ds">Autenticación 3DS</option>
-            <option style="width: 200px" id="tokenization" value="tokenization">Tokenización de Tarjetas</option>
             <option style="width: 200px" id="concurrent" value="concurrent">Cargos recurrentes</option>
-            <option style="width: 200px" id="scheduled" value="scheduled">Cargos recurrentes Agendados</option>
         </select>
 
     </div>
@@ -202,9 +296,11 @@
 
         <input type="password" style="width: 200px" class="form-control" name="apisec" id="apisec" />
         <div class="input-group-append">
-            <button id="show_password" class="btn btn-primary" type="button" onclick="show_pwd(this)"> <span  id="apisec_span" class="fa fa-eye-slash apisec icon"></span> </button>
+            <button id="show_password" class="btn btn-primary" type="button" onclick="show_pwd(this)"> <span id="apisec_span" class="fa fa-eye-slash apisec icon"></span> </button>
         </div>
     </div>
+
+
 
 </div>
 

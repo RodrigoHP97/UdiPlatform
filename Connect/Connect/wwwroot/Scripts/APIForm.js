@@ -10,12 +10,12 @@ var jpost = new Object;
 var list = [];
 var post = new Object;
 var repost = {}
-var Req_Obj = new Object;
+
 var orderObj = new Object;
 var redirect = new Object;
 var onComplete = new Object;
 var par_Obj = new Object;
-
+var Req_Obj = new Object;
 var final = {};
 
 function sort_by_key(array, key) {
@@ -37,7 +37,7 @@ function load_config() {
 
     //Armamos formulario
     jconf.then((value) => {
-
+        Req_Obj = {};
         var jval = $('#type_of_selling').children(":selected").attr("id");
 
 
@@ -79,7 +79,12 @@ function load_config() {
             $('#buttonData').before('<div id="div_master"></div>');
 
             gen_Sort.map(function (value) {
-                if (Object.keys(value)[0] != 'post' && Object.keys(value)[0] != 'redirect' && Object.keys(value)[0] != 'parentChild' && Object.keys(value)[0] != 'onComplete') {
+                if (Object.keys(value)[0] != 'post' &&
+                    Object.keys(value)[0] != 'redirect' &&
+                    Object.keys(value)[0] != 'parentChild' &&
+                    Object.keys(value)[0] != 'onComplete' &&
+                    Object.keys(value)[0] != '3ds' &&
+                    Object.keys(value)[0] != 'services') {
 
                     list.push(value.name);
 
@@ -152,10 +157,9 @@ function load_config() {
                 }
                 else
                 {
-                    if (Object.keys(value)[0] == 'post') { jpost = value.post; pay_post = value.post; Req_Obj = value.parentChild }
+                    if (Object.keys(value)[0] == 'post') { jpost = value.post; pay_post = value.post;  }
                     if (Object.keys(value)[0] == 'parentChild') { Req_Obj = value.parentChild }
                     if (Object.keys(value)[0] == 'onComplete') { onComplete = value.onComplete }
-                   
                     if (Object.keys(value)[0] == 'redirect') {
                         Object.keys(value.redirect).map(function (ind) {
                             redirect[ind] = value.redirect[ind]
@@ -262,26 +266,29 @@ function arrJ(obj, res, par, child) {
     return Object.assign(final, result)
 }
 
-function sendTrans() {
-
-    if (!Req_Obj) {
+function validateCard(obj) {
+    if (Object.keys(Req_Obj).length == 0) {
         Object.keys(jpost).map(function (key) {
+            obj[key] = {};
             var ex_Obj = jpost[key];
             for (const i in ex_Obj) {
                 console.log(ex_Obj, i, ex_Obj[i]);
                 if (i == 'number') {
-                    jpost[key][i] = $('#' + i).val().split(' ').join('');
+                    obj[key][i] = $('#' + i).val().split(' ').join('');
                 }
                 else {
-                    jpost[key][i] = $('#' + i).val();
+                    obj[key][i] = $('#' + i).val();
                 }
             }
 
         })
+        return obj;
     }
+}
+
+function sendTrans() {
    
     postData($('#apikey').val(), $('#apisec').val());
-
 
 }
 function show_pwd(el) {
@@ -321,17 +328,23 @@ $(document).ready(function () {
 
 function postData(apiKey, apiSec) {
     var hashdata = new Object;
-    var paysend = arrJ(Req_Obj, {});
-    if (!paysend['order']) {
-        Object.assign(paysend, orderGen())
+    if (Object.keys(Req_Obj).length>0) {
+        var paysend = arrJ(Req_Obj, {});
+        if (!paysend['order']) {
+            Object.assign(paysend, orderGen())
+        }
+        else {
+            Object.assign(paysend.order, orderGen().order)
+        }
     }
     else {
-        Object.assign(paysend.order, orderGen().order)
+        paysend=validateCard({});
     }
-    jpost.payload = JSON.stringify(paysend);
-    jpost.clientId = uuidv4()
-    jpost.timezone = Date.now();
-    var message = apiKey + jpost.clientId + jpost.timezone + jpost.payload;
+
+    var payload = JSON.stringify(paysend);
+    var clientId = uuidv4()
+    var timezone = Date.now();
+    var message = apiKey + clientId + timezone + payload;
     var controller = sep_conf[$('#hash_action').val()].controller; 
     
     hashdata.message = message;
@@ -347,7 +360,7 @@ function postData(apiKey, apiSec) {
         complete: function (response) {
             $('#hashExtended').val(response.responseJSON.replace(/\"/g, ""));
             newHash = response.responseJSON.replace(/\"/g, "");
-            jpost.sign = newHash;
+            var sign = newHash;
 
             post.url = $('#action').val() + redirect.url + redirect.id;
 
@@ -361,7 +374,7 @@ function postData(apiKey, apiSec) {
 
             repost.ResponseCatcher = redirect.ResponseCatcher;
 
-            post.Payload = jpost.payload;
+            post.Payload = payload;
 
             post.url_params = redirect.param;
 
@@ -371,11 +384,11 @@ function postData(apiKey, apiSec) {
 
             post.headers["Api-Key"] = $('#apikey').val();
 
-            post.headers["Client-Request-Id"] = jpost.clientId;
+            post.headers["Client-Request-Id"] = clientId;
 
-            post.headers["Timestamp"] = jpost.timezone;
+            post.headers["Timestamp"] = timezone;
 
-            post.headers["Message-Signature"] = jpost.sign;
+            post.headers["Message-Signature"] = sign;
 
             console.log('data', post);
 
@@ -383,7 +396,6 @@ function postData(apiKey, apiSec) {
             return newHash;
         }
     });
-    return jpost.sign;
 };
 
 function ExecTrans(params) {
@@ -392,16 +404,31 @@ function ExecTrans(params) {
 
     data.post = JSON.stringify(params);
 
-    $.ajax({
-        type: params.Httpmethod,
-        url: window.location.origin + '/' + params.controller + '/' + params.url_params,
-        dataType: 'json',
-        data: data,
-        success: function (response) {
-            console.log('respuesta', response);
-            SuccessPage(response);
-        }
-    })
+    if (validateCardNumber($('#number').val())) {
+
+        $.ajax({
+            type: params.Httpmethod,
+            url: window.location.origin + '/' + params.controller + '/' + params.url_params,
+            dataType: 'json',
+            data: data,
+            error: function (response) {
+                console.log(response);
+            },
+            success: function (response) {
+                console.log('respuesta', response);
+                if (JSON.parse(response).Code) {
+                    FailurePage(response);
+                }
+                else {
+                    SuccessPage(response);
+                }
+
+            }
+        })
+    }
+    else {
+        FailurePage('{"Message":"No. Tarjeta NO valida"}');
+    }
 }
 function orderGen() {
 
@@ -418,7 +445,6 @@ function orderGen() {
 
 function SuccessPage(params) {
     $("#success_tic").modal('show');
-
     onComplete.map(function (ret) {
 
         if (ret.type != 'button') {
@@ -428,7 +454,7 @@ function SuccessPage(params) {
             var msj_div = document.createElement('div');
             msj_div.setAttribute('id', 'txn' + ret.id);
             message_str.setAttribute('id', 'txn' + ret.id + '_header');
-            $('#modal_id').append(msj_div);
+            $('#modal_success_id').append(msj_div);
             if (ret.label) {
                 var message = ret.label;
                 if (ret.key) {
@@ -484,7 +510,64 @@ function SuccessPage(params) {
 }
 
 function close_modal() {
-
+    var range = document.createRange();
+    range.selectNodeContents(document.getElementById("modal_success_id"));
+    range.selectNodeContents(document.getElementById("modal_error_id"));
+    range.deleteContents();
     $("#success_tic").modal('hide');
+    $("#error_tic").modal('hide');
 }
 
+function FailurePage(params) {
+    $('#txnerror').remove();
+    var msj = JSON.parse(params).Message
+    var msj_div = document.createElement('h2');
+    msj_div.setAttribute('id', 'txnerror');
+    $('#modal_error_id').append(msj_div);
+    $("#error_tic").modal('show');
+    msj_div.innerHTML = msj;
+
+}
+
+const validateCardNumber = number => {
+    //Check if the number contains only numeric value  
+    //and is of between 13 to 19 digits
+    number=number.split(' ').join('');
+    const regex = new RegExp("^[0-9]{13,19}$");
+    if (!regex.test(number)) {
+        return false;
+    }
+
+    return luhnCheck(number);
+}
+
+const luhnCheck = val => {
+    let checksum = 0; // running checksum total
+    let j = 1; // takes value of 1 or 2
+
+    // Process each digit one by one starting from the last
+    for (let i = val.length - 1; i >= 0; i--) {
+        let calc = 0;
+        // Extract the next digit and multiply by 1 or 2 on alternative digits.
+        calc = Number(val.charAt(i)) * j;
+
+        // If the result is in two digits add 1 to the checksum total
+        if (calc > 9) {
+            checksum = checksum + 1;
+            calc = calc - 10;
+        }
+
+        // Add the units element to the checksum total
+        checksum = checksum + calc;
+
+        // Switch the value of j
+        if (j == 1) {
+            j = 2;
+        } else {
+            j = 1;
+        }
+    }
+
+    //Check if it is divisible by 10 or not.
+    return (checksum % 10) == 0;
+}

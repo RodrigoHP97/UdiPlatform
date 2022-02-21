@@ -1,0 +1,362 @@
+[
+ {
+   "Code": "00",
+   "Message": "Aprobado",
+   "Detail": "Transacción Exitosa",
+   "Source": "Issuer"
+ },
+ {
+   "Code": "01",
+   "Message": "Ocurrió un error favor de contactar a su banco",
+   "Detail": "N:01:01-REFERRAL",
+   "Source": "Issuer"
+ },
+ {
+   "Code": "02",
+   "Message": "Ocurrió un error favor de contactar a su banco",
+   "Detail": "N:01:02-REFERRAL ",
+   "Source": "Issuer"
+ },
+ {
+   "Code": "03",
+   "Message": "Ocurrió un error favor de contactar a su banco",
+   "Detail": "N:03:03-INVLD MER ID",
+   "Source": "Issuer"
+ },
+ {
+   "Code": "04",
+   "Message": "Ocurrió un error favor de contactar a su banco",
+   "Detail": "N:60:04-HOLD-CALL CTR ",
+   "Source": "Issuer"
+ },
+ {
+   "Code": "05",
+   "Message": "Error de formato, intentar de nuevo",
+   "Detail": "N:51:05-DECLINED ",
+   "Source": "Issuer"
+ },
+ {
+   "Code": "06",
+   "Message": "Ocurrió un error favor de contactar a su banco",
+   "Detail": "N:01:06-DECLINED ",
+   "Source": "Issuer"
+ },
+ {
+   "Code": "07",
+   "Message": "Ocurrió un error favor de contactar a su banco",
+   "Detail": "N:60:07-HOLD-CALL CTR",
+   "Source": "Issuer"
+ },
+ {
+   "Code": "12",
+   "Message": "Ocurrió un error con la transacción",
+   "Detail": "N:12:12-INV TRAN ",
+   "Source": "Issuer"
+ },
+ {
+   "Code": "13",
+   "Message": "Ocurrió un error favor de contactar a su banco",
+   "Detail": "N:13:13-INV AMT",
+   "Source": "Issuer"
+ },
+ {
+   "Code": "14",
+   "Message": "Ocurrió un error favor de contactar a su banco",
+   "Detail": "N:14:14-INV ACCT NUM",
+   "Source": "Issuer"
+ },
+ {
+   "Code": "15",
+   "Message": "No such issuer ",
+   "Detail": "N:51:15-DECLINED ",
+   "Source": "Issuer"
+ },
+ {
+   "Code": "30",
+   "Message": "Error de formato, intentar de nuevo",
+   "Detail": "N:91:30-PLEASE RETRY ",
+   "Source": "Issuer"
+ },
+ {
+   "Code": "33",
+   "Message": "Ocurrió un error favor de contactar a su banco",
+   "Detail": "N:54:33-EXPIRED CARD ",
+   "Source": "Issuer"
+ },
+ {
+   "Code": "39",
+   "Message": "Cuenta sin crédito",
+   "Detail": "N:51:39-DECLINED ",
+   "Source": "Issuer"
+ },
+ {
+   "Code": "41",
+   "Message": "Ocurrió un error favor de contactar a su banco",
+   "Detail": "N:60:41-HOLD-CALL CTR ",
+   "Source": "Issuer"
+ },
+ {
+   "Code": "43",
+   "Message": "Ocurrió un error favor de contactar a su banco",
+   "Detail": "N:60:43-HOLD-CALL CTR  ",
+   "Source": "Issuer"
+ },
+ {
+   "Code": "51",
+   "Message": "Fondos Insuficientes",
+   "Detail": "N:51:51-DECLINED ",
+   "Source": "Issuer"
+ },
+ {
+   "Code": "54",
+   "Message": "Tarjeta Expirada",
+   "Detail": "N:54:54-EXPIRED CARD ",
+   "Source": "Issuer"
+ },
+ {
+   "Code": "55",
+   "Message": "PIN Incorrecto",
+   "Detail": "N:55:55-INCORRECT PIN ",
+   "Source": "Issuer"
+ },
+ {
+   "Code": "57",
+   "Message": "Ocurrió un error favor de contactar a su banco",
+   "Detail": "N:57:57-TXN NOT ALLOW ",
+   "Source": "Issuer"
+ },
+ {
+   "Code": "58",
+   "Message": "Transacción no permitida",
+   "Detail": "N:63:58-SERV NOT ALLOWED ",
+   "Source": "Issuer"
+ },
+ {
+   "Code": "61",
+   "Message": "Timout",
+   "Detail": "N:51:61-TRY AGAIN LATER ",
+   "Source": "Issuer"
+ },
+ {
+   "Code": "62",
+   "Message": "Ocurrió un error contactar a su banco",
+   "Detail": "N:63:62-SER NOT ALLOW ",
+   "Source": "Issuer"
+ },
+ {
+   "Code": "65",
+   "Message": "Timout",
+   "Detail": "N:51:65-TRY AGAIN LATER ",
+   "Source": "Issuer"
+ },
+ {
+   "Code": "68",
+   "Message": "Timout de respuesta",
+   "Detail": "N:91:68-PLEASE RETRY",
+   "Source": "Issuer"
+ },
+ {
+   "Code": "75",
+   "Message": "El número de intentos de PIN fue excedido",
+   "Detail": "N:75:75-PIN RETRY MAX ",
+   "Source": "Issuer"
+ },
+ {
+   "Code": "91",
+   "Message": "Fuera de servicio",
+   "Detail": "N:91:91-PLEASE RETRY ",
+   "Source": "Issuer"
+ },
+ {
+   "Code": "92",
+   "Message": "Ocurrió un error favor de contactar a su banco",
+   "Detail": "N:91:92-PLEASE RETRY ",
+   "Source": "Issuer"
+ },
+ {
+   "Code": "94",
+   "Message": "Transmisión duplicada",
+   "Detail": "N:94:94-DUPLICATE TRAN ",
+   "Source": "Issuer"
+ },
+ {
+   "Code": "96",
+   "Message": "Ha ocurrido un problema en sistema",
+   "Detail": "N:CE:96-SYSTEM PROBLEM ",
+   "Source": "Issuer"
+ },
+ {
+   "Code": "N:-5018",
+   "Message": "No transaction found for void",
+   "Detail": "N:-5018",
+   "Source": "IPG"
+ },
+ {
+   "Code": "N:-2303",
+   "Message": "Tarjeta inválida",
+   "Detail": "N:-2303",
+   "Source": "IPG"
+ },
+ {
+   "Code": "N:-30051",
+   "Message": "Timeout",
+   "Detail": "N:-30051",
+   "Source": "IPG"
+ },
+ {
+   "Code": "N:-5103",
+   "Message": "No se pudo autenticar la transacción",
+   "Detail": "N:-5103",
+   "Source": "IPG"
+ },
+ {
+   "Code": "N:-2304",
+   "Message": "Fecha de expiración inválida",
+   "Detail": "N:-2304",
+   "Source": "IPG"
+ },
+ {
+   "Code": "N:-5101",
+   "Message": "Autenticación fallida",
+   "Detail": "N:-5101",
+   "Source": "IPG"
+ },
+ {
+   "Code": "N:-5315",
+   "Message": "La transacción ya fue declinada",
+   "Detail": "N:-5315",
+   "Source": "IPG"
+ },
+ {
+   "Code": "N:-5005",
+   "Message": "Límite excedido",
+   "Detail": "N:-5005",
+   "Source": "IPG"
+ },
+ {
+   "Code": "N:-5002",
+   "Message": "Marca no soportada",
+   "Detail": "N:-5002",
+   "Source": "IPG"
+ },
+ {
+   "Code": "N:-5993",
+   "Message": "Transacción cancelada por el usuario",
+   "Detail": "N:-5993",
+   "Source": "IPG"
+ },
+ {
+   "Code": "N:-30031",
+   "Message": "Moneda o Servicio no configurado",
+   "Detail": "N:-30031",
+   "Source": "IPG"
+ },
+ {
+   "Code": "N:-7778",
+   "Message": "Timeout",
+   "Detail": "N:-7778",
+   "Source": "IPG"
+ },
+ {
+   "Code": "N:-50698",
+   "Message": "Hubo incompatabilidad en la transacción",
+   "Detail": "N:-50698",
+   "Source": "IPG"
+ },
+ {
+   "Code": "N:-5003",
+   "Message": "Este número de orden ya existe",
+   "Detail": "N:-5003",
+   "Source": "IPG"
+ },
+ {
+   "Code": "N:-5005",
+   "Message": "Demasiados intentos",
+   "Detail": "N:-5005",
+   "Source": "IPG"
+ },
+ {
+   "Code": "N:-5009",
+   "Message": "No se puede retornar esta transacción",
+   "Detail": "N:-5009",
+   "Source": "IPG"
+ },
+ {
+   "Code": "N:-7777",
+   "Message": "Sistema ocupado",
+   "Detail": "N:-7777",
+   "Source": "IPG"
+ },
+ {
+   "Code": "N:-5996",
+   "Message": "Tipo de tarjeta inválido",
+   "Detail": "N:-5996",
+   "Source": "IPG"
+ },
+ {
+   "Code": "N:-95001",
+   "Message": "Moneda no soportada para esta tarjeta",
+   "Detail": "N:-95001",
+   "Source": "IPG"
+ },
+ {
+   "Code": "N:-5995",
+   "Message": "La orden ya es muy antigua",
+   "Detail": "N:-5995",
+   "Source": "IPG"
+ },
+ {
+   "Code": "N:-50004",
+   "Message": "Petición inválida",
+   "Detail": "N:-50004",
+   "Source": "IPG"
+ },
+ {
+   "Code": "N:-96000",
+   "Message": "MSI no soportado para esta tienda",
+   "Detail": "N:-96000",
+   "Source": "IPG"
+ },
+ {
+   "Code": "N:-5994",
+   "Message": "La marca no coincide con la tarjeta",
+   "Detail": "N:-5994",
+   "Source": "IPG"
+ },
+ {
+   "Code": "N:-5102",
+   "Message": "Error de autenticación ",
+   "Detail": "N:-5102",
+   "Source": "IPG"
+ },
+ {
+   "Code": "N:-50687",
+   "Message": "Autenticación fallida",
+   "Detail": "N:-50687",
+   "Source": "IPG"
+ },
+ {
+   "Code": "N:-5022",
+   "Message": "No se puede cancelar la transacción",
+   "Detail": "N:-5022",
+   "Source": "IPG"
+ },
+ {
+   "Code": "N:-5014",
+   "Message": "Problema de validación",
+   "Detail": "N:-5014",
+   "Source": "IPG"
+ },
+ {
+   "Code": "N:-10601",
+   "Message": "El monto a regresar excede al original",
+   "Detail": "N:-10601",
+   "Source": "IPG"
+ },
+ {
+   "Code": "N:-10501",
+   "Message": "La autorización ya fue completada",
+   "Detail": "N:-10501",
+   "Source": "IPG"
+ }
+]
