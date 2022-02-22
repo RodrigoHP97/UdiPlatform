@@ -1,11 +1,5 @@
 [
  {
-   "Code": "00",
-   "Message": "Aprobado",
-   "Detail": "Transacción Exitosa",
-   "Source": "Issuer"
- },
- {
    "Code": "01",
    "Message": "Ocurrió un error favor de contactar a su banco",
    "Detail": "N:01:01-REFERRAL",
@@ -48,139 +42,139 @@
    "Source": "Issuer"
  },
  {
-   "Code": "12",
+   "Code": "012",
    "Message": "Ocurrió un error con la transacción",
    "Detail": "N:12:12-INV TRAN ",
    "Source": "Issuer"
  },
  {
-   "Code": "13",
+   "Code": "013",
    "Message": "Ocurrió un error favor de contactar a su banco",
    "Detail": "N:13:13-INV AMT",
    "Source": "Issuer"
  },
  {
-   "Code": "14",
+   "Code": "014",
    "Message": "Ocurrió un error favor de contactar a su banco",
    "Detail": "N:14:14-INV ACCT NUM",
    "Source": "Issuer"
  },
  {
-   "Code": "15",
-   "Message": "No such issuer ",
+   "Code": "015",
+   "Message": "Ocurrió un Error favor de contactar a su banco",
    "Detail": "N:51:15-DECLINED ",
    "Source": "Issuer"
  },
  {
-   "Code": "30",
+   "Code": "030",
    "Message": "Error de formato, intentar de nuevo",
    "Detail": "N:91:30-PLEASE RETRY ",
    "Source": "Issuer"
  },
  {
-   "Code": "33",
+   "Code": "033",
    "Message": "Ocurrió un error favor de contactar a su banco",
    "Detail": "N:54:33-EXPIRED CARD ",
    "Source": "Issuer"
  },
  {
-   "Code": "39",
+   "Code": "039",
    "Message": "Cuenta sin crédito",
    "Detail": "N:51:39-DECLINED ",
    "Source": "Issuer"
  },
  {
-   "Code": "41",
+   "Code": "041",
    "Message": "Ocurrió un error favor de contactar a su banco",
    "Detail": "N:60:41-HOLD-CALL CTR ",
    "Source": "Issuer"
  },
  {
-   "Code": "43",
+   "Code": "043",
    "Message": "Ocurrió un error favor de contactar a su banco",
    "Detail": "N:60:43-HOLD-CALL CTR  ",
    "Source": "Issuer"
  },
  {
-   "Code": "51",
+   "Code": "051",
    "Message": "Fondos Insuficientes",
    "Detail": "N:51:51-DECLINED ",
    "Source": "Issuer"
  },
  {
-   "Code": "54",
+   "Code": "054",
    "Message": "Tarjeta Expirada",
    "Detail": "N:54:54-EXPIRED CARD ",
    "Source": "Issuer"
  },
  {
-   "Code": "55",
+   "Code": "055",
    "Message": "PIN Incorrecto",
    "Detail": "N:55:55-INCORRECT PIN ",
    "Source": "Issuer"
  },
  {
-   "Code": "57",
+   "Code": "057",
    "Message": "Ocurrió un error favor de contactar a su banco",
    "Detail": "N:57:57-TXN NOT ALLOW ",
    "Source": "Issuer"
  },
  {
-   "Code": "58",
+   "Code": "058",
    "Message": "Transacción no permitida",
    "Detail": "N:63:58-SERV NOT ALLOWED ",
    "Source": "Issuer"
  },
  {
-   "Code": "61",
+   "Code": "061",
    "Message": "Timout",
    "Detail": "N:51:61-TRY AGAIN LATER ",
    "Source": "Issuer"
  },
  {
-   "Code": "62",
+   "Code": "062",
    "Message": "Ocurrió un error contactar a su banco",
    "Detail": "N:63:62-SER NOT ALLOW ",
    "Source": "Issuer"
  },
  {
-   "Code": "65",
+   "Code": "065",
    "Message": "Timout",
    "Detail": "N:51:65-TRY AGAIN LATER ",
    "Source": "Issuer"
  },
  {
-   "Code": "68",
+   "Code": "068",
    "Message": "Timout de respuesta",
    "Detail": "N:91:68-PLEASE RETRY",
    "Source": "Issuer"
  },
  {
-   "Code": "75",
+   "Code": "075",
    "Message": "El número de intentos de PIN fue excedido",
    "Detail": "N:75:75-PIN RETRY MAX ",
    "Source": "Issuer"
  },
  {
-   "Code": "91",
+   "Code": "091",
    "Message": "Fuera de servicio",
    "Detail": "N:91:91-PLEASE RETRY ",
    "Source": "Issuer"
  },
  {
-   "Code": "92",
+   "Code": "092",
    "Message": "Ocurrió un error favor de contactar a su banco",
    "Detail": "N:91:92-PLEASE RETRY ",
    "Source": "Issuer"
  },
  {
-   "Code": "94",
+   "Code": "094",
    "Message": "Transmisión duplicada",
    "Detail": "N:94:94-DUPLICATE TRAN ",
    "Source": "Issuer"
  },
  {
-   "Code": "96",
+   "Code": "096",
    "Message": "Ha ocurrido un problema en sistema",
    "Detail": "N:CE:96-SYSTEM PROBLEM ",
    "Source": "Issuer"

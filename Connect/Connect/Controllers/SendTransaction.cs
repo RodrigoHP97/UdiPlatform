@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using RestSharp;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -8,7 +9,6 @@ namespace WebApplication1.Controllers
 {
     public class SendTransactionController : Controller
     {
-       
 
         [HttpPost]
         public JsonResult PostTransaction(Jpost postData)
@@ -31,6 +31,7 @@ namespace WebApplication1.Controllers
 
             var request = new RestRequest(Method.POST); 
             //Agregamos los headers
+
 
             foreach (var val in headers.Keys)
             {
@@ -65,12 +66,24 @@ namespace WebApplication1.Controllers
                     }
                     else
                     {
-                        //Aquí se mapean los errores
-                        var Error = new JpostException();
-                        Error.Code = "Error";
-                        Error.Message = "La transacción no pudo ser completada exitosamente";
+                        using (StreamReader r = new StreamReader("../Connect/wwwroot/Configurations/DeclineCodes.json"))
+                        {
+                            string json = r.ReadToEnd();
+                            dynamic array = JsonConvert.DeserializeObject(json);
+                            var Error = new JpostException();
+                            Error.Code = "Error";
+                            foreach (var item in array)
+                            {
+                                if (code==item["Code"].Value) {
+                                    Error.Message = item["Message"];
 
-                        sended.Code = JsonConvert.SerializeObject(Error);
+                                    sended.Code = JsonConvert.SerializeObject(Error);
+                                }
+                            }
+                        }
+                        //Aquí se mapean los errores
+
+
                     }
                 }
                 catch (Exception)
@@ -91,8 +104,9 @@ namespace WebApplication1.Controllers
             
         }
            
-        }   
-    }
+        }
+
+}
 
 public class Jpost
 {
