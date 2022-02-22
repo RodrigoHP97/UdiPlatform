@@ -91,7 +91,7 @@ namespace WebApplication1.Controllers
                     var Error = new JpostException();
                     Error.Code = "Error";
                     Error.Source = "Usuario";
-                    Error.Message = "Favor de corroborar las credenciales";
+                    Error.Message = "Favor de corroborar las credenciales o que la tienda tenga habilitado el servicio";
 
                     sended.Code = JsonConvert.SerializeObject(Error);
 

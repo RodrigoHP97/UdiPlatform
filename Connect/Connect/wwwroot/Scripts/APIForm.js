@@ -501,7 +501,7 @@ function SuccessPage(params) {
             $('#' + ret.id + '_btn').remove();
             var msj_div = document.createElement('div');
             msj_div.setAttribute('id', ret.id + '_btn');
-            $('#modal-content').append(msj_div);
+            $('#modal-success-content').append(msj_div);
             var txn_button = '<button id="' + ret.id + '" type="button" onclick="voidTrans(' + JSON.parse(params)[ret.key] + ')" class="center col-sm-12 btn-danger">'+ret.label+'</button>'
             $('#' + ret.id+'_btn').append(txn_button);
         }
