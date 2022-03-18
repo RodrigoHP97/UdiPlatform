@@ -50,6 +50,7 @@ C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\bin\Debug\net5.0
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\bin\Debug\net5.0\Connect.Views.dll
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\bin\Debug\net5.0\Connect.Views.pdb
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\bin\Debug\net5.0\Humanizer.dll
+C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\bin\Debug\net5.0\System.Net.Http.Formatting.dll
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\bin\Debug\net5.0\Microsoft.AspNetCore.Razor.Language.dll
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\bin\Debug\net5.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\bin\Debug\net5.0\Microsoft.CodeAnalysis.dll
@@ -79,6 +80,9 @@ C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\bin\Debug\net5.0
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\bin\Debug\net5.0\Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\bin\Debug\net5.0\Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\bin\Debug\net5.0\Newtonsoft.Json.dll
+C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll
+C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\bin\Debug\net5.0\RestClient.dll
+C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\bin\Debug\net5.0\RestSharp.dll
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\bin\Debug\net5.0\System.Composition.AttributedModel.dll
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\bin\Debug\net5.0\System.Composition.Convention.dll
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\bin\Debug\net5.0\System.Composition.Hosting.dll
@@ -155,6 +159,8 @@ C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\bin\Debug\net5.0
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\bin\Debug\net5.0\runtimes\win-arm64\lib\net5.0\dotnet-aspnet-codegenerator-design.exe
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Connect.csproj.AssemblyReference.cache
+C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Connect.csproj.ResolveComReference.cache
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Connect.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Connect.AssemblyInfoInputs.cache
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Connect.AssemblyInfo.cs
@@ -169,9 +175,15 @@ C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Connect.TagHelpers.output.cache
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Connect.RazorCoreGenerate.cache
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Razor\Views\Home\Index.cshtml.g.cs
+C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Razor\Views\Response\Failure.cshtml.g.cs
+C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Razor\Views\Response\Success.cshtml.g.cs
+C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Razor\Views\Service\API.cshtml.g.cs
+C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Razor\Views\Service\Connect.cshtml.g.cs
+C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Razor\Views\Service\Store_Creation.cshtml.g.cs
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Razor\Views\Shared\Error.cshtml.g.cs
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Razor\Views\Shared\_Layout.cshtml.g.cs
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
+C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Razor\Views\ThreeDSValidator\Authentication.cshtml.g.cs
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Razor\Views\_ViewImports.cshtml.g.cs
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Razor\Views\_ViewStart.cshtml.g.cs
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Connect.RazorTargetAssemblyInfo.cache
@@ -182,14 +194,3 @@ C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\ref\Connect.dll
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Connect.pdb
 C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Connect.genruntimeconfig.cache
-C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Connect.csproj.AssemblyReference.cache
-C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Razor\Views\Response\Failure.cshtml.g.cs
-C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Razor\Views\Response\Success.cshtml.g.cs
-C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Razor\Views\Service\API.cshtml.g.cs
-C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Razor\Views\Service\Connect.cshtml.g.cs
-C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\bin\Debug\net5.0\System.Net.Http.Formatting.dll
-C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll
-C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\bin\Debug\net5.0\RestSharp.dll
-C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Connect.csproj.ResolveComReference.cache
-C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\bin\Debug\net5.0\RestClient.dll
-C:\Users\herib\Documents\Fiserv-Rodrigo\Connect\Connect\Connect\obj\Debug\net5.0\Razor\Views\Service\Store_Creation.cshtml.g.cs

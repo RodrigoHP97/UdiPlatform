@@ -39,69 +39,8 @@
         "parent": "expiryDate",
         "label": "Mes:",
         "type": "select",
-        "class": "",
-        "options": [
-          {
-            "id": "jan",
-            "value": "01",
-            "label": "01"
-          },
-          {
-            "id": "feb",
-            "value": "02",
-            "label": "02"
-          },
-          {
-            "id": "mar",
-            "value": "03",
-            "label": "03"
-          },
-          {
-            "id": "apr",
-            "value": "04",
-            "label": "04"
-          },
-          {
-            "id": "may",
-            "value": "05",
-            "label": "05"
-          },
-          {
-            "id": "jun",
-            "value": "06",
-            "label": "06"
-          },
-          {
-            "id": "jul",
-            "value": "07",
-            "label": "07"
-          },
-          {
-            "id": "ago",
-            "value": "08",
-            "label": "08"
-          },
-          {
-            "id": "sep",
-            "value": "09",
-            "label": "09"
-          },
-          {
-            "id": "oct",
-            "value": "10",
-            "label": "10"
-          },
-          {
-            "id": "nov",
-            "value": "11",
-            "label": "11"
-          },
-          {
-            "id": "dic",
-            "value": "12",
-            "label": "12"
-          }
-        ]
+        "subtype":"month",
+        "class": ""
       },
       {
         "order": 5,
@@ -109,64 +48,8 @@
         "parent": "expiryDate",
         "label": "Año:",
         "type": "select",
-        "class": "",
-        "options": [
-          {
-            "id": "2023",
-            "value": "23",
-            "label": "2023"
-          },
-          {
-            "id": "2024",
-            "value": "24",
-            "label": "2024"
-          },
-          {
-            "id": "2025",
-            "value": "25",
-            "label": "2025"
-          },
-          {
-            "id": "2026",
-            "value": "26",
-            "label": "2026"
-          },
-          {
-            "id": "2027",
-            "value": "27",
-            "label": "2027"
-          },
-          {
-            "id": "2028",
-            "value": "28",
-            "label": "2028"
-          },
-          {
-            "id": "2029",
-            "value": "29",
-            "label": "2029"
-          },
-          {
-            "id": "2030",
-            "value": "30",
-            "label": "2030"
-          },
-          {
-            "id": "2031",
-            "value": "31",
-            "label": "2031"
-          },
-          {
-            "id": "2032",
-            "value": "32",
-            "label": "2032"
-          },
-          {
-            "id": "2033",
-            "value": "33",
-            "label": "2033"
-          }
-        ]
+        "subtype":"year",
+        "class": ""
       },
       {
         "order": 1,
@@ -195,27 +78,146 @@
     "partial": [
       {
         "3ds": {
-          "type": "insert",
-          "request": {
-            "authenticationRequest": {
-              "authenticationType": "Secure3D21AuthenticationRequest",
-              "termURL": "https://https://localhost:44384/ThreeDSValidator/Authentication",
-              "methodNotificationURL": "https://https://localhost:44384/ThreeDSValidator/Notification",
-              "challengeIndicator": "",
-              "challengeWindowSize": ""
+          "version": {
+            "1.0": {
+              "ReqVal": "Secure3D10AuthenticationUpdateRequest",
+              "form": [
+                {
+                  "type": "form",
+                  "action": "acsURL",
+                  "name": "acsURL",
+                  "method": "POST"
+                },
+                {
+                  "type": "input",
+                  "name": "PaReq",
+                  "value": "payerAuthenticationRequest"
+                },
+                {
+                  "type": "input",
+                  "name": "TermUrl",
+                  "value": "termURL"
+                },
+                {
+                  "type": "input",
+                  "name": "MD",
+                  "value": "merchantData"
+                }
+              ]
+            },
+            "2.0": {
+              "ReqVal": "Secure3D20AuthenticationUpdateRequest",
+              "form": [
+                {
+                  "type": "form",
+                  "action": "acsURL",
+                  "name": "acsURL",
+                  "method": "POST"
+                },
+                {
+                  "type": "input",
+                  "name": "creq",
+                  "value": "cReq"
+                },
+                {
+                  "type": "input",
+                  "name": "threeDSSessionData",
+                  "value": "sessionData"
+                }
+              ]
+            },
+            "2.1": {
+              "ReqVal": "Secure3D21AuthenticationUpdateRequest",
+              "form": [
+                {
+                  "type": "form",
+                  "action": "acsURL",
+                  "name": "acsURL",
+                  "method": "POST"
+                },
+                {
+                  "type": "input",
+                  "name": "creq",
+                  "value": "cReq"
+                },
+                {
+                  "type": "input",
+                  "name": "threeDSSessionData",
+                  "value": "sessionData"
+                }
+              ]
             }
           },
+          "prepatch": {
+            "authenticationType": "",
+            "methodNotificationStatus": "RECEIVED"
+          },
+          "postpatch": {
+            "authenticationType": "Secure3D21AuthenticationUpdateRequest",
+            "billingAddress": {
+                "company": "Test Company",
+                "address1": "5565 Glenridge Conn",
+                "address2": "Suite 123",
+                "city": "Atlanta",
+                "region": "Georgia",
+                "postalCode": "30342",
+                "country": "USA"
+            },
+            "securityCode": "",
+            "acsResponse": {
+                "cRes": ""
+            }
+        },
+          "redirect": {
+            "url": "/payments",
+            "param": "PatchTransaction",
+            "id": "ipgTransactionId",
+            "controller": "SendTransaction",
+            "content": "application/json",
+            "async": true,
+            "Httpmethod": "PATCH",
+            "case": "secondary"
+          },
           "input": {
-            "name": "3ds_box",
-            "label": "¿Autenticar transacción?",
-            "type": "checkbox"
+            "name": "3ds",
+            "label": "&nbsp;&nbsp;¿Autenticar transacción?",
+            "type": "checkbox",
+            "class": "",
+            "action": "insert",
+            "parent": "authenticationRequest",
+            "state": "true"
           },
           "form": [
+            {
+              "name": "authenticationType",
+              "type": "hidden",
+              "value": "Secure3D21AuthenticationRequest",
+              "parent": "authenticationRequest",
+              "class": "hide"
+            },
+            {
+              "name": "termURL",
+              "type": "hidden",
+              "concat_type": "URL",
+              "value": "/ThreeDSValidator/Authentication",
+              "parent": "authenticationRequest",
+              "class": "hide"
+            },
+            {
+              "name": "methodNotificationURL",
+              "type": "hidden",
+              "concat_type": "URL",
+              "value": "/ThreeDSValidator/Notification",
+              "parent": "authenticationRequest",
+              "class": "hide"
+            },
             {
               "name": "challengeIndicator",
               "label": "Método de autenticación:",
               "type": "select",
-              "class": "",
+              "master": "3ds",
+              "parent": "authenticationRequest",
+              "class": "hide",
               "options": [
                 {
                   "id": "first",
@@ -243,7 +245,9 @@
               "name": "challengeWindowSize",
               "label": "Tamaño de la ventana:",
               "type": "select",
-              "class": "",
+              "class": "hide",
+              "parent": "authenticationRequest",
+              "master": "3ds",
               "options": [
                 {
                   "id": "first",
@@ -276,10 +280,17 @@
         }
       },
       {
-        "tokenization": {
-          "type": "update",
+        "Tokenization": {
           "request": {
             
+          },
+          "input": {
+            "name": "tokenization",
+            "label": "&nbsp;&nbsp;Tokenizar la tarjeta",
+            "type": "checkbox",
+            "class": "",
+            "action": "update",
+            "state": "false"
           }
         }
       }
@@ -312,6 +323,7 @@
           "method": "Validation",
           "content": "application/json",
           "async": true,
+          "case": "primary",
           "Httpmethod": "POST",
           "ResponseCatcher": [
             "orderId",
@@ -416,7 +428,7 @@
       {
         "services": [
           "orderId",
-          "3Ds",
+          "3ds",
           "Tokenization"
         ]
       }
@@ -432,6 +444,7 @@
           "controller": "SendTransaction",
           "method": "Validation",
           "content": "application/json",
+          "case": "primary",
           "async": true,
           "Httpmethod": "POST"
         }
@@ -513,7 +526,7 @@
       {
         "services": [
           "orderId",
-          "3Ds",
+          "3ds",
           "Tokenization"
         ]
       },

@@ -6,17 +6,39 @@ var sep_conf = {
         "name":"hashExtended"
     }
 };
+
+$(document).ready(function () {
+    $(document).ajaxStart(function () {
+        $('#bckgloaderframe').removeClass('hide');
+    }).ajaxStop(function () {
+        $('#bckgloaderframe').addClass('hide');
+    });
+});
+
+$(document).ready(function () {
+    $(document).ajaxStart(function () {
+        $('#bckgloader').removeClass('hide');
+    }).ajaxStop(function () {
+        $('#bckgloader').addClass('hide');
+    });
+});
 var jpost = new Object;
 var list = [];
 var post = new Object;
 var repost = {}
-
+var services_conf;
+var version;
+var patch = {};
 var orderObj = new Object;
 var redirect = new Object;
 var onComplete = new Object;
 var par_Obj = new Object;
 var Req_Obj = new Object;
 var final = {};
+var auth;
+var authParent;
+var Sredirect;
+var authpatch;
 
 function sort_by_key(array, key) {
     return array.sort(function (a, b) {
@@ -47,6 +69,13 @@ function load_config() {
             var general_form = value.filter(function (case_config) {
                 if (Object.keys(case_config)[0] == 'general') {
                     return case_config;
+                }
+
+            });
+
+            value.filter(function (case_config) {
+                if (Object.keys(case_config)[0] == 'partial') {
+                    services_conf = case_config['partial'];
                 }
 
             });
@@ -87,76 +116,14 @@ function load_config() {
                     Object.keys(value)[0] != 'services') {
 
                     list.push(value.name);
-
-                    if (value.label != undefined) {
-
-                        var div = '<div class="form-group col-md-4 col-xs-6" id="' + value.name + '_field"></div>';
-
-                        var label = '<label class="control-label col-sm-12" id="' + value.name + '_label">' + value.label + '</label>';
-
-
-                        $('#div_master').append(div);
-
-
-                        //validamos tipo de input
-                        if (value.type == "select") {
-
-
-                            var select = label + '<select class="form-control" id="' + value.name + '" name="' + value.name + '"parent="'+ value.parent+'" style="width: 200px"></select>';
-
-                            $('#' + value.name + '_field').append(select);
-
-
-
-                            value.options.map(function (values) {
-
-                                var option = '<option style="width: 200px" id="' + values.id + '"  value="' + values.value + '">' + values.label + '</option>';
-
-                                $('#' + value.name).append(option);
-
-
-                            })
-
-                        }
-
-
-                        else {
-                            var input_div = label + '<div class="item-box input-group" id="' + value.name + '_input"></div>';
-
-                            $('#' + value.name + '_field').append(input_div);
-
-                            var input = '<input class="form-control" id="' + value.name + '"  style="width: 200px"></input>';
-
-                            $('#' + value.name + '_input').append(input);
-
-
-                            Object.keys(value).map(function (attributes) {
-
-                                if (value[attributes] != '') {
-                                    $('#' + value.name).attr(attributes, value[attributes]);
-                                }
-
-                            })
-
-
-                        }
-
-                    }
-                    else {
-
-                        var input = '<input id="' + value.name + '"></input>';
-
-                        $('#div_master').append(input);
-
-                        Object.keys(value).map(function (attributes) {
-
-                            $('#' + value.name).attr(attributes, value[attributes]);
-
-                        })
-                    }
+                    input_loader(value)
                 }
                 else
                 {
+                    //Mapeamos checkbox de servicios
+                    if (Object.keys(value)[0] == 'services') {
+                        servicesMapper(value.services);
+                    }
                     if (Object.keys(value)[0] == 'post') { jpost = value.post; pay_post = value.post;  }
                     if (Object.keys(value)[0] == 'parentChild') { Req_Obj = value.parentChild }
                     if (Object.keys(value)[0] == 'onComplete') { onComplete = value.onComplete }
@@ -178,6 +145,154 @@ function load_config() {
             }
         });
 }
+
+function servicesMapper(serv) {
+
+    serv.map(function (check) {
+        if (services_conf) {
+            services_conf.map(function (trans) {
+                if (trans[check]) {
+                    //construimos formulario escondido 
+                    var checkbox = trans[check].form;
+                    if (checkbox) {
+                        checkbox.map(function (value) {
+                            input_loader(value)
+
+                        })
+                        
+                    }
+                    if (trans[check].input) {
+                        input_loader(trans[check].input)
+                    }
+
+                    if (trans[check].version) {
+                        version = trans[check].version;
+                    }
+                    if (trans[check].prepatch) {
+                        patch = trans[check].prepatch;
+                    }
+                    if (trans[check].postpatch) {
+                        authpatch = trans[check].postpatch;
+                    }
+                    if (trans[check].redirect) {
+                        Sredirect = trans[check].redirect
+                    }
+                }
+            })
+        }
+
+
+    })
+
+}
+
+function input_loader(value) {
+
+    if (value.label != undefined) {
+
+        //input loader
+
+
+        //validamos tipo de input
+        if (value.type == "select") {
+
+            if (value.subtype == 'month') {
+                value.options = monthArrayLoader();
+            }
+            if (value.subtype == 'year') {
+                value.options = yearArrayLoader();
+            }
+            var div = '<div class="form-group col-md-4 col-xs-6 ' + value.class + '" master="'+value.master +'"  id="' + value.name + '_field"></div>';
+
+            var label = '<label class="control-label col-sm-12" id="' + value.name + '_label">' + value.label + '</label>';
+
+
+            $('#div_master').append(div);
+            var select = label + '<select class="form-control" id="' + value.name + '" name="' + value.name + '"parent="' + value.parent + '" style="width: 200px"></select>';
+
+            $('#' + value.name + '_field').append(select);
+
+
+
+            value.options.map(function (values) {
+
+                var option = '<option style="width: 200px" id="' + values.id + '"  value="' + values.value + '">' + values.label + '</option>';
+
+                $('#' + value.name).append(option);
+
+
+            })
+
+        }
+
+
+        else {
+            if (value.type != "checkbox") {
+            var div = '<div class="form-group col-md-4 col-xs-6 ' + value.class + '" id="' + value.name + '_field"></div>';
+
+            var label = '<label class="control-label col-sm-12" id="' + value.name + '_label">' + value.label + '</label>';
+
+
+            $('#div_master').append(div);
+
+           
+                var input_div = label + '<div class="item-box input-group" id="' + value.name + '_input"></div>';
+
+                $('#' + value.name + '_field').append(input_div);
+
+                var input = '<input class="form-control" id="' + value.name + '"  style="width: 200px"></input>';
+
+                $('#' + value.name + '_input').append(input);
+
+
+                Object.keys(value).map(function (attributes) {
+
+                    if (value[attributes] != '') {
+                        $('#' + value.name).attr(attributes, value[attributes]);
+                    }
+
+                })
+            }
+            else {
+                $('#'+ value.name + '_field').remove();
+                var div_c = document.createElement('div');
+                div_c.setAttribute('id', value.name + '_field');
+                div_c.setAttribute('class','input-group-append')
+                $('#serviceTab').append(div_c);
+
+                var input = document.createElement('input');
+                input.setAttribute('id', value.name + '_input');
+                input.setAttribute('type', 'checkbox');
+                input.setAttribute('onclick', 'validateState("' + value.name + '","' + value.action + '","' + value.parent + '")');
+
+
+                $('#' + value.name + '_field').append(input);
+
+                var label = document.createElement('label');
+                label.setAttribute('id', value.name + '_label');
+                label.innerHTML = value.label;
+                $('#' + value.name + '_field').append(label);
+                document.getElementById(value.name + '_input').checked = JSON.parse(value.state.toLowerCase());
+                validateState(value.name, value.action, value.parent );
+            }
+
+        }
+
+    }
+    else {
+
+        var input = '<input id="' + value.name + '"></input>';
+
+        $('#div_master').append(input);
+
+        Object.keys(value).map(function (attributes) {
+
+            $('#' + value.name).attr(attributes, value[attributes]);
+
+        })
+    }
+}
+
 function uuidv4() {
     return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
         (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
@@ -266,7 +381,9 @@ function arrJ(obj, res, par, child) {
     return Object.assign(final, result)
 }
 
+
 function validateCard(obj) {
+    auth=false
     if (Object.keys(Req_Obj).length == 0) {
         Object.keys(jpost).map(function (key) {
             obj[key] = {};
@@ -288,7 +405,7 @@ function validateCard(obj) {
 
 function sendTrans() {
    
-    postData($('#apikey').val(), $('#apisec').val());
+    postData($('#apikey').val(), $('#apisec').val(), Post_ReqGen(),'primary','');
 
 }
 function show_pwd(el) {
@@ -322,14 +439,56 @@ $(document).ready(function () {
  
     });
 
-
 });
 
 
-function postData(apiKey, apiSec) {
+function postData(apiKey, apiSec, payL, Case, transId) {
+
     var hashdata = new Object;
-    if (Object.keys(Req_Obj).length>0) {
-        var paysend = arrJ(Req_Obj, {});
+
+    var typeCase = Case;
+
+    var payload = JSON.stringify(payL);
+    var clientId =  uuidv4();
+    var timezone = Date.now();
+    var message = apiKey + clientId + timezone + payload;
+    var controller = sep_conf[$('#hash_action').val()].controller; 
+    
+    hashdata.message = message;
+    hashdata.sharedsecret = apiSec;
+
+
+    var sign = MessageSignatureGen(hashdata, controller);
+
+    post = Request_loader(post, sign, timezone, clientId, payload,typeCase,transId);
+
+    ExecTrans(post);
+};
+
+
+
+function MessageSignatureGen(hashdata, controller) {
+
+    var result=$.ajax({
+        type: 'POST',
+        url: '/HashExtended/' + controller + '/',
+        data: hashdata,
+        async: false,
+        success: function (response) {
+            console.log(response)
+        }
+    });
+
+    return result.responseJSON.replace(/\"/g, "")
+}
+
+
+
+function Post_ReqGen() {
+
+    var paysend = {};
+    if (Object.keys(Req_Obj).length > 0) {
+        paysend = arrJ(Req_Obj, {});
         if (!paysend['order']) {
             Object.assign(paysend, orderGen())
         }
@@ -338,65 +497,85 @@ function postData(apiKey, apiSec) {
         }
     }
     else {
-        paysend=validateCard({});
+        paysend = validateCard({});
     }
 
-    var payload = JSON.stringify(paysend);
-    var clientId = uuidv4()
-    var timezone = Date.now();
-    var message = apiKey + clientId + timezone + payload;
-    var controller = sep_conf[$('#hash_action').val()].controller; 
+    if (auth) {
+        var authReq = {};
+        authReq[authParent] = {};
+        $("[parent='" + authParent + "']").map(function (index, input) {
+
+            if (input.getAttribute('concat_type') == 'URL') {
+                var val_in = window.location.origin + $('#' + input.id).val();
+
+            }
+            else {
+                var val_in = $('#' + input.id).val();
+            }
+
+            authReq[authParent][input.id] = val_in;
+
+        })
+        Object.assign(paysend, authReq);
+
+    }
+
+    return paysend;
+
+}
+
+
+function Request_loader(params, message, time, client, request, typeCase, transId) {
+
+    params.headers = {};
+
+    heads = headerGen(typeCase);
+
+    if (transId != '') {
+        transId = '/' + transId;
+    }
+
+    params.url = $('#action').val() + heads.url + transId;
+
+    params.Httpmethod = heads.Httpmethod;
+
+    params.async = heads.async;
     
-    hashdata.message = message;
-    hashdata.sharedsecret = apiSec;
-    var newHash;
-    $.ajax({
-        type: 'POST',
-        url: '/HashExtended/' +controller+'/',
-        data: hashdata,
-        success: function (response) {
-            console.log('se genero hash', response);
-        },
-        complete: function (response) {
-            $('#hashExtended').val(response.responseJSON.replace(/\"/g, ""));
-            newHash = response.responseJSON.replace(/\"/g, "");
-            var sign = newHash;
+    params.controller = heads.controller;
 
-            post.url = $('#action').val() + redirect.url + redirect.id;
+    params.url_params = heads.param;
 
-            post.Httpmethod = redirect.Httpmethod;
+    params.headers["Accept"] = heads.content
 
-            post.async = redirect.async;
-             
-            post.headers = {};
+    params.headers["Content-type"] = heads.content
 
-            post.controller = redirect.controller;
+    params.Payload = request;
 
-            repost.ResponseCatcher = redirect.ResponseCatcher;
+    params.headers["Api-Key"] = $('#apikey').val();
 
-            post.Payload = payload;
+    params.headers["Client-Request-Id"] = client;
 
-            post.url_params = redirect.param;
+    params.headers["Timestamp"] = time;
 
-            post.headers["Accept"] = redirect.content
+    params.headers["Message-Signature"] = message;
 
-            post.headers["Content-type"] = redirect.content
+    console.log('data', params);
 
-            post.headers["Api-Key"] = $('#apikey').val();
+    return params;
 
-            post.headers["Client-Request-Id"] = clientId;
+}
 
-            post.headers["Timestamp"] = timezone;
+function headerGen(typeCase) {
 
-            post.headers["Message-Signature"] = sign;
+    if (typeCase == 'primary') {
 
-            console.log('data', post);
+        return redirect;
 
-            ExecTrans(post);
-            return newHash;
-        }
-    });
-};
+    }
+    else {
+        return Sredirect;
+    }
+}
 
 function ExecTrans(params) {
 
@@ -404,8 +583,9 @@ function ExecTrans(params) {
 
     data.post = JSON.stringify(params);
 
-    if (validateCardNumber($('#number').val())) {
 
+    if (validateCardNumber($('#number').val())) {
+ 
         $.ajax({
             type: params.Httpmethod,
             url: window.location.origin + '/' + params.controller + '/' + params.url_params,
@@ -415,21 +595,137 @@ function ExecTrans(params) {
                 console.log(response);
             },
             success: function (response) {
-                console.log('respuesta', response);
-                if (JSON.parse(response).Code) {
+
+                //console.log('respuesta', response);
+                if (JSON.parse(response).Code == 'Error') {
+                    $('#threeds_tic', window.parent.document).removeClass('hide')
                     FailurePage(response);
+                    final = {};
                 }
+                else if (JSON.parse(response).Code == 'Authenticating') {
+                    console.log(response)
+                    var iframeauth = JSON.parse(JSON.parse(response).Message).methodForm;
+                    var vers = JSON.parse(response).Version;
+                    var transactionId = JSON.parse(response).TransId;
+                    $('#authframe').append(iframeauth);
+                    patchLoader(vers, transactionId);
+                    final = {};
+
+                }
+                else if (JSON.parse(response).Code == 'Finalizing_Auth') {
+                    $('#threeds_tic', window.parent.document).removeClass('hide')
+                    var resp_auth = JSON.parse(JSON.parse(response).Message);
+                    var vs = JSON.parse(response).Version
+                    console.log(resp_auth)
+                    //generamos el form de la respuesta del PATCH
+                    var form = version[vs].form;
+                    //Mapeamos respuesta 
+                    var final_form=threeDsformLoader(form,resp_auth);
+                    $('#div_master').append(final_form)
+                    document.getElementById('formAcs').submit();
+                    $('#threeds_tic').modal('show');
+                    //Mandamos al iframe los datos como header,ipgtransactionId y completar la transaccioón
+                    post.Payload = authpatch;
+                    post.Payload.securityCode = $('#securityCode').val();
+                    $('#threeds_tic_id').attr('obj', JSON.stringify(post))
+                    $('#threeds_tic_id').attr('complete', JSON.stringify(onComplete))
+                    $('#formAcs').remove();
+                    final = {};
+
+                } 
                 else {
-                    SuccessPage(response);
+                    SuccessPage(response)
+                    final = {};
                 }
 
             }
         })
     }
     else {
-        FailurePage('{"Message":"No. Tarjeta NO valida"}');
+        FailurePage('{"Message":"No. Tarjeta no valida"}');
     }
 }
+
+function yearArrayLoader() {
+
+    var yarray = [];
+    for (var i = 0; i < 30; i++) {
+        var date = new Date();
+        var year = date.getFullYear() + i
+        var value = (date.getFullYear() + i).toString().substr(-2);
+        if (value.length < 2) {
+            value = '0' + val;
+        }
+        var dateobj = new Object;
+        dateobj.id = year;
+        dateobj.label = year;
+        dateobj.value = value;
+        yarray.push(dateobj)
+    }
+
+    return yarray;
+}
+
+function monthArrayLoader() {
+    var marray = [];
+    for (var i = 0; i < 12; i++) {
+        var date = new Date(2020, i, 1);
+        var month = date.toLocaleString('default', { month: 'long' });
+        var mobj = new Object();
+        mobj.id = month;
+        mobj.label = month;
+        var val = (i + 1).toString();
+        if (val.length < 2) {
+            val = '0' + val;
+        }
+        mobj.value = val;
+        marray.push(mobj)
+    }
+    return marray;
+
+}
+
+function patchLoader(vers,transId) {
+
+    patch['authenticationType'] = version[vers].ReqVal;
+
+    var request = postData($('#apikey').val(), $('#apisec').val(), patch, 'secondary', transId);
+
+    console.log(request)
+
+
+}
+
+function threeDsformLoader(jform, response) {
+    var htform;
+    var input = "";
+    var html;
+
+    Object.keys(response).map(function (resp) {
+        console.log(resp)
+        jform.map(function (form) {
+            if (form.type == 'form') {
+
+                htform = '<form action="' + response[form["action"]] + '" target="threeds_tic" method="POST" id="formAcs">'
+                
+            }
+            else {
+
+                if (response[form["value"]] && resp == form["value"]) {
+                    input = input+'<input name="' + form["name"] + '" id="'+form["name"]+'" type="hidden" value="' + response[form["value"]] + '">'
+
+                }
+                
+            }
+            
+        })
+        html = htform + input + '</form>'
+
+    })
+    console.log(html)
+    return html;
+}
+
 function orderGen() {
 
     var order = "FD";
@@ -441,7 +737,6 @@ function orderGen() {
     orderObj.order.orderId = order;
     return orderObj;
 }
-
 
 function SuccessPage(params) {
     $("#success_tic").modal('show');
@@ -495,13 +790,14 @@ function SuccessPage(params) {
                 }
 
             }
+
             $('#txn' + ret.id).append(message_str);
         }
         else {
             $('#' + ret.id + '_btn').remove();
             var msj_div = document.createElement('div');
             msj_div.setAttribute('id', ret.id + '_btn');
-            $('#modal-content').append(msj_div);
+            $('#modal-success-content').append(msj_div);
             var txn_button = '<button id="' + ret.id + '" type="button" onclick="voidTrans(' + JSON.parse(params)[ret.key] + ')" class="center col-sm-12 btn-danger">'+ret.label+'</button>'
             $('#' + ret.id+'_btn').append(txn_button);
         }
@@ -510,6 +806,8 @@ function SuccessPage(params) {
 }
 
 function close_modal() {
+    $('#threeds_tic', window.parent.document).modal('hide')
+    $('#threeds_tic', window.parent.document).addClass('hide')
     var range = document.createRange();
     range.selectNodeContents(document.getElementById("modal_success_id"));
     range.selectNodeContents(document.getElementById("modal_error_id"));
@@ -570,4 +868,29 @@ const luhnCheck = val => {
 
     //Check if it is divisible by 10 or not.
     return (checksum % 10) == 0;
+}
+
+function validateState(val,type,parent) {
+
+    var state = document.getElementById(val + '_input').checked;
+
+    if (state) {
+
+        $("[master='" + val + "']").map(function (index, cls) {
+
+            $('#' + cls.id).removeClass('hide')
+            auth = true; authParent = parent;
+
+        })
+    }
+    else {
+        $("[master='" + val + "']").map(function (index, cls) {
+
+            $('#' + cls.id).addClass('hide')
+            auth = false;
+
+        })
+
+    }
+
 }

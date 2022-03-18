@@ -339,36 +339,7 @@
                 "label": "No"
               }
             ]
-          },
-          {
-            "name": "threeDSRequestorChallengeIndicator",
-            "label": "Método de autenticación:",
-            "type": "select",
-            "class": "",
-            "options": [
-                {
-                  "id": "first",
-                  "value": "1",
-                  "label": "Permitir al Gateway determinar la solicitud del password."
-                },
-                {
-                  "id": "second",
-                  "value": "2",
-                  "label": "No solicitar password 3DS."
-                },
-                {
-                  "id": "third",
-                  "value": "03",
-                  "label": "El banco emisor decide si solicitar password."
-                },
-                {
-                  "id": "fourth",
-                  "value": "4",
-                  "label": "Siempre requerir password 3DS."
-                }
-                
-              ]
-        }
+          }
         ]
       },
       {
