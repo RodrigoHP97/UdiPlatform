@@ -12,6 +12,54 @@
         .hide {
             display: none !important;
         }
+    .ui-overlay-c {
+        background: rgba(0, 0, 0, 0.5);
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        text-align: center;
+    }
+    .loader {
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #3498db;
+        width: 80px;
+        height: 80px;
+        -webkit-animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite;
+        margin: auto;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        position: fixed;
+
+    }
+
+        @@-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+    @@keyframes
+        spin {
+            0%
+
+        {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+
+        }
 
         .section1 {
             width: 50%;
@@ -38,22 +86,35 @@
             margin: 10% auto;
         }
 
-    #error_tic .page-body {
-        max-width: 300px;
-        background-color: #FFFFFF;
-        margin: 10% auto;
-    }
+        #success_tic .page-body {
+            max-width: 300px;
+            background-color: #FFFFFF;
+            margin: 10% auto;
+        }
 
-            #success_tic .page-body .head {
-                text-align: center;
-            }
 
-    #error_tic .page-body .head {
-        text-align: center;
-    }
+        #threeds_tic .page-body {
+            max-width: 300px;
+            background-color: #FFFFFF;
+            margin: 10% auto;
+        }
+
+        #error_tic .page-body {
+            max-width: 300px;
+            background-color: #FFFFFF;
+            margin: 10% auto;
+        }
+
+        #success_tic .page-body .head {
+            text-align: center;
+        }
+
+        #error_tic .page-body .head {
+            text-align: center;
+        }
         /* #success_tic .tic{
-      font-size:186px;
-    } */
+          font-size:186px;
+        } */
         #success_tic .close {
             opacity: 1;
             position: absolute;
@@ -63,14 +124,23 @@
             margin-bottom: 10px;
         }
 
-    #error_tic .close {
-        opacity: 1;
-        position: absolute;
-        right: 0px;
-        font-size: 30px;
-        padding: 3px 15px;
-        margin-bottom: 10px;
-    }
+        #threeds_tic .close {
+            opacity: 1;
+            position: absolute;
+            right: 0px;
+            font-size: 30px;
+            padding: 3px 15px;
+            margin-bottom: 10px;
+        }
+
+        #error_tic .close {
+            opacity: 1;
+            position: absolute;
+            right: 0px;
+            font-size: 30px;
+            padding: 3px 15px;
+            margin-bottom: 10px;
+        }
 
         #success_tic .checkmark-circle {
             width: 150px;
@@ -88,89 +158,91 @@
             position: absolute;
         }
 
-    #error_tic .crossmark-circle {
-        width: 150px;
-        height: 150px;
-        position: relative;
-        display: inline-block;
-        vertical-align: top;
-    }
-    .crossmark-circle .background {
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        background: #cb2626;
-        position: absolute;
-    }
+        #error_tic .crossmark-circle {
+            width: 150px;
+            height: 150px;
+            position: relative;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .crossmark-circle .background {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: #cb2626;
+            position: absolute;
+        }
 
         #success_tic .checkmark-circle .checkmark {
             border-radius: 5px;
         }
-    #error_tic .crossmark-circle .crossmark {
-        border-radius: 5px;
-    }
+
+        #error_tic .crossmark-circle .crossmark {
+            border-radius: 5px;
+        }
 
 
-    #success_tic .checkmark-circle .checkmark.draw:after {
-        -webkit-animation-delay: 300ms;
-        -moz-animation-delay: 300ms;
-        animation-delay: 300ms;
-        -webkit-animation-duration: 1s;
-        -moz-animation-duration: 1s;
-        animation-duration: 1s;
-        -webkit-animation-timing-function: ease;
-        -moz-animation-timing-function: ease;
-        animation-timing-function: ease;
-        -webkit-animation-name: checkmark;
-        -moz-animation-name: checkmark;
-        animation-name: checkmark;
-        -webkit-transform: scaleX(-1) rotate(135deg);
-        -moz-transform: scaleX(-1) rotate(135deg);
-        -ms-transform: scaleX(-1) rotate(135deg);
-        -o-transform: scaleX(-1) rotate(135deg);
-        transform: scaleX(-1) rotate(135deg);
-        -webkit-animation-fill-mode: forwards;
-        -moz-animation-fill-mode: forwards;
-        animation-fill-mode: forwards;
-    }
+        #success_tic .checkmark-circle .checkmark.draw:after {
+            -webkit-animation-delay: 300ms;
+            -moz-animation-delay: 300ms;
+            animation-delay: 300ms;
+            -webkit-animation-duration: 1s;
+            -moz-animation-duration: 1s;
+            animation-duration: 1s;
+            -webkit-animation-timing-function: ease;
+            -moz-animation-timing-function: ease;
+            animation-timing-function: ease;
+            -webkit-animation-name: checkmark;
+            -moz-animation-name: checkmark;
+            animation-name: checkmark;
+            -webkit-transform: scaleX(-1) rotate(135deg);
+            -moz-transform: scaleX(-1) rotate(135deg);
+            -ms-transform: scaleX(-1) rotate(135deg);
+            -o-transform: scaleX(-1) rotate(135deg);
+            transform: scaleX(-1) rotate(135deg);
+            -webkit-animation-fill-mode: forwards;
+            -moz-animation-fill-mode: forwards;
+            animation-fill-mode: forwards;
+        }
 
-    #success_tic .checkmark-circle .checkmark:after {
-        opacity: 1;
-        height: 75px;
-        width: 37.5px;
-        -webkit-transform-origin: left top;
-        -moz-transform-origin: left top;
-        -ms-transform-origin: left top;
-        -o-transform-origin: left top;
-        transform-origin: left top;
-        border-right: 15px solid #fff;
-        border-top: 15px solid #fff;
-        border-radius: 2.5px !important;
-        content: '';
-        left: 35px;
-        top: 80px;
-        position: absolute;
-    }
+        #success_tic .checkmark-circle .checkmark:after {
+            opacity: 1;
+            height: 75px;
+            width: 37.5px;
+            -webkit-transform-origin: left top;
+            -moz-transform-origin: left top;
+            -ms-transform-origin: left top;
+            -o-transform-origin: left top;
+            transform-origin: left top;
+            border-right: 15px solid #fff;
+            border-top: 15px solid #fff;
+            border-radius: 2.5px !important;
+            content: '';
+            left: 35px;
+            top: 80px;
+            position: absolute;
+        }
 
 
-    .crossmark:after {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        content: "\2573"; /* use the hex value here... */
-        font-size: 80px;
-        color: #FFFFFF;
-        font-weight: bold;
-        line-height: 120px;
-        text-align: center;
-    }
+        .crossmark:after {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            content: "\2573"; /* use the hex value here... */
+            font-size: 80px;
+            color: #FFFFFF;
+            font-weight: bold;
+            line-height: 120px;
+            text-align: center;
+        }
 </style>
 <meta charset=UTF-8>
 <div>
     <!-- Modal -->
-    <div id="error_tic" class="modal fade" role="dialog">
+    <div id="error_tic" class="modal fade" role="dialog" data-toggle="modal" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
 
             <!-- Modal content-->
@@ -201,110 +273,133 @@
 
     </div>
 </div>
-<div>
-    <!-- Modal -->
-    <div id="success_tic" class="modal fade" role="dialog">
-        <div class="modal-dialog">
 
-            <!-- Modal content-->
-            <div class="modal-content" id="modal-success-content">
-                <a class="close" onclick="close_modal()" data-dismiss="modal">&times;</a>
-                <div class="page-body">
-                    <div class="head" id="head_id">
-                        <div class="checkmark-circle">
-                            <div class="background"></div>
-                            <div class="checkmark draw"></div>
-                        </div>
-                        <div id="modal_success_id">
+<div class="modal fade" id="threeds_tic"  role="dialog" data-toggle="modal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
 
+            <div class="modal-body">
+                <iframe name="threeds_tic" id="threeds_tic_id" width="480" height="480" frameborder="0" allowtransparency="true"></iframe>
 
-                        </div>
-
-                        <!--Message--->
+                <div class="ui-overlay-c hide" id="bckgloaderframe">
+                    <div class="loader">
                     </div>
-
-
-                </div>
-                <div id="txn_btn">
 
                 </div>
             </div>
-        </div>
-
-    </div>
-</div>
-<div class="form-group col-md-4 col-xs-6" id="action_field">
-
-    <label id="action_label">Acción:</label>
-    <div class="item-box input-group">
-        <select name="action" id="action" style="width: 200px" class="form-control action">
-            <option style="width: 200px" id="TEST" value="https://cert.api.firstdata.com/gateway/v2">TEST</option>
-            <option style="width: 200px" id="PROD" value="https://prod.api.firstdata.com/gateway/v2">PROD</option>
-        </select>
-
-    </div>
-    <label id="action_label">Algoritmo hash:</label>
-    <div class="item-box input-group">
-        <select name="action" id="hash_action" style="width: 200px" class="form-control action">
-            <option style="width: 200px" id="hmac" value="HMACSHA256">HMACSHA256</option>
-        </select>
-
-    </div>
-</div>
-<div class="section1">
-    <form accept-charset="UTF-8" method="POST" id="form_udi" target="myFrame">
-        <div id="div_master">
 
         </div>
-
-        <div id="buttonData" class="form-group col-md-4 col-xs-6">
-            <button id="sendData" type="button" onclick="sendTrans()" class="btn-primary waves-effectt">Enviar</button>
-        </div>
-    </form>
-
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
 </div>
+    <div>
 
-<div class="row" id="3ds_field">
+        <!-- Modal -->
+        <div id="success_tic" class="modal fade" role="dialog" data-toggle="modal" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
 
-    <div class="input-group-append">
-        <input type="checkbox" id="3ds_checkbox" >
-        <label for="3ds_checkbox">&nbsp;&nbsp;Autenticar Transacción?</label>
-    </div>
-</div>
-<div class="section2 col-sm-4">
-    <label id="action_label">Tipo de venta:</label>
-    <div class="item-box input-group">
-        <select name="type_of_selling" id="type_of_selling" style="width: 200px" class="form-control action">
-            <option style="width: 200px" id="keyvalidation" value="keyvalidation">Validación de Credenciales</option>
-            <option style="width: 200px" id="direct" value="direct">Directa</option>
-            <option style="width: 200px" id="msi" value="msi">MSI</option>
-            <option style="width: 200px" id="concurrent" value="concurrent">Cargos recurrentes</option>
-        </select>
+                <!-- Modal content-->
+                <div class="modal-content" id="modal-success-content">
+                    <a class="close" onclick="close_modal()" data-dismiss="modal">&times;</a>
+                    <div class="page-body">
+                        <div class="head" id="head_id">
+                            <div class="checkmark-circle">
+                                <div class="background"></div>
+                                <div class="checkmark draw"></div>
+                            </div>
+                            <div id="modal_success_id">
 
-    </div>
-    <label id="apikey_label">APIKEY:</label>
-    <div class="item-box input-group" id="apikey_field">
 
-        <input type="password" style="width: 200px" class="form-control" name="apikey" id="apikey" />
-        <div class="input-group-append">
-            <button id="show_password" class="btn btn-primary" type="button" onclick="show_pwd(this)"> <span id="apikey_span" class="fa fa-eye-slash apikey icon"></span> </button>
-        </div>
-    </div>
+                            </div>
 
-    <label id="apikey_label">APISec:</label>
-    <div class="item-box input-group" id="apisec_field">
+                            <!--Message--->
+                        </div>
 
-        <input type="password" style="width: 200px" class="form-control" name="apisec" id="apisec" />
-        <div class="input-group-append">
-            <button id="show_password" class="btn btn-primary" type="button" onclick="show_pwd(this)"> <span id="apisec_span" class="fa fa-eye-slash apisec icon"></span> </button>
+
+                    </div>
+                    <div id="txn_btn">
+
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
+    <div class="form-group col-md-4 col-xs-6" id="action_field">
+
+        <label id="action_label">Acción:</label>
+        <div class="item-box input-group">
+            <select name="action" id="action" style="width: 200px" class="form-control action">
+                <option style="width: 200px" id="TEST" value="https://cert.api.firstdata.com/gateway/v2">TEST</option>
+                <option style="width: 200px" id="PROD" value="https://prod.api.firstdata.com/gateway/v2">PROD</option>
+            </select>
+
+        </div>
+        <label id="action_label">Algoritmo hash:</label>
+        <div class="item-box input-group">
+            <select name="action" id="hash_action" style="width: 200px" class="form-control action">
+                <option style="width: 200px" id="hmac" value="HMACSHA256">HMACSHA256</option>
+            </select>
+
+        </div>
+    </div>
+    <div class="section1">
+        <form accept-charset="UTF-8" method="POST" id="form_udi" target="myFrame">
+            <div id="div_master">
+
+            </div>
+
+            <div id="buttonData" class="form-group col-md-4 col-xs-6">
+                <button id="sendData" type="button" onclick="sendTrans()" class="btn-primary waves-effectt">Enviar</button>
+            </div>
+        </form>
+
+    </div>
+
+    <div class="form-group" id="serviceTab">
+
+    </div>
+    <div class="section2 col-sm-4">
+        <label id="action_label">Tipo de venta:</label>
+        <div class="item-box input-group">
+            <select name="type_of_selling" id="type_of_selling" style="width: 200px" class="form-control action">
+                <option style="width: 200px" id="keyvalidation" value="keyvalidation">Validación de Credenciales</option>
+                <option style="width: 200px" id="direct" value="direct">Directa</option>
+                <option style="width: 200px" id="msi" value="msi">MSI</option>
+                <option style="width: 200px" id="concurrent" value="concurrent">Cargos recurrentes</option>
+            </select>
+
+        </div>
+        <label id="apikey_label">APIKEY:</label>
+        <div class="item-box input-group" id="apikey_field">
+
+            <input type="password" style="width: 200px" class="form-control" name="apikey" id="apikey" />
+            <div class="input-group-append">
+                <button id="show_password" class="btn btn-primary" type="button" onclick="show_pwd(this)"> <span id="apikey_span" class="fa fa-eye-slash apikey icon"></span> </button>
+            </div>
+        </div>
+
+        <label id="apikey_label">APISec:</label>
+        <div class="item-box input-group" id="apisec_field">
+
+            <input type="password" style="width: 200px" class="form-control" name="apisec" id="apisec" />
+            <div class="input-group-append">
+                <button id="show_password" class="btn btn-primary" type="button" onclick="show_pwd(this)"> <span id="apisec_span" class="fa fa-eye-slash apisec icon"></span> </button>
+            </div>
+        </div>
 
 
 
-</div>
+    </div>
 
-<script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" data-auto-replace-svg="nest"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-<script src="~/Scripts/APIForm.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+    <div class="ui-overlay-c hide" id="bckgloader">
+        <div class="loader">
+        </div>
+
+        </div>
+
+        <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" data-auto-replace-svg="nest"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+        <script src="~/Scripts/APIForm.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>

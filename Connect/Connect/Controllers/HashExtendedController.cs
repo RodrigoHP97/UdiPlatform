@@ -16,7 +16,7 @@ namespace WebApplication1.Controllers
                 stringHash.message;
 
             string secret = stringHash.sharedsecret;
-            
+             
 
             var keyByte = encoding.GetBytes(secret);
             using (var hmacsha256 = new HMACSHA256(keyByte))
@@ -30,7 +30,7 @@ namespace WebApplication1.Controllers
             }
             
         }
-        [HttpPost]
+        [HttpPost]  
         public JsonResult HashNoHMAC(HashValues stringHash)
         {
             Encoding encoding = Encoding.UTF8;
