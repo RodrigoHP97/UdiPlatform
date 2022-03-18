@@ -281,8 +281,15 @@
       },
       {
         "Tokenization": {
-          "request": {
-            
+          "prerequest": {
+            "endpoint":"/payment-tokens",
+            "parentchild":[]
+          },
+          "request":{
+            "endpoint":"/payments",
+            "parentchild":[
+              
+            ]
           },
           "input": {
             "name": "tokenization",
@@ -421,7 +428,11 @@
             "id": "TransactionId",
             "key": "ipgTransactionId",
             "return": "true",
-            "type": "button"
+            "type": "button",
+            "request":{
+              "requestType": "VoidTransaction",
+              "comments": "Cancelar Transacción"
+          }
           }
         ]
       },
@@ -519,7 +530,11 @@
             "id": "TransactionId",
             "key": "ipgTransactionId",
             "return": "true",
-            "type": "button"
+            "type": "button",
+            "request":{
+              "requestType": "VoidTransaction",
+              "comments": "Cancelar Transacción"
+          }
           }
         ]
       },

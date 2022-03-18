@@ -71,6 +71,8 @@ namespace WebApplication1.Controllers
                             using (StreamReader r = new StreamReader("../Connect/wwwroot/Configurations/DeclineCodes.json"))
                             {
                                 string json = r.ReadToEnd();
+                                var des_order = JsonConvert.DeserializeObject<Dictionary<string, object>>(response.Content);
+                                string order = des_order["orderId"].ToString();
                                 dynamic array = JsonConvert.DeserializeObject(json);
                                 var Error = new JpostException();
                                 Error.Code = "Error";
@@ -78,7 +80,7 @@ namespace WebApplication1.Controllers
                                 {
                                     if (code == item["Code"].Value)
                                     {
-                                        Error.Message = item["Message"];
+                                        Error.Message = "Tu pedido "+ order + " no pudo ser procesado correctamente. Razón:"+ item["Message"];
 
                                         sended.Code = JsonConvert.SerializeObject(Error);
                                     }
@@ -186,13 +188,15 @@ namespace WebApplication1.Controllers
                     {
                         string json = r.ReadToEnd();
                         dynamic array = JsonConvert.DeserializeObject(json);
+                        var des_order = JsonConvert.DeserializeObject<Dictionary<string, object>>(response.Content);
+                        string order = des_order["orderId"].ToString();
                         var Error = new JpostException();
                         Error.Code = "Error";
                         foreach (var item in array)
                         {
                             if (code == item["Code"].Value)
                             {
-                                Error.Message = item["Message"];
+                                Error.Message = "Tu pedido " + order + " no pudo ser procesado correctamente. Razón:" + item["Message"];
 
                                 sended.Code = JsonConvert.SerializeObject(Error);
                             }
@@ -221,7 +225,7 @@ namespace WebApplication1.Controllers
                     var Error = new JpostException();
                     Error.Code = "Error";
                     Error.Source = "Usuario";
-                    Error.Message = "Ocurrió un error inesperado";
+                    Error.Message = "La transacción no pudo ser completada satisfactoriament";
 
                     sended.Code = JsonConvert.SerializeObject(Error);
 
