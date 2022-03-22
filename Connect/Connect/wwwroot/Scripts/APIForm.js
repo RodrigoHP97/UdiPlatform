@@ -39,6 +39,7 @@ var auth;
 var authParent;
 var Sredirect;
 var authpatch;
+var threeDsfunction;
 
 function sort_by_key(array, key) {
     return array.sort(function (a, b) {
@@ -168,12 +169,7 @@ function servicesMapper(serv) {
                     if (trans[check].version) {
                         version = trans[check].version;
                     }
-                    if (trans[check].prepatch) {
-                        patch = trans[check].prepatch;
-                    }
-                    if (trans[check].postpatch) {
-                        authpatch = trans[check].postpatch;
-                    }
+
                     if (trans[check].redirect) {
                         Sredirect = trans[check].redirect
                     }
@@ -602,40 +598,13 @@ function ExecTrans(params) {
                     FailurePage(response);
                     final = {};
                 }
-                else if (JSON.parse(response).Code == 'Authenticating') {
-                    console.log(response)
-                    var iframeauth = JSON.parse(JSON.parse(response).Message).methodForm;
-                    var vers = JSON.parse(response).Version;
-                    var transactionId = JSON.parse(response).TransId;
-                    $('#authframe').append(iframeauth);
-                    patchLoader(vers, transactionId);
-                    final = {};
-
-                }
-                else if (JSON.parse(response).Code == 'Finalizing_Auth') {
-                    $('#threeds_tic', window.parent.document).removeClass('hide')
-                    var resp_auth = JSON.parse(JSON.parse(response).Message);
-                    var vs = JSON.parse(response).Version
-                    console.log(resp_auth)
-                    //generamos el form de la respuesta del PATCH
-                    var form = version[vs].form;
-                    //Mapeamos respuesta 
-                    var final_form=threeDsformLoader(form,resp_auth);
-                    $('#div_master').append(final_form)
-                    document.getElementById('formAcs').submit();
-                    $('#threeds_tic').modal('show');
-                    //Mandamos al iframe los datos como header,ipgtransactionId y completar la transaccioón
-                    post.Payload = authpatch;
-                    post.Payload.securityCode = $('#securityCode').val();
-                    $('#threeds_tic_id').attr('obj', JSON.stringify(post))
-                    $('#threeds_tic_id').attr('complete', JSON.stringify(onComplete))
-                    $('#formAcs').remove();
-                    final = {};
-
-                } 
-                else {
+                else if (!JSON.parse(response).Code) {
                     SuccessPage(response)
                     final = {};
+                }
+                else {
+                    threedsAuthProcessor(response);
+                    final = {}
                 }
 
             }
@@ -685,7 +654,10 @@ function monthArrayLoader() {
 
 }
 
-function patchLoader(vers,transId) {
+function patchLoader(code,vers, transId) {
+
+    patch = getPatch(code, vers, version[vers].request);
+    console.log(patch)
 
     patch['authenticationType'] = version[vers].ReqVal;
 
@@ -893,4 +865,51 @@ function validateState(val,type,parent) {
 
     }
 
+}
+
+function threedsAuthProcessor(params) {
+    
+    if (JSON.parse(params).Code == 'FINALIZING') {
+        
+        $('#threeds_tic', window.parent.document).removeClass('hide')
+        var resp_auth = JSON.parse(JSON.parse(params).Message);
+        var vs = JSON.parse(params).Version
+        console.log(resp_auth)
+        //generamos el form de la respuesta del PATCH
+        var form = version[vs].form;
+        var requestArr = version[vs].request;
+        //Mapeamos respuesta 
+        var final_form = threeDsformLoader(form, resp_auth,requestArr);
+        $('#div_master').append(final_form)
+        document.getElementById('formAcs').submit();
+        $('#threeds_tic').modal('show');
+        //Mandamos al iframe los datos como header,ipgtransactionId y completar la transaccioón
+        authpatch = getPatch(JSON.parse(params).Code, JSON.parse(params).Version, requestArr);
+        console.log(authpatch)
+        post.Payload = authpatch;
+        post.Payload.securityCode = $('#securityCode').val();
+        $('#threeds_tic_id').attr('obj', JSON.stringify(post))
+        $('#threeds_tic_id').attr('complete', JSON.stringify(onComplete))
+        $('#formAcs').remove();
+        final = {};
+    }
+    else {
+        console.log(params)
+        var iframeauth = JSON.parse(JSON.parse(params).Message).methodForm;
+        var vers = JSON.parse(params).Version;
+        var transactionId = JSON.parse(params).TransId;
+        $('#authframe').append(iframeauth);
+        patchLoader(JSON.parse(params).Code,vers, transactionId);
+        final = {};
+    }
+}
+
+function getPatch(code,version,request) {
+    var result;
+    request.map(function (req) {
+        if (req[code]) {
+            result = req[code];
+        }
+    });
+    return result;
 }

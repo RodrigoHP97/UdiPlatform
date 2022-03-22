@@ -39,7 +39,7 @@
         "parent": "expiryDate",
         "label": "Mes:",
         "type": "select",
-        "subtype":"month",
+        "subtype": "month",
         "class": ""
       },
       {
@@ -48,7 +48,7 @@
         "parent": "expiryDate",
         "label": "Año:",
         "type": "select",
-        "subtype":"year",
+        "subtype": "year",
         "class": ""
       },
       {
@@ -103,6 +103,15 @@
                   "name": "MD",
                   "value": "merchantData"
                 }
+              ],
+              "request": [
+                {
+                  "FINALIZING": {
+                    "authenticationType": "Secure3D10AuthenticationUpdateRequest",
+                    "payerAuthenticationResponse": "",
+                    "merchantData": ""
+                  }
+                }
               ]
             },
             "2.0": {
@@ -123,6 +132,32 @@
                   "type": "input",
                   "name": "threeDSSessionData",
                   "value": "sessionData"
+                }
+              ],
+              "request": [
+                {
+                  "AUTHENTICATING": {
+                    "authenticationType": "",
+                    "methodNotificationStatus": "RECEIVED"
+                  }
+                },
+                {
+                  "FINALIZING": {
+                    "authenticationType": "Secure3D21AuthenticationUpdateRequest",
+                    "billingAddress": {
+                      "company": "Test Company",
+                      "address1": "5565 Glenridge Conn",
+                      "address2": "Suite 123",
+                      "city": "Atlanta",
+                      "region": "Georgia",
+                      "postalCode": "30342",
+                      "country": "USA"
+                    },
+                    "securityCode": "",
+                    "acsResponse": {
+                      "cRes": ""
+                    }
+                  }
                 }
               ]
             },
@@ -145,29 +180,35 @@
                   "name": "threeDSSessionData",
                   "value": "sessionData"
                 }
+              ],
+              "request": [
+                {
+                  "AUTHENTICATING": {
+                    "authenticationType": "",
+                    "methodNotificationStatus": "RECEIVED"
+                  }
+                },
+                {
+                  "FINALIZING": {
+                    "authenticationType": "Secure3D21AuthenticationUpdateRequest",
+                    "billingAddress": {
+                      "company": "Test Company",
+                      "address1": "5565 Glenridge Conn",
+                      "address2": "Suite 123",
+                      "city": "Atlanta",
+                      "region": "Georgia",
+                      "postalCode": "30342",
+                      "country": "USA"
+                    },
+                    "securityCode": "",
+                    "acsResponse": {
+                      "cRes": ""
+                    }
+                  }
+                }
               ]
             }
           },
-          "prepatch": {
-            "authenticationType": "",
-            "methodNotificationStatus": "RECEIVED"
-          },
-          "postpatch": {
-            "authenticationType": "Secure3D21AuthenticationUpdateRequest",
-            "billingAddress": {
-                "company": "Test Company",
-                "address1": "5565 Glenridge Conn",
-                "address2": "Suite 123",
-                "city": "Atlanta",
-                "region": "Georgia",
-                "postalCode": "30342",
-                "country": "USA"
-            },
-            "securityCode": "",
-            "acsResponse": {
-                "cRes": ""
-            }
-        },
           "redirect": {
             "url": "/payments",
             "param": "PatchTransaction",
@@ -282,12 +323,14 @@
       {
         "Tokenization": {
           "prerequest": {
-            "endpoint":"/payment-tokens",
-            "parentchild":[]
+            "endpoint": "/payment-tokens",
+            "parentchild": [
+              
+            ]
           },
-          "request":{
-            "endpoint":"/payments",
-            "parentchild":[
+          "request": {
+            "endpoint": "/payments",
+            "parentchild": [
               
             ]
           },
@@ -429,10 +472,10 @@
             "key": "ipgTransactionId",
             "return": "true",
             "type": "button",
-            "request":{
+            "request": {
               "requestType": "VoidTransaction",
               "comments": "Cancelar Transacción"
-          }
+            }
           }
         ]
       },
@@ -531,10 +574,10 @@
             "key": "ipgTransactionId",
             "return": "true",
             "type": "button",
-            "request":{
+            "request": {
               "requestType": "VoidTransaction",
               "comments": "Cancelar Transacción"
-          }
+            }
           }
         ]
       },

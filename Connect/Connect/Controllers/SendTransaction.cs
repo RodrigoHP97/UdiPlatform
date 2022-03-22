@@ -103,7 +103,7 @@ namespace WebApplication1.Controllers
 
 
                             var Msj = new JpostMsj();
-                            Msj.Code = "Authenticating";
+                            Msj.Code = "AUTHENTICATING";
                             Msj.Source = "Authentication";
                             Msj.Message = JsonConvert.SerializeObject(des_authResp["secure3dMethod"]);
                             Msj.Version = des_authResp["version"].ToString();
@@ -213,7 +213,7 @@ namespace WebApplication1.Controllers
 
                     var authresp = JsonConvert.DeserializeObject<Dictionary<string, object>>(jauthresp);
 
-                    Msj.Code = "Finalizing_Auth";
+                    Msj.Code = "FINALIZING";
                     Msj.Source = "Authentication";
                     Msj.Version = authresp["version"].ToString();
                     Msj.Message = authresp["params"].ToString();
