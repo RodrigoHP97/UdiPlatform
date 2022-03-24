@@ -656,6 +656,7 @@ function monthArrayLoader() {
 
 function patchLoader(code,vers, transId) {
 
+
     patch = getPatch(code, vers, version[vers].request);
     console.log(patch)
 
@@ -885,10 +886,14 @@ function threedsAuthProcessor(params) {
         $('#threeds_tic').modal('show');
         //Mandamos al iframe los datos como header,ipgtransactionId y completar la transaccioón
         authpatch = getPatch(JSON.parse(params).Code, JSON.parse(params).Version, requestArr);
+        var mapper = version[vs].resultMapper
         console.log(authpatch)
         post.Payload = authpatch;
+        post.url_params = 'PatchTransaction';
+        post.url = $('#action').val() + heads.url + '/' +JSON.parse(params).TransId;;
         post.Payload.securityCode = $('#securityCode').val();
         $('#threeds_tic_id').attr('obj', JSON.stringify(post))
+        $('#threeds_tic_id').attr('mapper', JSON.stringify(mapper))
         $('#threeds_tic_id').attr('complete', JSON.stringify(onComplete))
         $('#formAcs').remove();
         final = {};

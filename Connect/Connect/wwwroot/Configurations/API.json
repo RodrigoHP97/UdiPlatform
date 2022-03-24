@@ -112,7 +112,8 @@
                     "merchantData": ""
                   }
                 }
-              ]
+              ],
+              "resultMapper":{"payerAuthenticationResponse":"PaRes","merchantData":"MD"}
             },
             "2.0": {
               "ReqVal": "Secure3D20AuthenticationUpdateRequest",
@@ -159,7 +160,8 @@
                     }
                   }
                 }
-              ]
+              ],
+              "resultMapper":{"cres":"cRes"}
             },
             "2.1": {
               "ReqVal": "Secure3D21AuthenticationUpdateRequest",
@@ -206,7 +208,8 @@
                     }
                   }
                 }
-              ]
+              ],
+              "resultMapper":{"cres":"cRes"}
             }
           },
           "redirect": {

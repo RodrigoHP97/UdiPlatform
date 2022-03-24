@@ -12,10 +12,16 @@ var jpost = JSON.parse(spost);
 
 var data = {};
 var apiKey = window.parent.document.getElementById('apikey').value;
+var mapper = JSON.parse(window.parent.document.getElementById('threeds_tic_id').getAttribute('mapper'));
+Object.keys(jpost.Payload).map(function (vals) {
+    if (mapper[vals]) {
+        jpost.Payload[vals] = jdata[mapper[vals]];
+    }
 
+})
 var hashdata = new Object;
 var onComplete = JSON.parse(window.parent.document.getElementById('threeds_tic_id').getAttribute('complete'));
-jpost.Payload.acsResponse.cRes = jdata.cres;
+//jpost.Payload.acsResponse.cRes = jdata.cres;
 
 console.log('authpatch', jpost);
 

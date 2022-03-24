@@ -103,9 +103,11 @@ namespace WebApplication1.Controllers
 
 
                             var Msj = new JpostMsj();
-                            Msj.Code = "AUTHENTICATING";
+                            
                             Msj.Source = "Authentication";
-                            Msj.Message = JsonConvert.SerializeObject(des_authResp["secure3dMethod"]);
+                            try { Msj.Message = JsonConvert.SerializeObject(des_authResp["secure3dMethod"]); Msj.Code = "AUTHENTICATING"; }
+                            catch { Msj.Message = JsonConvert.SerializeObject(des_authResp["params"]); Msj.Code = "FINALIZING"; }
+                            
                             Msj.Version = des_authResp["version"].ToString();
                             Msj.TransId = TransID;
 
