@@ -13,17 +13,13 @@ var jpost = JSON.parse(spost);
 var data = {};
 var apiKey = window.parent.document.getElementById('apikey').value;
 var mapper = JSON.parse(window.parent.document.getElementById('threeds_tic_id').getAttribute('mapper'));
-Object.keys(jpost.Payload).map(function (vals) {
-    if (mapper[vals]) {
-        jpost.Payload[vals] = jdata[mapper[vals]];
-    }
 
-})
 var hashdata = new Object;
 var onComplete = JSON.parse(window.parent.document.getElementById('threeds_tic_id').getAttribute('complete'));
 //jpost.Payload.acsResponse.cRes = jdata.cres;
 
 console.log('authpatch', jpost);
+keyFinder()
 
 var payload = JSON.stringify(jpost.Payload);
 var clientId = uuidv4();
@@ -72,6 +68,25 @@ function close_modal() {
     $("#error_tic").modal('hide');
 }
 
+function keyFinder() {
+    Object.keys(jpost.Payload).map(function (vals) {
+        //console.log(mapper)
+        if (mapper[vals]) {
+            jpost.Payload[vals] = jdata[mapper[vals]];
+        }
+        else {
+            //generamos finder
+            var post_finder = jpost.Payload[vals];
+            if(typeof(post_finder)=='object')
+                Object.keys(post_finder).map(function (subval) {
+                if (mapper[subval]) {
+                    jpost.Payload[vals][subval] = jdata[mapper[subval]];
+                }
+            })
+        }
+
+    })
+}
 
 function uuidv4() {
     return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>

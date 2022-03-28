@@ -219,6 +219,7 @@ namespace WebApplication1.Controllers
                     Msj.Source = "Authentication";
                     Msj.Version = authresp["version"].ToString();
                     Msj.Message = authresp["params"].ToString();
+                    Msj.TransId = des_resp["ipgTransactionId"].ToString();
 
                     sended.Code = JsonConvert.SerializeObject(Msj);
                 }
