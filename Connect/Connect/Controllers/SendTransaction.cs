@@ -71,6 +71,8 @@ namespace WebApplication1.Controllers
                             using (StreamReader r = new StreamReader("../Connect/wwwroot/Configurations/DeclineCodes.json"))
                             {
                                 string json = r.ReadToEnd();
+                                var des_order = JsonConvert.DeserializeObject<Dictionary<string, object>>(response.Content);
+                                string order = des_order["orderId"].ToString();
                                 dynamic array = JsonConvert.DeserializeObject(json);
                                 var Error = new JpostException();
                                 Error.Code = "Error";
@@ -78,7 +80,7 @@ namespace WebApplication1.Controllers
                                 {
                                     if (code == item["Code"].Value)
                                     {
-                                        Error.Message = item["Message"];
+                                        Error.Message = "Tu pedido "+ order + " no pudo ser procesado correctamente. Razón:"+ item["Message"];
 
                                         sended.Code = JsonConvert.SerializeObject(Error);
                                     }
@@ -101,9 +103,11 @@ namespace WebApplication1.Controllers
 
 
                             var Msj = new JpostMsj();
-                            Msj.Code = "Authenticating";
+                            
                             Msj.Source = "Authentication";
-                            Msj.Message = JsonConvert.SerializeObject(des_authResp["secure3dMethod"]);
+                            try { Msj.Message = JsonConvert.SerializeObject(des_authResp["secure3dMethod"]); Msj.Code = "AUTHENTICATING"; }
+                            catch { Msj.Message = JsonConvert.SerializeObject(des_authResp["params"]); Msj.Code = "FINALIZING"; }
+                            
                             Msj.Version = des_authResp["version"].ToString();
                             Msj.TransId = TransID;
 
@@ -186,13 +190,15 @@ namespace WebApplication1.Controllers
                     {
                         string json = r.ReadToEnd();
                         dynamic array = JsonConvert.DeserializeObject(json);
+                        var des_order = JsonConvert.DeserializeObject<Dictionary<string, object>>(response.Content);
+                        string order = des_order["orderId"].ToString();
                         var Error = new JpostException();
                         Error.Code = "Error";
                         foreach (var item in array)
                         {
                             if (code == item["Code"].Value)
                             {
-                                Error.Message = item["Message"];
+                                Error.Message = "Tu pedido " + order + " no pudo ser procesado correctamente. Razón:" + item["Message"];
 
                                 sended.Code = JsonConvert.SerializeObject(Error);
                             }
@@ -209,10 +215,11 @@ namespace WebApplication1.Controllers
 
                     var authresp = JsonConvert.DeserializeObject<Dictionary<string, object>>(jauthresp);
 
-                    Msj.Code = "Finalizing_Auth";
+                    Msj.Code = "FINALIZING";
                     Msj.Source = "Authentication";
                     Msj.Version = authresp["version"].ToString();
                     Msj.Message = authresp["params"].ToString();
+                    Msj.TransId = des_resp["ipgTransactionId"].ToString();
 
                     sended.Code = JsonConvert.SerializeObject(Msj);
                 }
@@ -221,7 +228,7 @@ namespace WebApplication1.Controllers
                     var Error = new JpostException();
                     Error.Code = "Error";
                     Error.Source = "Usuario";
-                    Error.Message = "Ocurrió un error inesperado";
+                    Error.Message = "La transacción no pudo ser completada satisfactoriament";
 
                     sended.Code = JsonConvert.SerializeObject(Error);
 
