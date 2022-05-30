@@ -40,6 +40,7 @@ var authParent;
 var Sredirect;
 var authpatch;
 var threeDsfunction;
+var t_request = new Object;
 
 function sort_by_key(array, key) {
     return array.sort(function (a, b) {
@@ -113,6 +114,7 @@ function load_config() {
                     Object.keys(value)[0] != 'redirect' &&
                     Object.keys(value)[0] != 'parentChild' &&
                     Object.keys(value)[0] != 'onComplete' &&
+                    Object.keys(value)[0] != '3ds' &&
                     Object.keys(value)[0] != '3ds' &&
                     Object.keys(value)[0] != 'services') {
 
@@ -400,8 +402,14 @@ function validateCard(obj) {
 }
 
 function sendTrans() {
-   
-    postData($('#apikey').val(), $('#apisec').val(), Post_ReqGen(),'primary','');
+
+    if (!tokenize) {
+        postData($('#apikey').val(), $('#apisec').val(), Post_ReqGen(), 'primary', '');
+    }
+    else {
+        postData($('#apikey').val(), $('#apisec').val(), Tok_ReqGen(), 'primary', '');
+    }
+    
 
 }
 function show_pwd(el) {
@@ -490,7 +498,7 @@ function Post_ReqGen() {
         }
         else {
             Object.assign(paysend.order, orderGen().order)
-        }
+        }   
     }
     else {
         paysend = validateCard({});
@@ -843,16 +851,57 @@ const luhnCheck = val => {
     return (checksum % 10) == 0;
 }
 
+function Split_transaction() {
+
+    var first= new Object;
+
+    var last = new Object;
+
+    var Arr_r = [];
+
+    first = Post_TokGen();
+        
+    last = Post_TokPay(); 
+
+    Arr_r.push(first);
+
+    Arr_r.push(last);
+
+    return Arr_r;
+
+}
+
+function Post_TokGen() {
+
+    //Generamos Token aquí
+
+
+}
+
+function Post_TokPay() {
+    //Generamos botón aquí
+
+
+}
+
 function validateState(val,type,parent) {
 
     var state = document.getElementById(val + '_input').checked;
-
+    t_request = {};
     if (state) {
+
+        if (Sredirect) {
+            if (Sredirect.split_trans) {
+
+                t_request = Split_transaction();
+
+            }
+        }
 
         $("[master='" + val + "']").map(function (index, cls) {
 
             $('#' + cls.id).removeClass('hide')
-            auth = true; authParent = parent;
+            auth = true; authParent = parent;   
 
         })
     }
@@ -900,6 +949,7 @@ function threedsAuthProcessor(params) {
     }
     else {
         console.log(params)
+        document.getElementById('authframe').innerHTML = ""
         var iframeauth = JSON.parse(JSON.parse(params).Message).methodForm;
         var vers = JSON.parse(params).Version;
         var transactionId = JSON.parse(params).TransId;

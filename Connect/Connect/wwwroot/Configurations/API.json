@@ -28,7 +28,7 @@
         "order": 3,
         "name": "securityCode",
         "parent": "paymentCard",
-        "label": "CCV:",
+        "label": "CVV:",
         "type": "password",
         "maxlength": "5",
         "class": ""
@@ -113,7 +113,10 @@
                   }
                 }
               ],
-              "resultMapper":{"payerAuthenticationResponse":"PaRes","merchantData":"MD"}
+              "resultMapper": {
+                "payerAuthenticationResponse": "PaRes",
+                "merchantData": "MD"
+              }
             },
             "2.0": {
               "ReqVal": "Secure3D20AuthenticationUpdateRequest",
@@ -161,7 +164,9 @@
                   }
                 }
               ],
-              "resultMapper":{"cRes":"cres"}
+              "resultMapper": {
+                "cRes": "cres"
+              }
             },
             "2.1": {
               "ReqVal": "Secure3D21AuthenticationUpdateRequest",
@@ -209,7 +214,9 @@
                   }
                 }
               ],
-              "resultMapper":{"cRes":"cres"}
+              "resultMapper": {
+                "cRes": "cres"
+              }
             }
           },
           "redirect": {
@@ -323,13 +330,40 @@
           ]
         }
       },
-      {
+      { 
         "Tokenization": {
-          "prerequest": {
-            "endpoint": "/payment-tokens",
-            "parentchild": [
-              
-            ]
+          "redirect": {
+            "split_trans": true,
+            "url": "/payment-tokens",
+            "param": "SendTransaction",
+            "id": "ipgTransactionId",
+            "controller": "SendTransaction",
+            "content": "application/json",
+            "async": true,
+            "Httpmethod": "POST",
+            "subform": {
+              "url": "/payments",
+              "param": "SendTransaction",
+              "id": "ipgTransactionId",
+              "controller": "SendTransaction",
+              "content": "application/json",
+              "async": true,
+              "Httpmethod": "POST",
+              "parentchild": [
+                {
+                  "parent": "requestType",
+                  "value": "PaymentCardPaymentTokenRequest"
+                },
+                {
+                  "parent": "paymentMethod",
+                  "child": "paymentCard"
+                },
+                {
+                  "parent": "paymentCard",
+                  "child": "expiryDate"
+                }
+              ]
+            }
           },
           "request": {
             "endpoint": "/payments",

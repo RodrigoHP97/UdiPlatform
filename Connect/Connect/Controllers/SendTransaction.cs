@@ -41,7 +41,7 @@ namespace WebApplication1.Controllers
             request.AddParameter(headers["Content-type"].ToString(), deserialized_post["Payload"].ToString(),ParameterType.RequestBody);
 
             IRestResponse response = client.Execute(request);
-            var des_resp = JsonConvert.DeserializeObject<Dictionary<string, object>>(response.Content);
+             var des_resp = JsonConvert.DeserializeObject<Dictionary<string, object>>(response.Content);
 
                 try
                 {
@@ -196,7 +196,7 @@ namespace WebApplication1.Controllers
                         Error.Code = "Error";
                         foreach (var item in array)
                         {
-                            if (code == item["Code"].Value)
+                            if (code == item["Code"].Value && code!=" " && code!=" ")
                             {
                                 Error.Message = "Tu pedido " + order + " no pudo ser procesado correctamente. Razón:" + item["Message"];
 
