@@ -335,7 +335,7 @@
           "redirect": {
             "split_trans": true,
             "url": "/payment-tokens",
-            "param": "SendTransaction",
+            "param": "PostTransaction",
             "id": "ipgTransactionId",
             "controller": "SendTransaction",
             "content": "application/json",
@@ -348,15 +348,20 @@
               "controller": "SendTransaction",
               "content": "application/json",
               "async": true,
+              "complementObj": {
+                "createToken": {
+                  "reusable": true,
+                  "declineDuplicates": false
+                }
+              },
               "Httpmethod": "POST",
               "parentchild": [
                 {
                   "parent": "requestType",
-                  "value": "PaymentCardPaymentTokenRequest"
+                  "value": "PaymentCardPaymentTokenizationRequest"
                 },
                 {
-                  "parent": "paymentMethod",
-                  "child": "paymentCard"
+                  "parent": "paymentCard"
                 },
                 {
                   "parent": "paymentCard",
@@ -372,7 +377,7 @@
             ]
           },
           "input": {
-            "name": "tokenization",
+            "name": "Tokenization",
             "label": "&nbsp;&nbsp;Tokenizar la tarjeta",
             "type": "checkbox",
             "class": "",

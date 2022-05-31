@@ -37,10 +37,12 @@ var Req_Obj = new Object;
 var final = {};
 var auth;
 var authParent;
-var Sredirect;
+var Sredirect = {};
 var authpatch;
 var threeDsfunction;
 var t_request = new Object;
+
+var create_token = false;
 
 function sort_by_key(array, key) {
     return array.sort(function (a, b) {
@@ -173,7 +175,8 @@ function servicesMapper(serv) {
                     }
 
                     if (trans[check].redirect) {
-                        Sredirect = trans[check].redirect
+                        
+                        Sredirect[check]= trans[check].redirect
                     }
                 }
             })
@@ -351,6 +354,7 @@ function arrJ(obj, res, par, child) {
                         else {
                             if (!result[Objv.parent]) {
                                 result[Objv.parent] = {};
+
                             }
 
 
@@ -362,6 +366,19 @@ function arrJ(obj, res, par, child) {
 
                                 })
 
+                            }
+                            if (child) {
+                                result[Objv.parent][child] = {};
+
+                                var element = $("[parent='" + child + "']");
+                                var ele_l = element.length;
+                                if (ele_l > 0) {
+                                    element.map(function (i, input) {
+                                        result[Objv.parent][child][input.id] = $('#' + input.id).val().split(' ').join('');;
+
+                                    })
+
+                                }
                             }
                         }
                         if (result[par]) {
@@ -376,7 +393,7 @@ function arrJ(obj, res, par, child) {
     }
 
     // console.log(final,result)
-    return Object.assign(final, result)
+    return Object.assign(result, final)
 }
 
 
@@ -403,12 +420,17 @@ function validateCard(obj) {
 
 function sendTrans() {
 
-    if (!tokenize) {
-        postData($('#apikey').val(), $('#apisec').val(), Post_ReqGen(), 'primary', '');
+    var type_case = 'primary';
+    if (create_token) {
+
+        var type_case = 'secondary';
+        var service = "Tokenization";
     }
     else {
-        postData($('#apikey').val(), $('#apisec').val(), Tok_ReqGen(), 'primary', '');
+        var service="3ds"
     }
+    postData($('#apikey').val(), $('#apisec').val(), Post_ReqGen(service), type_case, '', service);
+
     
 
 }
@@ -446,7 +468,7 @@ $(document).ready(function () {
 });
 
 
-function postData(apiKey, apiSec, payL, Case, transId) {
+function postData(apiKey, apiSec, payL, Case, transId,service) {
 
     var hashdata = new Object;
 
@@ -464,9 +486,9 @@ function postData(apiKey, apiSec, payL, Case, transId) {
 
     var sign = MessageSignatureGen(hashdata, controller);
 
-    post = Request_loader(post, sign, timezone, clientId, payload,typeCase,transId);
+    post = Request_loader(post, sign, timezone, clientId, payload,typeCase,transId,service);
 
-    ExecTrans(post);
+    ExecTrans(post,service);
 };
 
 
@@ -488,40 +510,49 @@ function MessageSignatureGen(hashdata, controller) {
 
 
 
-function Post_ReqGen() {
+function Post_ReqGen(service) {
 
     var paysend = {};
-    if (Object.keys(Req_Obj).length > 0) {
-        paysend = arrJ(Req_Obj, {});
-        if (!paysend['order']) {
-            Object.assign(paysend, orderGen())
-        }
-        else {
-            Object.assign(paysend.order, orderGen().order)
-        }   
+
+    if (create_token) {
+
+        paysend = Post_TokGen(service)
+
+       
     }
     else {
-        paysend = validateCard({});
-    }
-
-    if (auth) {
-        var authReq = {};
-        authReq[authParent] = {};
-        $("[parent='" + authParent + "']").map(function (index, input) {
-
-            if (input.getAttribute('concat_type') == 'URL') {
-                var val_in = window.location.origin + $('#' + input.id).val();
-
+        if (Object.keys(Req_Obj).length > 0) {
+            paysend = arrJ(Req_Obj, {});
+            if (!paysend['order']) {
+                Object.assign(paysend, orderGen())
             }
             else {
-                var val_in = $('#' + input.id).val();
+                Object.assign(paysend.order, orderGen().order)
             }
+        }
+        else {
+            paysend = validateCard({});
+        }
 
-            authReq[authParent][input.id] = val_in;
+        if (auth) {
+            var authReq = {};
+            authReq[authParent] = {};
+            $("[parent='" + authParent + "']").map(function (index, input) {
 
-        })
-        Object.assign(paysend, authReq);
+                if (input.getAttribute('concat_type') == 'URL') {
+                    var val_in = window.location.origin + $('#' + input.id).val();
 
+                }
+                else {
+                    var val_in = $('#' + input.id).val();
+                }
+
+                authReq[authParent][input.id] = val_in;
+
+            })
+            Object.assign(paysend, authReq);
+
+        }
     }
 
     return paysend;
@@ -529,11 +560,11 @@ function Post_ReqGen() {
 }
 
 
-function Request_loader(params, message, time, client, request, typeCase, transId) {
+function Request_loader(params, message, time, client, request, typeCase, transId, service) {
 
     params.headers = {};
 
-    heads = headerGen(typeCase);
+    heads = headerGen(typeCase,service);
 
     if (transId != '') {
         transId = '/' + transId;
@@ -569,7 +600,7 @@ function Request_loader(params, message, time, client, request, typeCase, transI
 
 }
 
-function headerGen(typeCase) {
+function headerGen(typeCase, service) {
 
     if (typeCase == 'primary') {
 
@@ -577,11 +608,11 @@ function headerGen(typeCase) {
 
     }
     else {
-        return Sredirect;
+        return Sredirect[service];
     }
 }
 
-function ExecTrans(params) {
+function ExecTrans(params, service) {
 
     var data = {};
 
@@ -607,11 +638,17 @@ function ExecTrans(params) {
                     final = {};
                 }
                 else if (!JSON.parse(response).Code) {
-                    SuccessPage(response)
+                    if (!create_token) {
+                        SuccessPage(response)
+                    }
+                    else {
+                        console.log('Respuesta de la tokenización',response)
+                        //SuccessSplit(response)
+                    }
                     final = {};
                 }
                 else {
-                    threedsAuthProcessor(response);
+                    threedsAuthProcessor(response, service);
                     final = {}
                 }
 
@@ -662,7 +699,7 @@ function monthArrayLoader() {
 
 }
 
-function patchLoader(code,vers, transId) {
+function patchLoader(code,vers, transId,service) {
 
 
     patch = getPatch(code, vers, version[vers].request);
@@ -670,7 +707,7 @@ function patchLoader(code,vers, transId) {
 
     patch['authenticationType'] = version[vers].ReqVal;
 
-    var request = postData($('#apikey').val(), $('#apisec').val(), patch, 'secondary', transId);
+    var request = postData($('#apikey').val(), $('#apisec').val(), patch, 'secondary', transId,service);
 
     console.log(request)
 
@@ -851,30 +888,20 @@ const luhnCheck = val => {
     return (checksum % 10) == 0;
 }
 
-function Split_transaction() {
-
-    var first= new Object;
-
-    var last = new Object;
-
-    var Arr_r = [];
-
-    first = Post_TokGen();
-        
-    last = Post_TokPay(); 
-
-    Arr_r.push(first);
-
-    Arr_r.push(last);
-
-    return Arr_r;
-
-}
-
-function Post_TokGen() {
+function Post_TokGen(service) {
 
     //Generamos Token aquí
+    var gen = Sredirect[service].subform.parentchild;
 
+    var tok_req = {};
+
+    var comp = {};
+
+    comp = Sredirect[service].subform.complementObj;
+
+    tok_req = arrJ(gen, {});
+
+    return Object.assign(tok_req, comp);
 
 }
 
@@ -885,19 +912,20 @@ function Post_TokPay() {
 }
 
 function validateState(val,type,parent) {
-
+    create_token = false;
     var state = document.getElementById(val + '_input').checked;
     t_request = {};
     if (state) {
-
         if (Sredirect) {
-            if (Sredirect.split_trans) {
-
-                t_request = Split_transaction();
-
+            if (Sredirect[val]) {
+                if (Sredirect[val].split_trans) {
+                    create_token = true;
+                }
+                else {
+                    create_token = false;
+                }
             }
         }
-
         $("[master='" + val + "']").map(function (index, cls) {
 
             $('#' + cls.id).removeClass('hide')
@@ -906,6 +934,9 @@ function validateState(val,type,parent) {
         })
     }
     else {
+        if (Sredirect.split_trans) {
+            create_token = false;
+        }
         $("[master='" + val + "']").map(function (index, cls) {
 
             $('#' + cls.id).addClass('hide')
@@ -917,7 +948,7 @@ function validateState(val,type,parent) {
 
 }
 
-function threedsAuthProcessor(params) {
+function threedsAuthProcessor(params, service) {
     
     if (JSON.parse(params).Code == 'FINALIZING') {
         
@@ -954,7 +985,7 @@ function threedsAuthProcessor(params) {
         var vers = JSON.parse(params).Version;
         var transactionId = JSON.parse(params).TransId;
         $('#authframe').append(iframeauth);
-        patchLoader(JSON.parse(params).Code,vers, transactionId);
+        patchLoader(JSON.parse(params).Code,vers, transactionId,service);
         final = {};
     }
 }
